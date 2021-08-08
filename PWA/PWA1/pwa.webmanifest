@@ -1,0 +1,28 @@
+{
+    "name":"PWA-Beispiel Nr. 1",
+    "short_name":"PWA1",
+    "description":"Ein kleines Beispiel für eine PWA",
+    "start_url":"/",
+    "background_color":"#6DCCB1",
+    "theme_color":"#009578",
+    "display":"standalone",
+    "icons": [
+        {
+            "src":"/images/PWA1Logo_512.png",
+            "sizes": "512x512",
+            "type":"image/png"
+        },
+        {
+            "src":"/images/PWA1Logo_192.png",
+            "sizes": "192x192",
+            "type":"image/png"
+        },
+        {
+            "src":"/images/maskable_icon_x48.png",
+            "sizes":"48x48",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+
+    ]
+}

@@ -1,0 +1,9 @@
+body {
+    font-family: verdana;
+    font-size: 11pt;
+}
+
+button {
+    width: 120px;
+    height: 32px;
+}

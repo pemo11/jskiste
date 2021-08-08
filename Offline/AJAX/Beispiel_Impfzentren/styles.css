@@ -1,0 +1,12 @@
+/* Standard-Style */
+
+body {
+    font-family: verdana;
+    font-size: 11pt;
+}
+
+input[type="submit"] {
+    height: 32px;
+    width: 120px;
+    background-color:greenyellow;
+}

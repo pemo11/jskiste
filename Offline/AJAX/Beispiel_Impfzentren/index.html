@@ -1,0 +1,117 @@
+<!-- 
+    Es funktioniert bereits grundsätlich, beim Drücken der Return-Taste im input-Feld txBundesland gibt es einen 405 
+
+    Das Abrufen der Daten geht, bei der Anzeige muss berücksichtigt werden, dass der Inhalt der Eingabe erst gelöscht werden muss, damit ein anderes Bula ausgewählt werden kann
+    
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Impfzentren-Auswahl per AJAX</title>
+        <link href="styles.css" rel="stylesheet" type="text/css">
+
+        <script>
+
+            var bundeslaender = {};
+
+            function getJsonData(path, callback) {
+                console.log(`*** Hole Daten von ${path} ***`)
+                const xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            var data = JSON.parse(xhr.responseText);
+                            callback(data);
+                        } else if (xhr.status === 404) {
+                            console.log(`!!! ${path} konnte nicht abgerufen werden!!!`);
+                        }
+                    }
+                }
+                xhr.onerror = (target) => {
+                    console.log(`Fehler beim Abfruf von ${path} (${target})`);
+                }
+                xhr.open("GET", path);
+                xhr.send();
+            };
+
+            const jsonUrl = "Bundeslaender.json";
+
+            getJsonData(jsonUrl, (data) => {
+                console.log(data)
+                var laenderOptions = "";
+                data.forEach(element => {
+                    laenderOptions += `<option value="${element}" />`;
+                    // Auch in Dictionary eintragen
+                    if (!(element in bundeslaender)) {
+                        var bulaName = element.split(" ").join("");
+                        bundeslaender[bulaName] = [];
+                    }
+
+                });
+
+                const elLaenderList = document.getElementById("laender");
+                elLaenderList.innerHTML = laenderOptions;
+            });
+
+            function fillImpfzentren(bulaName) {
+                var impfzentren = bundeslaender[bulaName];
+                var impfzentrenOptions = "";
+                var elImpfzentren = document.getElementById("impfzentren");
+                elImpfzentren.innerHTML = impfzentrenOptions;
+                impfzentren.forEach(element => {
+                    impfzentrenOptions += `<option value="${element}" />`;                    
+                });
+                elImpfzentren.innerHTML = impfzentrenOptions;
+                elImpfzentren = document.getElementsByName("txImpfzentren")[0];
+                elImpfzentren.value = "";
+            };
+
+            window.addEventListener("load", (event) => {
+                var elLaender = document.getElementsByName("txBundesland")[0];
+                elLaender.addEventListener("input", (e)=> {
+                    var auswahl = e.target.value;
+                    var bulaName = auswahl.split(" ").join("");
+                    console.log(` Aktuelle Auswahl: ${auswahl}`)
+                    if (bulaName in bundeslaender) {
+                        // Müssen die Daten noch abgerufen werden?
+                        if (bundeslaender[bulaName].length == 0) {
+                            var jsonUrl = `Impfzentren_${bulaName}.json`;
+                            getJsonData(jsonUrl, (data) => {
+                                console.log(data);
+                                data.forEach(element => {
+                                    bundeslaender[bulaName].push(element);
+                                });
+                                // Wegen dem asynchronen Aufruf muss fillImpfzentren gleich hier aufgerufen werden
+                                fillImpfzentren(bulaName);
+                            });
+                        }
+                        else {
+                            fillImpfzentren(bulaName);
+                        }
+                    }  else {
+                        var elImpfzentren = document.getElementById("impfzentren");
+                        elImpfzentren.innerHTML = '<option value="Wähle ein Impfzentrum" />';
+                        elImpfzentren = document.getElementsByName("txImpfzentren")[0];
+                        elImpfzentren.value = "";
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <h2>Impfzentren-Auswahl per AJAX</h2>
+        <form method="POST" action="">
+            <label for="txBundesland">Bundesland:</label><br/>
+            <input type="text" name="txBundesland" list="laender"><p/>
+            <label for="txImpfzentren">Impfzentren:</label><br/>
+            <input type="text" name="txImpfzentren" list="impfzentren"><p/>
+            <input type="submit" value="Terminsuche">
+            <datalist id="laender">
+               <option value="Wähle ein Bundesland"></option>
+            </datalist>
+            <datalist id="impfzentren">
+                <option value="Wähle ein Impfzentrum"></option>
+             </datalist>
+         </form>
+    </body>
+</html> 
