@@ -1,0 +1,12 @@
+/* Standard-Style */
+
+body {
+    font-family: verdana;
+    font-size: 11pt;
+}
+
+div.country {
+    font-size: 1.2em;
+    font-weight: bolder;
+    margin-bottom: 6px;
+}

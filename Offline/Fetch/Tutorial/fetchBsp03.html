@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Simple-Fetch-Beispiel Nr. 3</title>
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h1>Simple Fetch-Beispiel Nr. 3</h1>
+        <hr>
+        <h3>Alle Länder dieser Welt</h3>
+        <table id="tabLaender">
+            <thead>
+                <th>Land</th><th>Hauptstadt</th><th>Einwohner</th><th>Hdi</th><th>Flagge</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+        <script>
+
+            // var url = "https://activetraining.de/WikiLaender.json";
+            var url = "../../Material/WikiLaender.json";
+
+            window.addEventListener("load", (event) => {
+                getLaenderInfo(url);
+            })
+
+            // Dieses Mal werden json-Objekte übergeben
+            function insertLaenderInfo(laender) {
+                var elTabLaender = document.getElementById("tabLaender");
+                laender.forEach(land => {
+                    var elTr = document.createElement("tr");
+                    var elTd = document.createElement("td");
+                    elTd.innerText = land.country;
+                    elTr.appendChild(elTd)
+                    elTd = document.createElement("td");
+                    elTd.innerText = land.capitol;
+                    elTr.appendChild(elTd)
+                    elTd = document.createElement("td");
+                    elTd.innerText = land.population;
+                    elTr.appendChild(elTd)
+                    elTd = document.createElement("td");
+                    elTd.innerText = land.hdi;
+                    elTr.appendChild(elTd)
+                    var elImg = document.createElement("img");
+                    elImg.setAttribute("src",land.flagUrl);
+                    elImg.setAttribute("height",32);
+                    elImg.setAttribute("width",48);
+                    elTr.appendChild(elImg);
+                    elTabLaender.appendChild(elTr);
+                })
+            }
+
+            function getLaenderInfo(url) {
+                var fetchHeaders = new Headers();
+                fetchHeaders.append("Content-Type","text/json; charset=UTF-8");
+
+                // mode:"no-cors" spielt für lokale Dateien keine Rolle
+                var request = new Request(url, {
+                    method:"GET",
+                    headers:fetchHeaders,
+                });
+
+                fetch(request)
+                .then(response => {return response.json()})
+                .then(json => { insertLaenderInfo(json)})
+                .catch(err => console.log("Fetch-Error", err));
+            }
+
+        </script>
+    </body>
+</html> 

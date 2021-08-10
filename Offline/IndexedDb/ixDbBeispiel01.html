@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>IndexedDb-Beispiel Nr. 1</title>
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>IndexedDb-Beispiel Nr. 1</h3>
+        <div id="divAusgabe"></div>
+
+        <script>
+            window.addEventListener("load", (event) => {
+                // Db anlegen
+                var indexedDB = window.indexedDB;
+                var openRequest = indexedDB.open("LaenderDb", 1);
+                var objectStoreName = "countries";
+
+                // Datenbank muss neu angelegt/aktualisiert werden (abhängig von der Versionsnummer)
+                openRequest.onupgradeneeded = () => {
+                    console.log("*** onupgradeneeded ***");
+
+                    // Object store anlegen
+                    let laenderDb = openRequest.result;
+                    if (!laenderDb.objectStoreNames.contains(objectStoreName)) {
+                            laenderDb.createObjectStore(objectStoreName, {keyPath: "name"})
+                            console.log(`*** Objectstore ${objectStoreName} wurde angelegt. ***`)
+                    }
+
+
+                }
+
+                // Datenbank wurde geöffnet
+                openRequest.onsuccess = () => {
+                    console.log("*** onsuccess ***");
+                    let laenderDb = openRequest.result;
+                    // Mit Laenderinfos füllen
+                    let transaction = laenderDb.transaction("countries", "readwrite");
+                    let countries = transaction.objectStore(objectStoreName);
+
+                    var countriesData = [{name:"Alabama"},{name:"Belgien"},{name:"Costa Rika"},{name:"Dänemark"}];
+                    countriesData.forEach(country => {
+                        let putRequest = countries.put(country);
+                        putRequest.onsuccess = () => {
+                            console.log("*** put() war erfolgreich ***")
+                        }
+                        putRequest.onerror = () => {
+                            console.log("!!! Fehler bei put()", putRequest.error);
+                        }
+                    })
+                    console.log(`${countriesData.length} Länder wurden hinzugefügt ***`)
+                    getCountries();
+                }
+            });
+
+            // Abrufen der Daten 
+            function getCountries() {
+                console.log("*** getCountries ***");
+                let indexedDB = window.indexedDB;
+                let openRequest = indexedDB.open("LaenderDb", 1);
+                let objectStoreName = "countries";
+                openRequest.onsuccess = () => {
+                    let laenderDb = openRequest.result;
+                    let transaction = laenderDb.transaction("countries", "readonly");
+                    let countries = transaction.objectStore(objectStoreName);
+                    let countriesRequest = countries.getAll();
+
+                    countriesRequest.onsuccess = () => {
+                        if (countriesRequest.result !== undefined) {
+                            const elAusgabe = document.getElementById("divAusgabe");
+                            countriesRequest.result.forEach(country => {
+                            var elCountry = document.createElement("div");
+                            elCountry.innerHTML = `${country.name}<BR>`;
+                            elAusgabe.appendChild(elCountry);
+                            })
+                        } else {
+                            console.log("!!! Keine Daten (sehr seltsam) !!!")
+                        }
+                    };
+
+                    countriesRequest.onerror = () => {
+                        console.log("!!! Fehler beim Abrufen der Countries !!!", countriesRequest.error);
+                    };
+                }
+                openRequest.onerror = () => {
+                    console.log("!!! Fehler beim Öffnen der Datenbank !!!", openRequest.error);
+                }
+            }
+
+            // Grundsätzlich geht es, aber diese Function darf erst dann ausgeführt werden, wenn die Datenbank angelegt wurde
+            // getCountries();
+
+        </script>
+
+        <h6>Remembering Clarence Clemonts</h6>
+    </body>
+</html> 

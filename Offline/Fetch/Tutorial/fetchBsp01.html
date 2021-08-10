@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Simple-Fetch-Beispiel Nr. 1</title>
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Simple Fetch-Beispiel Nr. 1</h3>
+        <div id="divOutput"></div>
+        <script>
+
+            // var url = "https://activetraining.de/WikiLaender.json";
+            // Im Moment der einfachste Weg, die CORS-Problematik zu umgehen
+            var url = "../../Material/WikiLaender.json";
+            var fetchHeaders = new Headers();
+            fetchHeaders.append("Content-Type","text/json; charset=UTF-8");
+            // fetchHeaders.append("X-Custom-Header","Viele Gruesse");
+
+            var request = new Request(url, {
+                method:"GET",
+                headers:fetchHeaders,
+                mode:"no-cors"
+            });
+
+            fetch(request)
+            .then(response => { console.log(response.type);return response.text()})
+            .then(json => console.log(json ? json : "Leer"))
+            .catch(err => console.log("Fetch-Error", err));
+
+        </script>
+    </body>
+</html> 

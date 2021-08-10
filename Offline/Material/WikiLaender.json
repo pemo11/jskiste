@@ -1,0 +1,1409 @@
+[
+    {
+        "country": "Abchasien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Flag_of_the_Republic_of_Abkhazia.svg/150px-Flag_of_the_Republic_of_Abkhazia.svg.png",
+        "capitol": "Sochumi",
+        "population": "240.705",
+        "hdi": 0
+    },
+    {
+        "country": "Afghanistan",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Afghanistan.svg/180px-Flag_of_Afghanistan.svg.png",
+        "capitol": "Kabul",
+        "population": "38,0 Millionen",
+        "hdi": "0,511 (2019)"
+    },
+    {
+        "country": "Ägypten",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Egypt.svg/180px-Flag_of_Egypt.svg.png",
+        "capitol": "Kairo",
+        "population": "102,3 Millionen",
+        "hdi": "0,707 (2019)"
+    },
+    {
+        "country": "Albanien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Flag_of_Albania.svg/180px-Flag_of_Albania.svg.png",
+        "capitol": "Tirana",
+        "population": "2,9 Millionen (2019)",
+        "hdi": "0,795 (2019)"
+    },
+    {
+        "country": "Algerien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Flag_of_Algeria.svg/180px-Flag_of_Algeria.svg.png",
+        "capitol": "Algier",
+        "population": "42,973 Mio.(Hochrechnung Juli 2020)",
+        "hdi": "0,748 (2019)"
+    },
+    {
+        "country": "Andorra",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Flag_of_Andorra.svg/180px-Flag_of_Andorra.svg.png",
+        "capitol": "Andorra la Vella",
+        "population": "77.142 (2019)",
+        "hdi": "0,868 (2019)"
+    },
+    {
+        "country": "Angola",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Flag_of_Angola.svg/180px-Flag_of_Angola.svg.png",
+        "capitol": "Luanda",
+        "population": "31,13 Mio. (Schätzung 2020)",
+        "hdi": "0,581 (2019)"
+    },
+    {
+        "country": "Antigua und Barbuda",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Flag_of_Antigua_and_Barbuda.svg/180px-Flag_of_Antigua_and_Barbuda.svg.png",
+        "capitol": "Saint John’s",
+        "population": "97.000",
+        "hdi": "0,778 (2019)"
+    },
+    {
+        "country": "Äquatorialguinea",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Flag_of_Equatorial_Guinea.svg/180px-Flag_of_Equatorial_Guinea.svg.png",
+        "capitol": "Malabo",
+        "population": "1,4 Millionen",
+        "hdi": "0,592 (2019)"
+    },
+    {
+        "country": "Argentinien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/180px-Flag_of_Argentina.svg.png",
+        "capitol": "Buenos Aires",
+        "population": "44.780.675(2019: Schätzung)",
+        "hdi": "0,845 (2019)"
+    },
+    {
+        "country": "Armenien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Flag_of_Armenia.svg/180px-Flag_of_Armenia.svg.png",
+        "capitol": "Jerewan",
+        "population": "3,0 Millionen (2019)",
+        "hdi": "0,776 (2019)"
+    },
+    {
+        "country": "Aserbaidschan",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Flag_of_Azerbaijan.svg/180px-Flag_of_Azerbaijan.svg.png",
+        "capitol": "Baku",
+        "population": "10,0 Millionen (2019)",
+        "hdi": "0,756 (2019)"
+    },
+    {
+        "country": "Äthiopien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Flag_of_Ethiopia.svg/180px-Flag_of_Ethiopia.svg.png",
+        "capitol": "Addis Abeba",
+        "population": "112.079.000 (2019)",
+        "hdi": "0,485 (2019)"
+    },
+    {
+        "country": "Australien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_Australia.svg/180px-Flag_of_Australia.svg.png",
+        "capitol": "Canberra",
+        "population": "25,7 Millionen",
+        "hdi": "0,944 (2019)"
+    },
+    {
+        "country": "Bahamas",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Flag_of_the_Bahamas.svg/180px-Flag_of_the_Bahamas.svg.png",
+        "capitol": "Nassau",
+        "population": "389 Tausend",
+        "hdi": "0,814 (2019)"
+    },
+    {
+        "country": "Bahrain",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Flag_of_Bahrain.svg/180px-Flag_of_Bahrain.svg.png",
+        "capitol": "Manama",
+        "population": "1,6 Millionen",
+        "hdi": "0,852 (2019)"
+    },
+    {
+        "country": "Bangladesch",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Flag_of_Bangladesh.svg/180px-Flag_of_Bangladesh.svg.png",
+        "capitol": "Dhaka",
+        "population": "164,7 Mio. (2020)",
+        "hdi": "0,632 (2019)"
+    },
+    {
+        "country": "Barbados",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Flag_of_Barbados.svg/180px-Flag_of_Barbados.svg.png",
+        "capitol": "Bridgetown",
+        "population": "287.000",
+        "hdi": "0,814 (2019)"
+    },
+    {
+        "country": "Belgien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Flag_of_Belgium_%28civil%29.svg/180px-Flag_of_Belgium_%28civil%29.svg.png",
+        "capitol": "Brüssel",
+        "population": "11.492.641 (1. Januar 2020)",
+        "hdi": "0,931 (2019)"
+    },
+    {
+        "country": "Belize",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Flag_of_Belize.svg/180px-Flag_of_Belize.svg.png",
+        "capitol": "Belmopan",
+        "population": "419.000  (Schätzung 2020)",
+        "hdi": "0,716 (2019)"
+    },
+    {
+        "country": "Benin",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Flag_of_Benin.svg/180px-Flag_of_Benin.svg.png",
+        "capitol": "Porto-Novo",
+        "population": "11,8 Millionen",
+        "hdi": "0,545 (2019)"
+    },
+    {
+        "country": "Bhutan",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Flag_of_Bhutan.svg/180px-Flag_of_Bhutan.svg.png",
+        "capitol": "Thimphu",
+        "population": "756.129 (Zensus 2021)",
+        "hdi": "0,654 (2019)"
+    },
+    {
+        "country": "Bolivien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Flag_of_Bolivia.svg/180px-Flag_of_Bolivia.svg.png",
+        "capitol": "Sucre",
+        "population": "11,5 Millionen",
+        "hdi": "0,718 (2019)"
+    },
+    {
+        "country": "Bosnien und Herzegowina",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Flag_of_Bosnia_and_Herzegovina.svg/180px-Flag_of_Bosnia_and_Herzegovina.svg.png",
+        "capitol": "Sarajevo",
+        "population": "3,3 Millionen",
+        "hdi": "0,78 (2019)"
+    },
+    {
+        "country": "Botswana",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_Botswana.svg/180px-Flag_of_Botswana.svg.png",
+        "capitol": "Gaborone",
+        "population": "2,3 Millionen",
+        "hdi": "0,735 (2019)"
+    },
+    {
+        "country": "Brasilien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/180px-Flag_of_Brazil.svg.png",
+        "capitol": "Brasilia",
+        "population": "211.834.000 (Juli 2020)",
+        "hdi": "0,765 (2019)"
+    },
+    {
+        "country": "Brunei",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Flag_of_Brunei.svg/180px-Flag_of_Brunei.svg.png",
+        "capitol": "Bandar Seri Begawan",
+        "population": "464.478 (Schätzung 2020)",
+        "hdi": "0,838 (2019)"
+    },
+    {
+        "country": "Bulgarien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Bulgaria.svg/180px-Flag_of_Bulgaria.svg.png",
+        "capitol": "Sofia",
+        "population": "6.951.482 (Dezember 2019)",
+        "hdi": "0,816 (2019)"
+    },
+    {
+        "country": "Burkina Faso",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Flag_of_Burkina_Faso.svg/180px-Flag_of_Burkina_Faso.svg.png",
+        "capitol": "Ouagadougou",
+        "population": "20.488.000 (Zensus 2019)",
+        "hdi": "0,452 (2019)"
+    },
+    {
+        "country": "Burundi",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Flag_of_Burundi.svg/180px-Flag_of_Burundi.svg.png",
+        "capitol": "Gitega",
+        "population": "11,5 Mio. (Schätzung 2020 UN)",
+        "hdi": "0,433 (2019)"
+    },
+    {
+        "country": "Chile",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/180px-Flag_of_Chile.svg.png",
+        "capitol": "Santiago de Chile",
+        "population": "19,1 Millionen",
+        "hdi": "0,851 (2019)"
+    },
+    {
+        "country": "Volksrepublik China",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/180px-Flag_of_the_People%27s_Republic_of_China.svg.png",
+        "capitol": "Peking",
+        "population": "1.411.780.000",
+        "hdi": "0,761 (2019)"
+    },
+    {
+        "country": "Cookinseln",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Flag_of_the_Cook_Islands.svg/180px-Flag_of_the_Cook_Islands.svg.png",
+        "capitol": "Avarua",
+        "population": "18.600 (2011)",
+        "hdi": 0
+    },
+    {
+        "country": "Costa Rica",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Flag_of_Costa_Rica.svg/180px-Flag_of_Costa_Rica.svg.png",
+        "capitol": "San Josè",
+        "population": "5,0 Millionen",
+        "hdi": "0,81 (2019)"
+    },
+    {
+        "country": "Dänemark",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Flag_of_Denmark.svg/180px-Flag_of_Denmark.svg.png",
+        "capitol": "Kopenhagen",
+        "population": "5.840.045 Kernland, 56.584 Grönland, 48.354 Färöer (Stand: 2021)",
+        "hdi": "0,94 (2019)"
+    },
+    {
+        "country": "Deutschland",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/180px-Flag_of_Germany.svg.png",
+        "capitol": "Berlin",
+        "population": "83.155.031 (2020)",
+        "hdi": "0,947 (2019)"
+    },
+    {
+        "country": "Dominica",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Flag_of_Dominica.svg/180px-Flag_of_Dominica.svg.png",
+        "capitol": "Roseau",
+        "population": "72.000",
+        "hdi": "0,742 (2019)"
+    },
+    {
+        "country": "Dominikanische Republik",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_the_Dominican_Republic.svg/180px-Flag_of_the_Dominican_Republic.svg.png",
+        "capitol": "Santo Domingo",
+        "population": "10,7 Millionen",
+        "hdi": "0,756 (2019)"
+    },
+    {
+        "country": "Dschibuti",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Flag_of_Djibouti.svg/180px-Flag_of_Djibouti.svg.png",
+        "capitol": "Dschibuti",
+        "population": "865.267  (Schätzung Juli 2017)",
+        "hdi": "0,524 (2019)"
+    },
+    {
+        "country": "Ecuador",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Flag_of_Ecuador.svg/180px-Flag_of_Ecuador.svg.png",
+        "capitol": "Quito",
+        "population": "17,4 Millionen",
+        "hdi": "0,759 (2019)"
+    },
+    {
+        "country": "El Salvador",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Flag_of_El_Salvador.svg/180px-Flag_of_El_Salvador.svg.png",
+        "capitol": "San Salvador",
+        "population": "6,5 Millionen",
+        "hdi": "0,673 (2019)"
+    },
+    {
+        "country": "Elfenbeinküste",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_C%C3%B4te_d%27Ivoire.svg/180px-Flag_of_C%C3%B4te_d%27Ivoire.svg.png",
+        "capitol": "Yamoussoukro",
+        "population": "25,7 Millionen",
+        "hdi": "0,538 (2019)"
+    },
+    {
+        "country": "Eritrea",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Flag_of_Eritrea.svg/180px-Flag_of_Eritrea.svg.png",
+        "capitol": "Asmara",
+        "population": "5,1 Millionen (Quelle: UN World Population Prospects, 2017)",
+        "hdi": "0,459 (2019)"
+    },
+    {
+        "country": "Estland",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Flag_of_Estonia.svg/180px-Flag_of_Estonia.svg.png",
+        "capitol": "Tallinn",
+        "population": "1,3 Millionen (2019)",
+        "hdi": "0,892 (2019)"
+    },
+    {
+        "country": "Eswatini",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Flag_of_Eswatini.svg/180px-Flag_of_Eswatini.svg.png",
+        "capitol": "Mbabane",
+        "population": "1,16 Millionen",
+        "hdi": "0,611 (2019)"
+    },
+    {
+        "country": "Fidschi",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Fiji.svg/180px-Flag_of_Fiji.svg.png",
+        "capitol": "Suva",
+        "population": "890.000",
+        "hdi": "0,743 (2019)"
+    },
+    {
+        "country": "Finnland",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_Finland.svg/180px-Flag_of_Finland.svg.png",
+        "capitol": "Helsinki",
+        "population": "5.536.146 (31. Dezember 2020)",
+        "hdi": "0,938 (2019)"
+    },
+    {
+        "country": "Frankreich",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/180px-Flag_of_France.svg.png",
+        "capitol": "Paris",
+        "population": "67.422.000 (1. Januar 2021)",
+        "hdi": "0,901 (2019)"
+    },
+    {
+        "country": "Gabun",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Flag_of_Gabon.svg/180px-Flag_of_Gabon.svg.png",
+        "capitol": "Libreville",
+        "population": "2.176.800 Schätzung 2020",
+        "hdi": "0,703 (2019)"
+    },
+    {
+        "country": "Gambia",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Flag_of_The_Gambia.svg/180px-Flag_of_The_Gambia.svg.png",
+        "capitol": "Banjul",
+        "population": "2,23 Mio. (Schätzung 2020)",
+        "hdi": "0,496 (2019)"
+    },
+    {
+        "country": "Georgien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Flag_of_Georgia.svg/180px-Flag_of_Georgia.svg.png",
+        "capitol": "Tiflis",
+        "population": "3,7 Millionen (2019)",
+        "hdi": "0,812 (2019)"
+    },
+    {
+        "country": "Ghana",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Flag_of_Ghana.svg/180px-Flag_of_Ghana.svg.png",
+        "capitol": "Accra",
+        "population": "30,95 Mio. (Schätzung 2019)",
+        "hdi": "0,611 (2019)"
+    },
+    {
+        "country": "Grenada",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_Grenada.svg/180px-Flag_of_Grenada.svg.png",
+        "capitol": "St. George’s",
+        "population": "112.000",
+        "hdi": "0,779 (2019)"
+    },
+    {
+        "country": "Griechenland",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Greece.svg/180px-Flag_of_Greece.svg.png",
+        "capitol": "Athen",
+        "population": "10.718.565 (Jan. 2020)",
+        "hdi": "0,888 (2019)"
+    },
+    {
+        "country": "Guatemala",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Flag_of_Guatemala.svg/180px-Flag_of_Guatemala.svg.png",
+        "capitol": "Guatemala-Stadt",
+        "population": "16,9 Millionen",
+        "hdi": "0,663 (2019)"
+    },
+    {
+        "country": "Guinea",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Flag_of_Guinea.svg/180px-Flag_of_Guinea.svg.png",
+        "capitol": "Conakry",
+        "population": "12,53 Mio. (Stand 2020)",
+        "hdi": "0,477 (2019)"
+    },
+    {
+        "country": "Guinea-Bissau",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_Guinea-Bissau.svg/180px-Flag_of_Guinea-Bissau.svg.png",
+        "capitol": "Bissau",
+        "population": "1,97 Mio. (UN 2020)",
+        "hdi": "0,48 (2019)"
+    },
+    {
+        "country": "Guyana",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Flag_of_Guyana.svg/180px-Flag_of_Guyana.svg.png",
+        "capitol": "Georgetown",
+        "population": "783.000 (Schätzung aus 2019)",
+        "hdi": "0,682 (2019)"
+    },
+    {
+        "country": "Haiti",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Flag_of_Haiti.svg/180px-Flag_of_Haiti.svg.png",
+        "capitol": "Port-au-Prince",
+        "population": "11,3 Millionen",
+        "hdi": "0,51 (2019)"
+    },
+    {
+        "country": "Honduras",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Flag_of_Honduras.svg/180px-Flag_of_Honduras.svg.png",
+        "capitol": "Tegucigalpa",
+        "population": "9,7 Millionen",
+        "hdi": "0,634 (2019)"
+    },
+    {
+        "country": "Indien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/180px-Flag_of_India.svg.png",
+        "capitol": "Neu-Delhi",
+        "population": "1.380.004.000 (2020)",
+        "hdi": "0,645 (2019)"
+    },
+    {
+        "country": "Indonesien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_Indonesia.svg/180px-Flag_of_Indonesia.svg.png",
+        "capitol": "Jakarta",
+        "population": "270,6 Millionen",
+        "hdi": "0,718 (2019)"
+    },
+    {
+        "country": "Irak",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Flag_of_Iraq.svg/180px-Flag_of_Iraq.svg.png",
+        "capitol": "Bagdad",
+        "population": "39.309.783 (2019)",
+        "hdi": "0,674 (2019)"
+    },
+    {
+        "country": "Iran",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Flag_of_Iran.svg/180px-Flag_of_Iran.svg.png",
+        "capitol": "Teheran",
+        "population": "82,9 Millionen",
+        "hdi": "0,783 (2019)"
+    },
+    {
+        "country": "Irland",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Flag_of_Ireland.svg/180px-Flag_of_Ireland.svg.png",
+        "capitol": "Dublin",
+        "population": "4,9 Millionen",
+        "hdi": "0,955 (2019)"
+    },
+    {
+        "country": "Island",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Iceland.svg/180px-Flag_of_Iceland.svg.png",
+        "capitol": "Reykjavík",
+        "population": "361.000",
+        "hdi": "0,949 (2019)"
+    },
+    {
+        "country": "Israel",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Israel.svg/180px-Flag_of_Israel.svg.png",
+        "capitol": "Jerusalem",
+        "population": "9.136.000 (Schätzung 2016)",
+        "hdi": "0,919 (2019)"
+    },
+    {
+        "country": "Italien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/180px-Flag_of_Italy.svg.png",
+        "capitol": "Rom",
+        "population": "60.026.546 (30. Juni 2020)",
+        "hdi": "0,892 (2019)"
+    },
+    {
+        "country": "Jamaika",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Flag_of_Jamaica.svg/180px-Flag_of_Jamaica.svg.png",
+        "capitol": "Kingston",
+        "population": "2,9 Millionen",
+        "hdi": "0,734 (2019)"
+    },
+    {
+        "country": "Japan",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/180px-Flag_of_Japan.svg.png",
+        "capitol": "Tokio",
+        "population": "125.708.382  (2020)",
+        "hdi": "0,919 (2019)"
+    },
+    {
+        "country": "Jemen",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Flag_of_Yemen.svg/180px-Flag_of_Yemen.svg.png",
+        "capitol": "Sanaa",
+        "population": "29,2 Millionen",
+        "hdi": "0,47 (2019)"
+    },
+    {
+        "country": "Jordanien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Flag_of_Jordan.svg/180px-Flag_of_Jordan.svg.png",
+        "capitol": "Amman",
+        "population": "10,1 Millionen",
+        "hdi": "0,729 (2019)"
+    },
+    {
+        "country": "Kambodscha",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Flag_of_Cambodia.svg/180px-Flag_of_Cambodia.svg.png",
+        "capitol": "Phnom Penh",
+        "population": "16,5 Millionen (2019)",
+        "hdi": "0,594 (2019)"
+    },
+    {
+        "country": "Kamerun",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Flag_of_Cameroon.svg/180px-Flag_of_Cameroon.svg.png",
+        "capitol": "Yaoundé",
+        "population": "28,524 Mio. (Schätzung 2021)",
+        "hdi": "0,563 (2019)"
+    },
+    {
+        "country": "Kanada",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Flag_of_Canada.svg/180px-Flag_of_Canada.svg.png",
+        "capitol": "Ottawa",
+        "population": "38,0 Mio. (4. Quartal 2020, Bevölkerungsschätzung)",
+        "hdi": "0,929 (2019)"
+    },
+    {
+        "country": "Kap Verde",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Cape_Verde.svg/180px-Flag_of_Cape_Verde.svg.png",
+        "capitol": "Praia",
+        "population": "550.000 (Schätzung 2020)",
+        "hdi": "0,665 (2019)"
+    },
+    {
+        "country": "Kasachstan",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Flag_of_Kazakhstan.svg/180px-Flag_of_Kazakhstan.svg.png",
+        "capitol": "Nur-Sultan",
+        "population": "18.877.128(1. Jan. 2021)",
+        "hdi": "0,825 (2019)"
+    },
+    {
+        "country": "Katar",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Flag_of_Qatar.svg/180px-Flag_of_Qatar.svg.png",
+        "capitol": "Doha",
+        "population": "2.700.000",
+        "hdi": "0,848 (2019)"
+    },
+    {
+        "country": "Kenia",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Kenya.svg/180px-Flag_of_Kenya.svg.png",
+        "capitol": "Nairobi",
+        "population": "47.564.296 (Volkszählung 2019)",
+        "hdi": "0,601 (2019)"
+    },
+    {
+        "country": "Kirgisistan",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Flag_of_Kyrgyzstan.svg/180px-Flag_of_Kyrgyzstan.svg.png",
+        "capitol": "Bischkek",
+        "population": "6.523.529 (Schätzung 2020)",
+        "hdi": "0,697 (2019)"
+    },
+    {
+        "country": "Kiribati",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Flag_of_Kiribati.svg/180px-Flag_of_Kiribati.svg.png",
+        "capitol": "South Tarawa",
+        "population": "119.940 (2020; Volkszählung)",
+        "hdi": "0,63 (2019)"
+    },
+    {
+        "country": "Kolumbien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Colombia.svg/180px-Flag_of_Colombia.svg.png",
+        "capitol": "Bogotá, D.C.",
+        "population": "50,9 Millionen",
+        "hdi": "0,767 (2019)"
+    },
+    {
+        "country": "Komoren",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Flag_of_the_Comoros.svg/180px-Flag_of_the_Comoros.svg.png",
+        "capitol": "Moroni",
+        "population": "851.000",
+        "hdi": "0,554 (2019)"
+    },
+    {
+        "country": "Demokratische Republik Kongo",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Flag_of_the_Democratic_Republic_of_the_Congo.svg/180px-Flag_of_the_Democratic_Republic_of_the_Congo.svg.png",
+        "capitol": "Kinshasa",
+        "population": "91,9 Mio.",
+        "hdi": "0,48 (2019)"
+    },
+    {
+        "country": "Republik Kongo",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Flag_of_the_Republic_of_the_Congo.svg/180px-Flag_of_the_Republic_of_the_Congo.svg.png",
+        "capitol": "Brazzaville",
+        "population": "5.293.070 (Angabe Juli 2020)",
+        "hdi": "0,574 (2019)"
+    },
+    {
+        "country": "Nordkorea",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Flag_of_North_Korea.svg/180px-Flag_of_North_Korea.svg.png",
+        "capitol": "Pjöngjang",
+        "population": "25.549.604 (2018, gemäß UN-Schätzung)24.052.231 (2008, gemäß Volkszählung)",
+        "hdi": "n. v."
+    },
+    {
+        "country": "Südkorea",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/180px-Flag_of_South_Korea.svg.png",
+        "capitol": "Seoul",
+        "population": "51,7 Millionen",
+        "hdi": "0,916 (2019)"
+    },
+    {
+        "country": "Kosovo",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Flag_of_Kosovo.svg/150px-Flag_of_Kosovo.svg.png",
+        "capitol": "Pristina",
+        "population": "1.907.592 (Juli 2018)",
+        "hdi": "0,74223 (2016)"
+    },
+    {
+        "country": "Kroatien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Flag_of_Croatia.svg/180px-Flag_of_Croatia.svg.png",
+        "capitol": "Zagreb",
+        "population": "4.058.165 (Stand 2020)",
+        "hdi": "0,851 (2019)"
+    },
+    {
+        "country": "Kuba",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Flag_of_Cuba.svg/180px-Flag_of_Cuba.svg.png",
+        "capitol": "Havanna",
+        "population": "11.193.470 (2019)",
+        "hdi": "0,783 (2019)"
+    },
+    {
+        "country": "Kuwait",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Flag_of_Kuwait.svg/180px-Flag_of_Kuwait.svg.png",
+        "capitol": "Kuwait",
+        "population": "4,2 Millionen (2019)",
+        "hdi": "0,806 (2019)"
+    },
+    {
+        "country": "Laos",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Flag_of_Laos.svg/180px-Flag_of_Laos.svg.png",
+        "capitol": "Vientiane",
+        "population": "7,2 Millionen",
+        "hdi": "0,613 (2019)"
+    },
+    {
+        "country": "Lesotho",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Flag_of_Lesotho.svg/180px-Flag_of_Lesotho.svg.png",
+        "capitol": "Maseru",
+        "population": "2,1 Millionen",
+        "hdi": "0,527 (2019)"
+    },
+    {
+        "country": "Lettland",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Flag_of_Latvia.svg/180px-Flag_of_Latvia.svg.png",
+        "capitol": "Riga",
+        "population": "1,9 Millionen",
+        "hdi": "0,866 (2019)"
+    },
+    {
+        "country": "Libanon",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_Lebanon.svg/180px-Flag_of_Lebanon.svg.png",
+        "capitol": "Beirut",
+        "population": "6,9 Millionen (2019)",
+        "hdi": "0,744 (2019)"
+    },
+    {
+        "country": "Liberia",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Flag_of_Liberia.svg/180px-Flag_of_Liberia.svg.png",
+        "capitol": "Monrovia",
+        "population": "5,214 Mio. (Schätzung 2021)",
+        "hdi": "0,48 (2019)"
+    },
+    {
+        "country": "Libyen",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Libya.svg/180px-Flag_of_Libya.svg.png",
+        "capitol": "Tripolis",
+        "population": "6,9 Millionen",
+        "hdi": "0,724 (2019)"
+    },
+    {
+        "country": "Litauen",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Flag_of_Lithuania.svg/180px-Flag_of_Lithuania.svg.png",
+        "capitol": "Vilnius",
+        "population": "3.029.118 (Januar 2021)",
+        "hdi": "0,882 (2019)"
+    },
+    {
+        "country": "Luxemburg",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Flag_of_Luxembourg.svg/180px-Flag_of_Luxembourg.svg.png",
+        "capitol": "Luxemburg (Stadt)",
+        "population": "626.108 (1. Januar 2020),davon 47,9 % Ausländer",
+        "hdi": "0,916 (2019)"
+    },
+    {
+        "country": "Madagaskar",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_Madagascar.svg/180px-Flag_of_Madagascar.svg.png",
+        "capitol": "Antananarivo",
+        "population": "27,0 Millionen",
+        "hdi": "0,528 (2019)"
+    },
+    {
+        "country": "Malawi",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Flag_of_Malawi.svg/180px-Flag_of_Malawi.svg.png",
+        "capitol": "Lilongwe",
+        "population": "20,9 Mio. (Zensus 2020)",
+        "hdi": "0,483 (2019)"
+    },
+    {
+        "country": "Malaysia",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Flag_of_Malaysia.svg/180px-Flag_of_Malaysia.svg.png",
+        "capitol": "Kuala Lumpur",
+        "population": "31,9 Millionen",
+        "hdi": "0,81 (2019)"
+    },
+    {
+        "country": "Malediven",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Flag_of_Maldives.svg/180px-Flag_of_Maldives.svg.png",
+        "capitol": "Malé",
+        "population": "531.000",
+        "hdi": "0,74 (2019)"
+    },
+    {
+        "country": "Mali",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Flag_of_Mali.svg/180px-Flag_of_Mali.svg.png",
+        "capitol": "Bamako",
+        "population": "19,55 Mio. (Juli 2020)",
+        "hdi": "0,434 (2019)"
+    },
+    {
+        "country": "Malta",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flag_of_Malta.svg/180px-Flag_of_Malta.svg.png",
+        "capitol": "Valletta",
+        "population": "ca. 520.700 (Stand: April 2020)",
+        "hdi": "0,895 (2019)"
+    },
+    {
+        "country": "Marokko",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Flag_of_Morocco.svg/180px-Flag_of_Morocco.svg.png",
+        "capitol": "Rabat",
+        "population": "36,5 Millionen",
+        "hdi": "0,686 (2019)"
+    },
+    {
+        "country": "Marshallinseln",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Flag_of_the_Marshall_Islands.svg/180px-Flag_of_the_Marshall_Islands.svg.png",
+        "capitol": "Majuro",
+        "population": "59.000",
+        "hdi": "0,704 (2019)"
+    },
+    {
+        "country": "Mauretanien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Flag_of_Mauritania.svg/180px-Flag_of_Mauritania.svg.png",
+        "capitol": "Nouakchott",
+        "population": "4.077.000 (Schätzung 2019)",
+        "hdi": "0,546 (2019)"
+    },
+    {
+        "country": "Mauritius",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Flag_of_Mauritius.svg/180px-Flag_of_Mauritius.svg.png",
+        "capitol": "Port Louis",
+        "population": "1,3 Millionen",
+        "hdi": "0,804 (2019)"
+    },
+    {
+        "country": "Mexiko",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Flag_of_Mexico.svg/180px-Flag_of_Mexico.svg.png",
+        "capitol": "Mexiko-Stadt",
+        "population": "128,9 Millionen(2020: Schätzung)",
+        "hdi": "0,779 (2019)"
+    },
+    {
+        "country": "Föderierte Staaten von Mikronesien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Flag_of_the_Federated_States_of_Micronesia.svg/180px-Flag_of_the_Federated_States_of_Micronesia.svg.png",
+        "capitol": "Palikir",
+        "population": "114.000",
+        "hdi": "0,62 (2019)"
+    },
+    {
+        "country": "Moldawien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Flag_of_Moldova.svg/180px-Flag_of_Moldova.svg.png",
+        "capitol": "Chișinău",
+        "population": "2.597.100 (1. Januar 2021)",
+        "hdi": "0,75 (2019)"
+    },
+    {
+        "country": "Monaco",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Flag_of_Monaco.svg/180px-Flag_of_Monaco.svg.png",
+        "capitol": "",
+        "population": "38.100 (2019)",
+        "hdi": "nicht berücksichtigt"
+    },
+    {
+        "country": "Mongolei",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Flag_of_Mongolia.svg/180px-Flag_of_Mongolia.svg.png",
+        "capitol": "Ulaanbaatar",
+        "population": "3,2 Millionen (2019)",
+        "hdi": "0,737 (2019)"
+    },
+    {
+        "country": "Montenegro",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Flag_of_Montenegro.svg/180px-Flag_of_Montenegro.svg.png",
+        "capitol": "Podgorica",
+        "population": "622.000 (2020)",
+        "hdi": "0,829 (2019)"
+    },
+    {
+        "country": "Mosambik",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Flag_of_Mozambique.svg/180px-Flag_of_Mozambique.svg.png",
+        "capitol": "Maputo",
+        "population": "30,4 Millionen",
+        "hdi": "0,456 (2019)"
+    },
+    {
+        "country": "Myanmar",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Flag_of_Myanmar.svg/180px-Flag_of_Myanmar.svg.png",
+        "capitol": "Naypyidaw",
+        "population": "54,0 Millionen",
+        "hdi": "0,583 (2019)"
+    },
+    {
+        "country": "Namibia",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Flag_of_Namibia.svg/180px-Flag_of_Namibia.svg.png",
+        "capitol": "Windhoek",
+        "population": "2.324.388 (2016)",
+        "hdi": "0,646 (2019)"
+    },
+    {
+        "country": "Nauru",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Flag_of_Nauru.svg/180px-Flag_of_Nauru.svg.png",
+        "capitol": "de jure",
+        "population": "11.550 (2019)",
+        "hdi": 0
+    },
+    {
+        "country": "Nepal",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Flag_of_Nepal.svg/123px-Flag_of_Nepal.svg.png",
+        "capitol": "Kathmandu",
+        "population": "28,6 Millionen",
+        "hdi": "0,602 (2019)"
+    },
+    {
+        "country": "Neuseeland",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Flag_of_New_Zealand.svg/180px-Flag_of_New_Zealand.svg.png",
+        "capitol": "Wellington",
+        "population": "4,9 Millionen",
+        "hdi": "0,931 (2019)"
+    },
+    {
+        "country": "Nicaragua",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Flag_of_Nicaragua.svg/180px-Flag_of_Nicaragua.svg.png",
+        "capitol": "Managua",
+        "population": "6,5 Millionen",
+        "hdi": "0,66 (2019)"
+    },
+    {
+        "country": "Niederlande",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Flag_of_the_Netherlands.svg/180px-Flag_of_the_Netherlands.svg.png",
+        "capitol": "Amsterdam",
+        "population": "17.474.693 (Stand: 1. Januar 2021)",
+        "hdi": "0,944 (2019)"
+    },
+    {
+        "country": "Niger",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Flag_of_Niger.svg/175px-Flag_of_Niger.svg.png",
+        "capitol": "Niamey",
+        "population": "24,2 Millionen",
+        "hdi": "0,394 (2019)"
+    },
+    {
+        "country": "Nigeria",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/180px-Flag_of_Nigeria.svg.png",
+        "capitol": "Abuja",
+        "population": "214,03 Mio.(Schätzung Juli 2020)",
+        "hdi": "0,539 (2019)"
+    },
+    {
+        "country": "Niue",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_Niue.svg/180px-Flag_of_Niue.svg.png",
+        "capitol": "Alofi",
+        "population": "1784 (Zensus 2017)",
+        "hdi": 0
+    },
+    {
+        "country": "Nordmazedonien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_North_Macedonia.svg/180px-Flag_of_North_Macedonia.svg.png",
+        "capitol": "Skopje",
+        "population": "2,1 Millionen (2019)",
+        "hdi": "0,774 (2019)"
+    },
+    {
+        "country": "Norwegen",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Flag_of_Norway.svg/180px-Flag_of_Norway.svg.png",
+        "capitol": "Oslo",
+        "population": "5.391.369 (1. Januar 2021)",
+        "hdi": "0,957 (2019)"
+    },
+    {
+        "country": "Oman",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Flag_of_Oman.svg/180px-Flag_of_Oman.svg.png",
+        "capitol": "Maskat",
+        "population": "5,0 Millionen (2019)",
+        "hdi": "0,813 (2019)"
+    },
+    {
+        "country": "Österreich",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_Austria.svg/180px-Flag_of_Austria.svg.png",
+        "capitol": "Wien",
+        "population": "(93.) 8.932.664(1. Jänner 2021)",
+        "hdi": "0,922 (2019)"
+    },
+    {
+        "country": "Osttimor",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Flag_of_East_Timor.svg/180px-Flag_of_East_Timor.svg.png",
+        "capitol": "Dili",
+        "population": "1,3 Millionen (2019)",
+        "hdi": "0,606 (2019)"
+    },
+    {
+        "country": "Pakistan",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Flag_of_Pakistan.svg/180px-Flag_of_Pakistan.svg.png",
+        "capitol": "Islamabad",
+        "population": "216,6 Millionen",
+        "hdi": "0,557 (2019)"
+    },
+    {
+        "country": "Palästinensische Autonomiegebiete",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Flag_of_Palestine.svg/180px-Flag_of_Palestine.svg.png",
+        "capitol": "Jerusalem",
+        "population": "4.632.000 (Juni 2015),Westjordanland: 2.772.000Gazastreifen: 1.860.000",
+        "hdi": "0,708 (2019)"
+    },
+    {
+        "country": "Palau",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Flag_of_Palau.svg/180px-Flag_of_Palau.svg.png",
+        "capitol": "Ngerulmud",
+        "population": "18.000",
+        "hdi": "0,826 (2019)"
+    },
+    {
+        "country": "Panama",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Flag_of_Panama.svg/180px-Flag_of_Panama.svg.png",
+        "capitol": "Panama-Stadt",
+        "population": "4,2 Millionen",
+        "hdi": "0,815 (2019)"
+    },
+    {
+        "country": "Papua-Neuguinea",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Flag_of_Papua_New_Guinea.svg/180px-Flag_of_Papua_New_Guinea.svg.png",
+        "capitol": "Port Moresby",
+        "population": "8,8 Millionen",
+        "hdi": "0,555 (2019)"
+    },
+    {
+        "country": "Paraguay",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Flag_of_Paraguay.svg/180px-Flag_of_Paraguay.svg.png",
+        "capitol": "Asunción",
+        "population": "7,0 Millionen",
+        "hdi": "0,728 (2019)"
+    },
+    {
+        "country": "Peru",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Flag_of_Peru.svg/180px-Flag_of_Peru.svg.png",
+        "capitol": "Lima",
+        "population": "32,5 Millionen",
+        "hdi": "0,777 (2019)"
+    },
+    {
+        "country": "Philippinen",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Flag_of_the_Philippines.svg/180px-Flag_of_the_Philippines.svg.png",
+        "capitol": "Manila",
+        "population": "109.035.343 (Zensus 2020)",
+        "hdi": "0,718 (2019)"
+    },
+    {
+        "country": "Polen",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_Poland.svg/180px-Flag_of_Poland.svg.png",
+        "capitol": "Warschau",
+        "population": "37.798.655  (Stand 1. Mai 2021)",
+        "hdi": "0,88 (2019)"
+    },
+    {
+        "country": "Portugal",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Portugal.svg/180px-Flag_of_Portugal.svg.png",
+        "capitol": "Lissabon",
+        "population": "10.295.909 (Stand: Januar 2020)",
+        "hdi": "0,864 (2019)"
+    },
+    {
+        "country": "Ruanda",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Flag_of_Rwanda.svg/180px-Flag_of_Rwanda.svg.png",
+        "capitol": "Kigali",
+        "population": "12,6 Millionen",
+        "hdi": "0,543 (2019)"
+    },
+    {
+        "country": "Rumänien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flag_of_Romania.svg/180px-Flag_of_Romania.svg.png",
+        "capitol": "Bukarest",
+        "population": "19,4 Millionen (2019)",
+        "hdi": "0,828 (2019)"
+    },
+    {
+        "country": "Russland",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Russia.svg/180px-Flag_of_Russia.svg.png",
+        "capitol": "Moskau",
+        "population": "144.526.636 (ohne Krim)146.877.088 (mit Krim); 2018",
+        "hdi": "0,824 (2019)"
+    },
+    {
+        "country": "St. Kitts und Nevis",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Saint_Kitts_and_Nevis.svg/180px-Flag_of_Saint_Kitts_and_Nevis.svg.png",
+        "capitol": "Basseterre",
+        "population": "53 Tausend",
+        "hdi": "0,779 (2019)"
+    },
+    {
+        "country": "St. Lucia",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_Saint_Lucia.svg/180px-Flag_of_Saint_Lucia.svg.png",
+        "capitol": "Castries",
+        "population": "183.000",
+        "hdi": "0,759 (2019)"
+    },
+    {
+        "country": "St. Vincent und die Grenadinen",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Flag_of_Saint_Vincent_and_the_Grenadines.svg/180px-Flag_of_Saint_Vincent_and_the_Grenadines.svg.png",
+        "capitol": "Kingstown",
+        "population": "111.000",
+        "hdi": "0,738 (2019)"
+    },
+    {
+        "country": "Salomonen",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Flag_of_the_Solomon_Islands.svg/180px-Flag_of_the_Solomon_Islands.svg.png",
+        "capitol": "Honiara",
+        "population": "631.343 (2019)",
+        "hdi": "0,567 (2019)"
+    },
+    {
+        "country": "Sambia",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Flag_of_Zambia.svg/180px-Flag_of_Zambia.svg.png",
+        "capitol": "Lusaka",
+        "population": "17,9 Millionen",
+        "hdi": "0,584 (2019)"
+    },
+    {
+        "country": "Samoa",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Flag_of_Samoa.svg/180px-Flag_of_Samoa.svg.png",
+        "capitol": "Apia",
+        "population": "197.000",
+        "hdi": "0,715 (2019)"
+    },
+    {
+        "country": "San Marino",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Flag_of_San_Marino.svg/180px-Flag_of_San_Marino.svg.png",
+        "capitol": "San Marino",
+        "population": "33.598 (31. Mai 2021)",
+        "hdi": 0
+    },
+    {
+        "country": "São Tomé und Príncipe",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Flag_of_Sao_Tome_and_Principe.svg/180px-Flag_of_Sao_Tome_and_Principe.svg.png",
+        "capitol": "São Tomé",
+        "population": "210.240 (Stand 2020 geschätzt)",
+        "hdi": "0,625 (2019)"
+    },
+    {
+        "country": "Saudi-Arabien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Flag_of_Saudi_Arabia.svg/180px-Flag_of_Saudi_Arabia.svg.png",
+        "capitol": "Riad",
+        "population": "34,3 Millionen (2019)",
+        "hdi": "0,854 (2019)"
+    },
+    {
+        "country": "Schweden",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Flag_of_Sweden.svg/180px-Flag_of_Sweden.svg.png",
+        "capitol": "Stockholm",
+        "population": "10.327.589 (31. Dezember 2019)",
+        "hdi": "0,945 (2019)"
+    },
+    {
+        "country": "Schweiz",
+        "flagUrl": "https://de.wikipedia.org/wiki/Schweiz#/media/Datei:Flag_of_Switzerland.svg",
+        "capitol": "Bern",
+        "population": "8'606'033 (31. Dezember 2019)",
+        "hdi": "0,955 (2019)"
+    },
+    {
+        "country": "Senegal",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Flag_of_Senegal.svg/180px-Flag_of_Senegal.svg.png",
+        "capitol": "Dakar",
+        "population": "16,71 Mio. (Schätzung 2020)",
+        "hdi": "0,512 (2019)"
+    },
+    {
+        "country": "Serbien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Flag_of_Serbia.svg/180px-Flag_of_Serbia.svg.png",
+        "capitol": "Belgrad",
+        "population": "6,9 Millionen (2019)",
+        "hdi": "0,806 (2019)"
+    },
+    {
+        "country": "Seychellen",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Flag_of_Seychelles.svg/180px-Flag_of_Seychelles.svg.png",
+        "capitol": "Victoria",
+        "population": "98.500 (Schätzung 2020)",
+        "hdi": "0,796 (2019)"
+    },
+    {
+        "country": "Sierra Leone",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Flag_of_Sierra_Leone.svg/180px-Flag_of_Sierra_Leone.svg.png",
+        "capitol": "Freetown",
+        "population": "7.075.641 (Zählung 2015)",
+        "hdi": "0,452 (2019)"
+    },
+    {
+        "country": "Simbabwe",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Flag_of_Zimbabwe.svg/180px-Flag_of_Zimbabwe.svg.png",
+        "capitol": "Harare",
+        "population": "16.530.000 (2017)",
+        "hdi": "0,571 (2019)"
+    },
+    {
+        "country": "Singapur",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Flag_of_Singapore.svg/180px-Flag_of_Singapore.svg.png",
+        "capitol": "3",
+        "population": "5.703.600 (2019)",
+        "hdi": "0,938 (2019)"
+    },
+    {
+        "country": "Slowakei",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Flag_of_Slovakia.svg/180px-Flag_of_Slovakia.svg.png",
+        "capitol": "Bratislava",
+        "population": "5.457.873 (31. Dezember 2019)",
+        "hdi": "0,86 (2019)"
+    },
+    {
+        "country": "Slowenien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Flag_of_Slovenia.svg/180px-Flag_of_Slovenia.svg.png",
+        "capitol": "Ljubljana",
+        "population": "2.081.912 (11. Januar 2021)",
+        "hdi": "0,917 (2019)"
+    },
+    {
+        "country": "Somalia",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Flag_of_Somalia.svg/180px-Flag_of_Somalia.svg.png",
+        "capitol": "Mogadischu",
+        "population": "15,4 Millionen1 (Schätzung 2019)(*)",
+        "hdi": 0
+    },
+    {
+        "country": "Spanien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/180px-Flag_of_Spain.svg.png",
+        "capitol": "Madrid",
+        "population": "47,1 Millionen",
+        "hdi": "0,904 (2019)"
+    },
+    {
+        "country": "Sri Lanka",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Flag_of_Sri_Lanka.svg/180px-Flag_of_Sri_Lanka.svg.png",
+        "capitol": "de jure",
+        "population": "21,9 Millionen",
+        "hdi": "0,782 (2019)"
+    },
+    {
+        "country": "Südafrika",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/180px-Flag_of_South_Africa.svg.png",
+        "capitol": "Pretoria",
+        "population": "59.622.350 (2020, 30. Juni)",
+        "hdi": "0,709 (2019)"
+    },
+    {
+        "country": "Sudan",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_Sudan.svg/180px-Flag_of_Sudan.svg.png",
+        "capitol": "Khartum",
+        "population": "43,8 Millionen",
+        "hdi": "0,51 (2019)"
+    },
+    {
+        "country": "Südossetien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_South_Ossetia.svg/150px-Flag_of_South_Ossetia.svg.png",
+        "capitol": "Zchinwali",
+        "population": "53.532 (2015)",
+        "hdi": 0
+    },
+    {
+        "country": "Südsudan",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Flag_of_South_Sudan.svg/180px-Flag_of_South_Sudan.svg.png",
+        "capitol": "Juba",
+        "population": "11,2 Millionen",
+        "hdi": "0,433 (2019)"
+    },
+    {
+        "country": "Suriname",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Flag_of_Suriname.svg/180px-Flag_of_Suriname.svg.png",
+        "capitol": "Paramaribo",
+        "population": "581.000",
+        "hdi": "0,738 (2019)"
+    },
+    {
+        "country": "Syrien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Flag_of_Syria.svg/180px-Flag_of_Syria.svg.png",
+        "capitol": "Damaskus",
+        "population": "17,1 Millionen",
+        "hdi": "0,567 (2019)"
+    },
+    {
+        "country": "Tadschikistan",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Flag_of_Tajikistan.svg/180px-Flag_of_Tajikistan.svg.png",
+        "capitol": "Duschanbe",
+        "population": "9,3 Millionen",
+        "hdi": "0,668 (2019)"
+    },
+    {
+        "country": "Tansania",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Tanzania.svg/180px-Flag_of_Tanzania.svg.png",
+        "capitol": "Dodoma",
+        "population": "55,9 Mio. (Schätzung 2019)",
+        "hdi": "0,529 (2019)"
+    },
+    {
+        "country": "Thailand",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_Thailand.svg/180px-Flag_of_Thailand.svg.png",
+        "capitol": "Bangkok",
+        "population": "69,6 Millionen",
+        "hdi": "0,777 (2019)"
+    },
+    {
+        "country": "Togo",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Flag_of_Togo.svg/180px-Flag_of_Togo.svg.png",
+        "capitol": "Lomé",
+        "population": "7,07 Mio. (Schätzung 2020)",
+        "hdi": "0,515 (2019)"
+    },
+    {
+        "country": "Tonga",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Tonga.svg/180px-Flag_of_Tonga.svg.png",
+        "capitol": "Nukuʻalofa",
+        "population": "104.000",
+        "hdi": "0,725 (2019)"
+    },
+    {
+        "country": "Trinidad und Tobago",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Flag_of_Trinidad_and_Tobago.svg/180px-Flag_of_Trinidad_and_Tobago.svg.png",
+        "capitol": "Port of Spain",
+        "population": "1,4 Millionen",
+        "hdi": "0,796 (2019)"
+    },
+    {
+        "country": "Tschad",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Flag_of_Chad.svg/180px-Flag_of_Chad.svg.png",
+        "capitol": "N’Djamena",
+        "population": "16,4 Millionen",
+        "hdi": "0,398 (2019)"
+    },
+    {
+        "country": "Tschechien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Flag_of_the_Czech_Republic.svg/180px-Flag_of_the_Czech_Republic.svg.png",
+        "capitol": "Prag",
+        "population": "10,7 Millionen (2019)",
+        "hdi": "0,9 (2019)"
+    },
+    {
+        "country": "Tunesien",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Tunisia.svg/180px-Flag_of_Tunisia.svg.png",
+        "capitol": "Tunis",
+        "population": "11,951 Mio. (Schätzung Juli 2021)",
+        "hdi": "0,74 (2019)"
+    },
+    {
+        "country": "Türkei",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Flag_of_Turkey.svg/180px-Flag_of_Turkey.svg.png",
+        "capitol": "Ankara",
+        "population": "83.614.362 (Schätzung 31.12.2020)",
+        "hdi": "0,82 (2019)"
+    },
+    {
+        "country": "Türkische Republik Nordzypern",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Flag_of_the_Turkish_Republic_of_Northern_Cyprus.svg/150px-Flag_of_the_Turkish_Republic_of_Northern_Cyprus.svg.png",
+        "capitol": "Nord-Nikosia",
+        "population": "374.299",
+        "hdi": 0
+    },
+    {
+        "country": "Turkmenistan",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Flag_of_Turkmenistan.svg/180px-Flag_of_Turkmenistan.svg.png",
+        "capitol": "Aşgabat",
+        "population": "5.942.000 (2019)",
+        "hdi": "0,715 (2019)"
+    },
+    {
+        "country": "Tuvalu",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Tuvalu.svg/180px-Flag_of_Tuvalu.svg.png",
+        "capitol": "Funafuti",
+        "population": "11.650",
+        "hdi": 0
+    },
+    {
+        "country": "Uganda",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Flag_of_Uganda.svg/180px-Flag_of_Uganda.svg.png",
+        "capitol": "Kampala",
+        "population": "41,58 Mio. (Schätzung 2020)",
+        "hdi": "0,544 (2019)"
+    },
+    {
+        "country": "Ukraine",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Ukraine.svg/180px-Flag_of_Ukraine.svg.png",
+        "capitol": "Kiew",
+        "population": "41.830.619, ohne AR Krimund die Stadt Sewastopol(1. April 2020)",
+        "hdi": "0,779 (2019)"
+    },
+    {
+        "country": "Ungarn",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Flag_of_Hungary.svg/180px-Flag_of_Hungary.svg.png",
+        "capitol": "Budapest",
+        "population": "9.730.722 (2021)",
+        "hdi": "0,854 (2019)"
+    },
+    {
+        "country": "Uruguay",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Uruguay.svg/180px-Flag_of_Uruguay.svg.png",
+        "capitol": "Montevideo",
+        "population": "3,5 Millionen",
+        "hdi": "0,817 (2019)"
+    },
+    {
+        "country": "Usbekistan",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Flag_of_Uzbekistan.svg/180px-Flag_of_Uzbekistan.svg.png",
+        "capitol": "Taschkent",
+        "population": "33,6 Millionen",
+        "hdi": "0,72 (2019)"
+    },
+    {
+        "country": "Vanuatu",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_Vanuatu.svg/180px-Flag_of_Vanuatu.svg.png",
+        "capitol": "Port Vila",
+        "population": "300.000",
+        "hdi": "0,609 (2019)"
+    },
+    {
+        "country": "Vatikanstadt",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Flag_of_the_Vatican_City.svg/150px-Flag_of_the_Vatican_City.svg.png",
+        "capitol": "Città del Vaticano",
+        "population": "453/618 Einwohner/Staatsbürger",
+        "hdi": 0
+    },
+    {
+        "country": "Venezuela",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Flag_of_Venezuela.svg/180px-Flag_of_Venezuela.svg.png",
+        "capitol": "Caracas",
+        "population": "28,5 Millionen",
+        "hdi": "0,711 (2019)"
+    },
+    {
+        "country": "Vereinigte Arabische Emirate",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Flag_of_the_United_Arab_Emirates.svg/180px-Flag_of_the_United_Arab_Emirates.svg.png",
+        "capitol": "Abu Dhabi",
+        "population": "9.890.000 (2020)",
+        "hdi": "0,89 (2019)"
+    },
+    {
+        "country": "Vereinigte Staaten",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/180px-Flag_of_the_United_States.svg.png",
+        "capitol": "Washington, D.C.",
+        "population": "331.449.281(Zensus 2020)",
+        "hdi": "0,926 (2019)"
+    },
+    {
+        "country": "Vereinigtes Königreich",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/de/thumb/d/d2/Commonwealth_Flag_-_2013.svg/50px-Commonwealth_Flag_-_2013.svg.png",
+        "capitol": "London",
+        "population": "66,8 Millionen (2019)",
+        "hdi": "0,932 (2019)"
+    },
+    {
+        "country": "Vietnam",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/180px-Flag_of_Vietnam.svg.png",
+        "capitol": "Hanoi",
+        "population": "96,5 Millionen (2019)",
+        "hdi": "0,704 (2019)"
+    },
+    {
+        "country": "Weißrussland",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Flag_of_Belarus.svg/180px-Flag_of_Belarus.svg.png",
+        "capitol": "Minsk",
+        "population": "9,4 Millionen (2019)",
+        "hdi": "0,823 (2019)"
+    },
+    {
+        "country": "Demokratische Arabische Republik Sahara",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Flag_of_the_Sahrawi_Arab_Democratic_Republic.svg/180px-Flag_of_the_Sahrawi_Arab_Democratic_Republic.svg.png",
+        "capitol": "El Aaiún",
+        "population": "570.866 (Schätzung 2013)",
+        "hdi": 0
+    },
+    {
+        "country": "Zentralafrikanische Republik",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Flag_of_the_Central_African_Republic.svg/180px-Flag_of_the_Central_African_Republic.svg.png",
+        "capitol": "Bangui",
+        "population": "4,7 Millionen",
+        "hdi": "0,397 (2019)"
+    },
+    {
+        "country": "Republik Zypern",
+        "flagUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Cyprus.svg/180px-Flag_of_Cyprus.svg.png",
+        "capitol": "Nikosia",
+        "population": "1.179.551 Gesamtzypern (2017)",
+        "hdi": "0,887 (2019)"
+    }
+]

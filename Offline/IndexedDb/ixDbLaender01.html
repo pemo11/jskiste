@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>IndexedDb-Laender-Beispiel Nr. 1</title>
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>IndexedDb holt alle Länder dieser Welt</h3>
+        <div id="divLaender"></div>
+        <script src="ixDbHelper1.js"></script>
+
+        <script>
+            window.addEventListener("load", (event) => {
+                initLaenderDb();
+                let laender = getLaenderFromDb();
+                let elLaender = document.querySelector("#divLaender");
+                var i = 1;
+                laender.forEach(land => {
+                    let elLand = document.createElement("div");
+                    elLand.innerText = `${land.country}lic (${i++})`;
+                    elLand.setAttribute("class", "country");
+                    elLaender.appendChild(elLand);
+                });
+            });
+
+        </script>
+
+        <h6>Remembering Clarence Clemonts</h6>
+    </body>
+</html> 

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>Fetch-Beispiel Nr. 2</title>
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Alle Länder dieser Welt</h3>
+        <div id="divFlaggen"></div>
+        <script src="fetchHelper2.js"></script>
+
+        <script>
+            window.addEventListener("load", (event) => {
+                let laender = getLaenderData();
+                let elLaender = document.querySelector("#divLaender");
+                var i = 1;
+                laender.forEach(land => {
+                    let elCountry = document.createElement("div");
+                    elCountry.innerText = `${land.country}lic (${i++})`;
+                    elCountry.setAttribute("class", "country");
+                    elFlagge.appendChild(elCountry);
+                });
+            });
+
+        </script>
+
+        <h6>Remembering Clarence Clemonts</h6>
+    </body>
+</html> 
