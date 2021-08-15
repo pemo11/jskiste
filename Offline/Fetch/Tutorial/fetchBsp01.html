@@ -15,7 +15,8 @@
             // Im Moment der einfachste Weg, die CORS-Problematik zu umgehen
             var url = "../../Material/WikiLaender.json";
             var fetchHeaders = new Headers();
-            fetchHeaders.append("Content-Type","text/json; charset=UTF-8");
+            // Wichtig: Für einen Safe Request ist als Content-Type nur text/plain erlaubt (oder application/x-www-form-urlencoded oder multipart/form-data)
+            fetchHeaders.append("Content-Type","text/plain; charset=UTF-8");
             // fetchHeaders.append("X-Custom-Header","Viele Gruesse");
 
             var request = new Request(url, {

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Load Async-Beispiel Nr. 1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <h3>Load Async-Beispiel Nr. 1</h3>
+        <table id="tabLaender">
+
+        </table>
+
+        <script>
+
+            window.addEventListener("load", async (event) => {
+                async function getCountries() {
+                const url = "../Material/WikiLaender.json"
+                var reqHeaders = new Headers()
+                reqHeaders.append("Content-Type","text/plain; charset=UTF-8")
+
+                const options = {
+                    headers:reqHeaders
+                }
+
+                const response = await fetch(url, options)
+                const countries = await response.json()
+                return countries
+            }
+
+            var countries = await getCountries()
+            .then(countries => { return countries})
+
+            console.log(`${countries.length} Länder geladen `)
+
+            var elTab = document.getElementById("tabLaender")
+            countries.forEach(country => {
+                var elTr = document.createElement("tr")
+                var elTd = document.createElement("td")
+                elTd.innerText = country.country
+                elTr.appendChild(elTd)
+                elTab.appendChild(elTr)
+            });
+
+        });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 
+
+

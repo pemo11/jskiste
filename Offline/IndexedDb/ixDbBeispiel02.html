@@ -3,11 +3,11 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>IndexedDb-Beispiel Nr. 1</title>
+        <title>IndexedDb-Beispiel Nr. 2</title>
         <link href="styles.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <h3>IndexedDb-Beispiel Nr. 1</h3>
+        <h3>IndexedDb-Beispiel Nr. 2</h3>
         <div id="divAusgabe"></div>
 
         <script>
@@ -24,8 +24,8 @@
                     // Object store anlegen
                     let laenderDb = openRequest.result;
                     if (!laenderDb.objectStoreNames.contains(objectStoreName)) {
-                            laenderDb.createObjectStore(objectStoreName, {keyPath: "name"})
-                            console.log(`*** Objectstore ${objectStoreName} wurde angelegt. ***`)
+                        laenderDb.createObjectStore(objectStoreName, {keyPath: "country"})
+                        console.log(`*** Objectstore ${objectStoreName} wurde angelegt. ***`)
                     }
                 }
 
@@ -33,12 +33,30 @@
                 openRequest.onsuccess = () => {
                     console.log("*** onsuccess ***");
                     let laenderDb = openRequest.result;
-                    // Mit Laenderinfos füllen
-                    let transaction = laenderDb.transaction("countries", "readwrite");
-                    let countries = transaction.objectStore(objectStoreName);
 
-                    var countriesData = [{name:"Alabama"},{name:"Belgien"},{name:"Costa Rika"},{name:"Dänemark"}];
-                    countriesData.forEach(country => {
+                    // Mit Laenderinfos aus der Json-Datei füllen
+                    // So geht es, aber wirklich nur, wenn alles im Rahmen der Function erledigt wird
+                    // Eine Rückgabe der Json-Datei ist offenbar nicht möglich, da ich trotz await immer einen Promise zurückerhalte,
+                    // auch wenn dieser bereits "auflöst" wurde und die Daten im Debugger zu sehen ist, es bleibt ein "Promise pending"
+
+                    insertCountryData(laenderDb);
+                   
+                    // Ausgabe der Länderdaten aus der IndexedDb
+                    getCountries();
+                }
+            });
+
+            async function insertCountryData(laenderDb) {
+                // var url = "https://activetraining.de/WikiLaender.json";
+                var url = "../Material/WikiLaender.json";
+                var jsonText = await getLaenderInfo(url);
+                var countriesData = JSON.parse(jsonText);
+                var objectStoreName = "countries";
+
+                let transaction = laenderDb.transaction("countries", "readwrite");
+                let countries = transaction.objectStore(objectStoreName);
+
+                countriesData.forEach(country => {
                         let putRequest = countries.put(country);
                         putRequest.onsuccess = () => {
                             console.log("*** put() war erfolgreich ***")
@@ -48,9 +66,27 @@
                         }
                     })
                     console.log(`${countriesData.length} Länder wurden hinzugefügt ***`)
-                    getCountries();
+            }
+
+            async function getLaenderInfo(url) {
+                var fetchHeaders = new Headers();
+                fetchHeaders.append("Content-Type","text/json; charset=UTF-8");
+    
+                var request = new Request(url, {
+                    method:"GET",
+                    headers:fetchHeaders,
+                    mode:"no-cors"
+                });
+
+                // fetch(url)
+                try {
+                    let fetchResponse = await fetch(request)
+                    return await fetchResponse.text();
+                } catch(err) {
+                    console.log("Fehler bei Fetch:", err);
                 }
-            });
+            }
+
 
             // Abrufen der Daten 
             function getCountries() {
@@ -62,6 +98,7 @@
                     let laenderDb = openRequest.result;
                     let transaction = laenderDb.transaction("countries", "readonly");
                     let countries = transaction.objectStore(objectStoreName);
+                    // Abrufen aller Inhalte
                     let countriesRequest = countries.getAll();
 
                     countriesRequest.onsuccess = () => {
@@ -69,7 +106,7 @@
                             const elAusgabe = document.getElementById("divAusgabe");
                             countriesRequest.result.forEach(country => {
                             var elCountry = document.createElement("div");
-                            elCountry.innerHTML = `${country.name}<BR>`;
+                            elCountry.innerHTML = `${country.country}<BR>`;
                             elAusgabe.appendChild(elCountry);
                             })
                         } else {
@@ -81,6 +118,7 @@
                         console.log("!!! Fehler beim Abrufen der Countries !!!", countriesRequest.error);
                     };
                 }
+
                 openRequest.onerror = () => {
                     console.log("!!! Fehler beim Öffnen der Datenbank !!!", openRequest.error);
                 }

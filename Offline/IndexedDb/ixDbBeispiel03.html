@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>IndexedDb-Beispiel Nr. 3</title>
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Länder dieser Welt</h3>
+        <hr>
+        <table id="tabLaender">
+            <thead>
+                <th>Land</th><th>Hauptstadt</th><th>Einwohner</th><th>Hdi</th><th>Flagge</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+        <script>
+            window.addEventListener("load", (event) => {
+                // Db anlegen
+                var indexedDB = window.indexedDB;
+                var openRequest = indexedDB.open("LaenderDb", 1);
+                var objectStoreName = "countries";
+
+                // Datenbank muss neu angelegt/aktualisiert werden (abhängig von der Versionsnummer)
+                openRequest.onupgradeneeded = () => {
+                    console.log("*** onupgradeneeded ***");
+
+                    // Object store anlegen
+                    let laenderDb = openRequest.result;
+                    if (!laenderDb.objectStoreNames.contains(objectStoreName)) {
+                        laenderDb.createObjectStore(objectStoreName, {keyPath: "country"})
+                        console.log(`*** Objectstore ${objectStoreName} wurde angelegt. ***`)
+                    }
+                }
+
+                // Datenbank wurde geöffnet
+                openRequest.onsuccess = () => {
+                    console.log("*** onsuccess ***");
+                    let laenderDb = openRequest.result;
+
+                    // Mit Laenderinfos aus der Json-Datei füllen
+                    // So geht es, aber wirklich nur, wenn alles im Rahmen der Function erledigt wird
+                    // Eine Rückgabe der Json-Datei ist offenbar nicht möglich, da ich trotz await immer einen Promise zurückerhalte,
+                    // auch wenn dieser bereits "auflöst" wurde und die Daten im Debugger zu sehen ist, es bleibt ein "Promise pending"
+
+                    insertCountryData(laenderDb);
+                   
+                    // Ausgabe der Länderdaten aus der IndexedDb
+                    getCountries();
+                }
+            });
+
+            async function insertCountryData(laenderDb) {
+                // var url = "https://activetraining.de/WikiLaender.json";
+                var url = "../Material/WikiLaender.json";
+                var jsonText = await getLaenderInfo(url);
+                var countriesData = JSON.parse(jsonText);
+                var objectStoreName = "countries";
+
+                let transaction = laenderDb.transaction("countries", "readwrite");
+                let countries = transaction.objectStore(objectStoreName);
+
+                countriesData.forEach(country => {
+                        let putRequest = countries.put(country);
+                        putRequest.onsuccess = () => {
+                            console.log("*** put() war erfolgreich ***")
+                        }
+                        putRequest.onerror = () => {
+                            console.log("!!! Fehler bei put()", putRequest.error);
+                        }
+                    })
+                    console.log(`${countriesData.length} Länder wurden hinzugefügt ***`)
+            }
+
+            async function getLaenderInfo(url) {
+                var fetchHeaders = new Headers();
+                fetchHeaders.append("Content-Type","text/json; charset=UTF-8");
+    
+                var request = new Request(url, {
+                    method:"GET",
+                    headers:fetchHeaders,
+                    mode:"no-cors"
+                });
+
+                // fetch(url)
+                try {
+                    let fetchResponse = await fetch(request)
+                    return await fetchResponse.text();
+                } catch(err) {
+                    console.log("Fehler bei Fetch:", err);
+                }
+            }
+
+
+            // Abrufen der Daten 
+            function getCountries() {
+                console.log("*** getCountries ***");
+                let indexedDB = window.indexedDB;
+                let openRequest = indexedDB.open("LaenderDb", 1);
+                let objectStoreName = "countries";
+                openRequest.onsuccess = () => {
+                    let laenderDb = openRequest.result;
+                    let transaction = laenderDb.transaction("countries", "readonly");
+                    let countries = transaction.objectStore(objectStoreName);
+
+                    // Abrufen aller Inhalte
+                    let countriesRequest = countries.getAll();
+
+                    var elTabLaender = document.getElementById("tabLaender");
+
+                    countriesRequest.onsuccess = () => {
+                        if (countriesRequest.result !== undefined) {
+                            countriesRequest.result.forEach(country => {
+                                var elTr = document.createElement("tr");
+                                var elTd = document.createElement("td");
+                                elTd.innerText = country.country;
+                                elTr.appendChild(elTd)
+                                elTd = document.createElement("td");
+                                elTd.innerText = country.capitol;
+                                elTr.appendChild(elTd)
+                                elTd = document.createElement("td");
+                                elTd.innerText = country.population;
+                                elTr.appendChild(elTd)
+                                elTd = document.createElement("td");
+                                elTd.innerText = country.hdi;
+                                elTr.appendChild(elTd)
+                                var elImg = document.createElement("img");
+                                elImg.setAttribute("src", country.flagUrl);
+                                elImg.setAttribute("height",32);
+                                elImg.setAttribute("width",48);
+                                elTr.appendChild(elImg);
+                                elTabLaender.appendChild(elTr);
+                            })
+                        } else {
+                            console.log("!!! Keine Daten (sehr seltsam) !!!")
+                        }
+                    };
+
+                    countriesRequest.onerror = () => {
+                        console.log("!!! Fehler beim Abrufen der Countries !!!", countriesRequest.error);
+                    };
+                }
+
+                openRequest.onerror = () => {
+                    console.log("!!! Fehler beim Öffnen der Datenbank !!!", openRequest.error);
+                }
+            }
+
+            // Grundsätzlich geht es - alle Länderdaten werden in eine IndexedDb-Datenbank gefüllt und aus dieser Datenbank werden die 
+            // angezeigten Daten abgerufen - der Offline-Modus funktioniert aber noch nicht
+
+        </script>
+
+        <h6>Remembering Clarence Clemonts</h6>
+    </body>
+</html> 

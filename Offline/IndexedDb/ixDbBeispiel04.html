@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>IndexedDb-Beispiel Nr. 4</title>
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Länder dieser Welt Nr. 4</h3>
+        <hr>
+        <table id="tabLaender">
+            <thead>
+                <th>Land</th><th>Hauptstadt</th><th>Einwohner</th><th>Hdi</th><th>Flagge</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+        <script src="ixDbHelper2.js"></script>
+        <script>
+            const url = "../Material/WikiLaender.json";
+            const dbName = "LaenderDb2";
+
+            window.addEventListener("load", (event) => {
+                // Db anlegen, Daten abrufen und in das DOM einfügen
+                // Muss aktuell noch in einem Schritt erledigt werden
+                var elTabLaender = document.getElementById("tabLaender");
+                initData(url, dbName, elTabLaender);
+                // getCountries(dbName, elTabLaender);
+            });
+
+        </script>
+
+        <h6>Remembering Clarence Clemonts</h6>
+    </body>
+</html> 

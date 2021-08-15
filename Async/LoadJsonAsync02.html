@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Load Async-Beispiel Nr. 2</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <h3>Load Async-Beispiel Nr. 2</h3>
+        <table id="tabLaender">
+            <th>Land</th><th>Hauptstadt
+                
+            </th>
+        </table>
+
+        <script src="getCountries.js"></script>
+
+        <script>
+
+            window.addEventListener("load", async (event) => {
+        
+            var countries = await getCountries()
+            .then(countries => { return countries})
+
+            console.log(`${countries.length} Länder geladen `)
+
+            var elTab = document.getElementById("tabLaender")
+            countries.forEach(country => {
+                var elTr = document.createElement("tr")
+                var elTd = document.createElement("td")
+                elTd.innerText = country.country
+                elTr.appendChild(elTd)
+                elTd = document.createElement("td")
+                elTd.innerText = country.capitol
+                elTr.appendChild(elTd)
+                elTab.appendChild(elTr)
+            });
+
+        });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 
+
+

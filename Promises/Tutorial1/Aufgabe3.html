@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promise Tutorial - Devchallenge.io - Task Nr. 3</title>
+  </head>
+  <body style="background-color: rgb(149, 224, 126)">
+    <table id="tabCountry">
+      <th>Name</th><th>Wert</th>
+    </table>
+    <script src="Aufgabe3.js"></script>
+    <script>
+        window.addEventListener("load", async (event) => {
+          var countryData = await fetchCountry("deu");
+          var elTab = document.getElementById("tabCountry");
+          Object.keys(countryData).forEach(k => {
+            var elTr = document.createElement("tr"); 
+            var elTd = document.createElement("td");
+            elTd.innerText = k
+            elTr.appendChild(elTd);
+            elTd = document.createElement("td");
+            elTd.innerText = countryData[k]
+            elTr.appendChild(elTd);
+            elTab.appendChild(elTr);
+          })
+        })
+    </script>
+  </body>
+</html>

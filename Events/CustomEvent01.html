@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Custom-Event-Beispiel Nr. 1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Custom-Event-Beispiel Nr. 1</h3>
+        <pre id="rabbit">
+         |\   /|
+          \|_|/
+          /. .\
+         =\_Y_/=
+          {>o<}
+        </pre>
+
+        <button onclick="hide()">Hide the Rabbit</button>
+
+        <script>
+            function hide() {
+                let event = new CustomEvent("hideRabbit", {
+                    cancelable:true
+                });
+
+                if (!rabbit.dispatchEvent(event)) {
+                    alert("Action wurde von einem Handler unterdrückt...");
+                } else {
+                    rabbit.hidden = true;
+                }
+            }
+
+            rabbit.addEventListener("hideRabbit", (event) => {
+                if (confirm("PreventDefault ausführen?")) {
+                    event.preventDefault();
+                }
+            });
+
+            window.addEventListener("load", (event) => {
+
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

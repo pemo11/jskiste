@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>IndexedDb-Beispiel Nr. 5</title>
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Länder dieser Welt Nr. 5</h3>
+        <hr>
+        <div id="divSelection" style="width:400px">
+
+        </div>
+        <table id="tabCountries">
+            <thead>
+                <th>Land</th><th>Hauptstadt</th><th>Einwohner</th><th>Hdi</th><th>Flagge</th>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+        <script src="ixDbHelper3.js"></script>
+        <script>
+            var countries;
+            
+            function displayCountries(filter, countries) {
+                var elTab = document.getElementById("tabCountries")
+                var elBody = elTab.getElementsByTagName("tbody")[0]
+                // tbody zurücksetzen
+                elBody.innerHTML = "";
+
+                countries.forEach(country => {
+                    if ((filter != "" && country.country.startsWith(filter)) || filter == "") {
+                        var elTr = document.createElement("tr")
+                        var elTd = document.createElement("td")
+                        elTd.innerText = country.country
+                        elTr.appendChild(elTd)
+                        elTd = document.createElement("td")
+                        elTd.innerText = country.capitol
+                        elTr.appendChild(elTd)
+                        elTd = document.createElement("td")
+                        elTd.innerText = country.population
+                        elTr.appendChild(elTd)
+                        elTd = document.createElement("td")
+                        elTd.innerText = country.hdi
+                        elTr.appendChild(elTd)
+                        elTd = document.createElement("td")
+                        var elImg = document.createElement("img")
+                        elImg.setAttribute("src", country.flagUrl)
+                        elImg.setAttribute("width",32)
+                        elImg.setAttribute("height",32)
+                        elTd.appendChild(elImg)
+                        elTr.appendChild(elTd)
+
+                        elBody.appendChild(elTr)
+                    }
+
+                })
+            }
+
+            window.addEventListener("load", async (event) => {
+                countries = await getCountryData()
+                    .then(countries => { return countries})
+                console.log(`*** ${countries.length} Länder im DOM verfügbar ***`);
+                // 26 Buttons platzieren
+                const elSelection = document.getElementById("divSelection");
+                for(i=0;i<26;i++) {
+                    var elBtn = document.createElement("button");
+                    elBtn.innerText = String.fromCharCode(i+65);
+                    elBtn.setAttribute("class","charButton");
+                    elBtn.addEventListener("click", (event)=> {
+                        var countryChar = event.target.innerText;
+                        displayCountries(countryChar, countries);
+                    })
+                    elSelection.appendChild(elBtn);
+                }
+            });
+
+        </script>
+
+        <h6>Remembering Clarence Clemonts</h6>
+    </body>
+</html> 

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promise Tutorial - Devchallenge.io - Task Nr. 4</title>
+  </head>
+  <body style="background-color: rgb(149, 224, 126)">
+    <h3>Ein Land und seine Nachbarn</h3>
+    <div id="divAusgabe"></div>
+    <script src="Aufgabe4.js"></script>
+    <script>
+
+        function insertCountryData(countryData)
+        {
+            var elTab = document.createElement("table");
+            var elTr = document.createElement("tr");
+            var elTh = document.createElement("th");
+            elTh.innerText = "Name";
+            elTr.appendChild(elTh);
+            elTh = document.createElement("th");
+            elTh.innerText = "Wert";
+            elTr.appendChild(elTh);
+            elTab.appendChild(elTr);
+            Object.keys(countryData).forEach(k => {
+             elTr = document.createElement("tr"); 
+             elTd = document.createElement("td");
+             elTd.innerText = k
+             elTr.appendChild(elTd);
+             elTd = document.createElement("td");
+             elTd.innerText = countryData[k]
+             elTr.appendChild(elTd);
+             elTab.appendChild(elTr);
+          })
+          return elTab;
+        }
+
+        window.addEventListener("load", async (event) => {
+          var countryData = await fetchCountry("deu");
+          var elTab = insertCountryData(countryData);
+          var elAusgabe = document.getElementById("divAusgabe");
+          elAusgabe.appendChild(elTab);
+          var neighborsData = await fetchNeighbors("deu");
+          neighborsData.forEach(neighborData => {
+                elTab = insertCountryData(neighborData);
+                elAusgabe.appendChild(document.createElement("br"));
+                elAusgabe.appendChild(elTab);
+          });
+
+        })
+    </script>
+  </body>
+</html>

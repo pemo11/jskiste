@@ -57,6 +57,7 @@
 
             function getLaenderInfo(url) {
                 var fetchHeaders = new Headers();
+                // Für einen SaveRequest sollte Content-Type text/plain sein
                 fetchHeaders.append("Content-Type","text/json; charset=UTF-8");
 
                 // mode:"no-cors" spielt für lokale Dateien keine Rolle

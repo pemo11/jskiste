@@ -10,3 +10,10 @@ div.country {
     font-weight: bolder;
     margin-bottom: 6px;
 }
+
+button.charButton {
+    width:64px;
+    height:24px;
+    background-color: aliceblue;
+    margin:5px;
+}
