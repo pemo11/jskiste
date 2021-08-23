@@ -1,4 +1,4 @@
-// AnimalGameFunctions2.js1
+// AnimalGameFunctions3.js1
 
 var tiere = [
     {name:"Affe", img:"Affe.png", info:"Lebt auf Bäumen und springt von Ast zu Ast"},
@@ -30,6 +30,8 @@ var tiere = [
 ]
 
 var rateTiere = null
+var indexTier1 = -1
+var treffer = false
 
 // Gibt ein Feld mit allen Karten zurück (z.B. 2x8)
 function holeRateFeld(anzahl, max) {
@@ -79,12 +81,25 @@ function starteRateRunde(anzahlTiere) {
         divAnimal.setAttribute("data-index", i)
         divAnimal.addEventListener("click", (event) => {
             let index = event.currentTarget.getAttribute("data-index")
+            console.log(`*** index=${index} indexTier1=${indexTier1} Tier=${rateTiere[index].name} ***`)
+            // index merken
+            if (indexTier1 == -1) {
+                indexTier1 = index
+            } else {
+                treffer = rateTiere[index].name == rateTiere[indexTier1].name ? true : false
+                if (treffer) {
+                    alert("Treffer!")
+                }
+                indexTier1 = -1
+            }
             let target = event.currentTarget
             event.currentTarget.querySelector("img").setAttribute("src", "Material/Tiere/" + rateTiere[index].img)
             event.currentTarget.querySelector("div").innerText = rateTiere[index].name
             setTimeout(() => {
-                target.querySelector("img").setAttribute("src", "Material/Tiere/RedQuestionMark.png")
-                target.querySelector("div").innerText = ""
+                if (!treffer) {
+                    target.querySelector("img").setAttribute("src", "Material/Tiere/RedQuestionMark.png")
+                    target.querySelector("div").innerText = ""
+                }
             }, 2500)
         })
         divAnimal.addEventListener("mouseover", (event) => {
