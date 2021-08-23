@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Maze - Step 1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Maze - Step 1</h3>
+        <div id="maze_container">
+     
+        </div>
+
+        <script>
+            mazeWidth = 20;
+            mazeHeight = mazeWidth;
+
+            function createBlankMaze() {
+                var rowIndex, colIndex;
+
+                var table = document.createElement("table");
+                var tbody = document.createElement("tbody");
+
+                for (rowIndex=1;rowIndex <= mazeHeight; rowIndex++) {
+                    var row = document.createElement("tr");
+                    for (colIndex=1;colIndex < mazeWidth;colIndex++) {
+                        var col = document.createElement("td");
+                        if (rowIndex == 1 && colIndex == 1) {
+                            col.style.background = "rgb(244,0,0)";
+                            col.setAttribute("type", "start")
+                        } else if (rowIndex == mazeHeight && colIndex == mazeWidth) {
+                            col.style.background = "rgb(0,244,0)";
+                            col.setAttribute("type", "finish")
+                        } else {
+                            col.style.background = "rgb(255,255,255)";
+                        }
+                        col.setAttribute("id","cell_" + rowIndex + "_");
+                        row.appendChild(col);
+                    }
+                    tbody.appendChild(row);
+                }
+                table.appendChild(tbody);
+                document.getElementById("maze_container").appendChild(table);
+
+            }
+
+            window.addEventListener("load", (event) => {
+                createBlankMaze();
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

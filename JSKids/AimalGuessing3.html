@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Das lustige Tierrate-Spiel Teil 3</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet">
+    </head>
+    <body>
+        <h3>Das lustige Tierrate-Spiel Teil 3</h3>
+        <script src=""></script>
+        <table>
+            <tr>
+                <td><div><img id="animal1" src="Material/Tiere/RedQuestionMark.png" /><div class="animalInfo"></div></div></td>
+                <td><img id="animal2" src="Material/Tiere/RedQuestionMark.png"/><div class="animalInfo"></div></div> </td>
+            </tr>
+            <tr>
+                <td><img id="animal3" src="Material/Tiere/RedQuestionMark.png" /><div class="animalInfo"></div></div> </td>
+                <td><img id="animal4" src="Material/Tiere/RedQuestionMark.png"/><div class="animalInfo"></div> </td>
+            </tr>
+        </table>
+        <script>
+            window.addEventListener("load", (event) => {
+                let animal1 = document.getElementById("animal1")
+                animal1.addEventListener("click", (event) => {
+                    animal1.setAttribute("src", "Material/Tiere/Affe.png")
+                    animal1.nextElementSibling.innerText = "Der Affe"
+                })
+                let animal2 = document.getElementById("animal2")
+                animal2.addEventListener("click", (event) => {
+                    animal2.setAttribute("src", "Material/Tiere/Baer.png")
+                    animal2.nextElementSibling.innerText = "Der Bär"
+                })
+                let animal3 = document.getElementById("animal3")
+                animal3.addEventListener("click", (event) => {
+                    animal3.setAttribute("src", "Material/Tiere/Elefant.png")
+                    animal3.nextElementSibling.innerText = "Der Elefant"
+                })
+                let animal4 = document.getElementById("animal4")
+                animal4.addEventListener("click", (event) => {
+                    animal4.setAttribute("src", "Material/Tiere/Eule.png")
+                    animal4.nextElementSibling.innerText = "Die Eule"
+                })
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

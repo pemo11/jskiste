@@ -22,7 +22,7 @@
             window.addEventListener("load", (event) => {
                 // Db anlegen
                 var indexedDB = window.indexedDB;
-                var openRequest = indexedDB.open("LaenderDb", 1);
+                var openRequest = indexedDB.open("LaenderDb3", 1);
                 var objectStoreName = "countries";
 
                 // Datenbank muss neu angelegt/aktualisiert werden (abhängig von der Versionsnummer)
@@ -70,7 +70,7 @@
                             console.log("*** put() war erfolgreich ***")
                         }
                         putRequest.onerror = () => {
-                            console.log("!!! Fehler bei put()", putRequest.error);
+                            console.log("!!! Fehler bei put() !!!", putRequest.error);
                         }
                     })
                     console.log(`${countriesData.length} Länder wurden hinzugefügt ***`)
@@ -100,7 +100,7 @@
             function getCountries() {
                 console.log("*** getCountries ***");
                 let indexedDB = window.indexedDB;
-                let openRequest = indexedDB.open("LaenderDb", 1);
+                let openRequest = indexedDB.open("LaenderDb3", 1);
                 let objectStoreName = "countries";
                 openRequest.onsuccess = () => {
                     let laenderDb = openRequest.result;

@@ -1,0 +1,13 @@
+/* Die Standard-CSS */
+
+body {
+    font-family: verdana;
+    font-size: 11pt;
+}
+
+div.animalInfo {
+    text-align:  center;
+    font-weight: bolder;
+    font-size: 14pt;
+    background-color: goldenrod;
+}

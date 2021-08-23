@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Das lustige Tierrate-Spiel Teil 14</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet">
+    </head>
+    <body>
+        <!-- Bild wird nach 1s wieder unsichtbar -->
+        <h3>Das lustige Tierrate-Spiel Teil 14</h3>
+        <script src=""></script>
+        <table id="tabAnimals">
+        </table>
+        <input type="button" value="Vorschau" id="Vorschau">
+        <script src="AnimalGameFunctions2.js"></script>
+        <script>
+            let anzahlKarten = 8
+            
+            window.addEventListener("load", (event) => {
+                starteRateRunde(anzahlKarten)
+
+                let btnVorschau = document.querySelector("#Vorschau")
+                btnVorschau.addEventListener("click", (event) => {
+                    // Alle Felder umdrehen
+                    for(i=0;i<anzahlKarten * 2; i++) {
+                        // Hole das div-Element mit einem bestimmten data-index-Attribut, z.B. 0
+                        let elDiv = document.querySelector(`[data-index='${i}'`)
+                        // Hole das img-Element, das auf das div-Element folgt
+                        let elImg = elDiv.querySelector("img")
+                        elImg.setAttribute("src", "Material/Tiere/" + rateTiere[i].img)
+                        // Hole das div-Element, das auf das div-Element folgt (geniale Schreibweise dank QuerySelector)
+                        let elDivName = elDiv.querySelector("div")
+                        elDivName.innerText = rateTiere[i].name
+                    }
+                })
+            })
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

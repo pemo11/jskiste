@@ -1,5 +1,6 @@
-// file: ixDbHelper3.js
+﻿// file: ixDbHelper3.js
 
+// Stand: 15/08/21 - funktioniert noch nicht
 
 // ============================================================
 // getData()
@@ -39,16 +40,16 @@ async function initData(dbName) {
     var indexedDB = window.indexedDB;
     var openRequest = indexedDB.open(dbName, 1);
     
-    // Datenbank muss neu angelegt/aktualisiert werden (abhängig von der Versionsnummer)
-    openRequest.onupgradeneeded = async () =>  {
-        console.log("*** onupgradeneeded ***");
+    // Datenbank muss neu angelegt/aktualisiert werden (abhÃ¤ngig von der Versionsnummer)
+    var countriesData = openRequest.onupgradeneeded = async () =>  {
+        console.log("*** initData->onupgradeneeded ***");
         var objectStoreName = "countries";
     
         // Object store anlegen
         let laenderDb = openRequest.result;
         if (!laenderDb.objectStoreNames.contains(objectStoreName)) {
             laenderDb.createObjectStore(objectStoreName, {keyPath: "country"})
-            console.log(`*** Objectstore ${objectStoreName} wurde angelegt. ***`)
+            console.log(`*** initData->onupgradeneeded->Objectstore ${objectStoreName} wurde angelegt. ***`)
         }
 
         var countriesData = await getCountries()
@@ -63,12 +64,13 @@ async function initData(dbName) {
             }
 
             putRequest.onerror = () => {
-                console.log("!!! Fehler bei put() !!!", putRequest.error);
+                console.log("!!! initData->onupgradeneeded->Fehler bei put() !!!", putRequest.error);
             }
-            console.log(`*** ${countriesData.length} Countries wurden hinzugefÜgt ***`)
+            console.log(`*** initData->onupgradeneeded->${countriesData.length} Countries wurden hinzugefügt ***`)
         });
         return countriesData;
     }
+    return countriesData;
 }
 
 async function getData(dbName) {
@@ -79,7 +81,7 @@ async function getData(dbName) {
     // Datenbank wurde geöffnet
     // genial, dass der Event-Handler auch async sein kann
     openRequest.onsuccess = async () => {
-        console.log("*** onsuccess ***");
+        console.log("*** getData->onsuccess ***");
         let objectStoreName = "countries";
         let laenderDb = openRequest.result;
         let transaction = laenderDb.transaction(objectStoreName, "readonly");
@@ -90,26 +92,26 @@ async function getData(dbName) {
         let countriesRequest = countries.getAll();
 
         countriesRequest.onsuccess = async () => {
-            console.log("*** countriesRequest->success ***");
+            console.log("*** getData->countriesRequest->onsuccess ***");
             if (countriesRequest.result !== undefined) {
                 countriesRequest.result.forEach(country => {
                     countriesData.push(country);
                 })
             } else {
-                console.log("!!! Keine Daten (sehr seltsam) !!!")
+                console.log("!!! getData->countriesRequest->Keine Daten (sehr seltsam) !!!")
             }
-            console.log(`*** ${countriesData.length} Countries wurden aus der IndexedDb geladen ***`)
+            console.log(`*** getData->countriesRequest->${countriesData.length} Countries wurden aus der IndexedDb geladen ***`)
             return countriesData;
         };
 
         countriesRequest.onerror = () => {
-            console.log("!!! Fehler beim Abrufen der Countries !!!", countriesRequest.error);
+            console.log("!!! getData->Fehler beim Abrufen der Countries !!!", countriesRequest.error);
         };
         
     }
 
     openRequest.onerror = () => {
-        console.log("!!! Fehler beim Öffnen der Datenbank !!!", openRequest.error);
+        console.log("!!! getData->openRequest->Fehler beim Öffnen der Datenbank !!!", openRequest.error);
     }
     
 }

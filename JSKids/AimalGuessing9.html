@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Das lustige Tierrate-Spiel Teil 9</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet">
+    </head>
+    <body>
+        <!-- Bild wird nach 1s wieder unsichtbar -->
+        <h3>Das lustige Tierrate-Spiel Teil 9</h3>
+        <script src=""></script>
+        <table id="tabAnimals">
+        </table>
+        <script>
+            var tiere = [{name:"Affe", img:"Affe.png"},
+                {name:"Bär", img:"Baer.png"},
+                {name:"Der Elefant", img:"Elefant.png"},
+                {name:"Die Eule", img:"Eule.png"},
+                {name:"Der Fisch", img:"Fisch.png"},
+                {name:"Der Flamingo", img:"Flamingo.png"},
+                {name:"Der Fuchs", img:"Fuchs.png"},
+                {name:"Die Giraffe", img:"Giraffe.png"},
+                {name:"Der Hai", img:"Hai.png"},
+                {name:"Der Hase", img:"Hase.png"},
+                {name:"Der Hirsch", img:"Hirsch.png"},
+                {name:"Der Igel", img:"Igel.png"},
+                {name:"Der Koala", img:"Koala.png"},
+                {name:"Der Löwe", img:"Loewe.png"},
+                {name:"Der Panda", img:"Panda.png"},
+                {name:"Der Papagei", img:"Papagei.png"},
+                {name:"Das Pferd", img:"Pferd.png"},
+                {name:"Der Pinguin", img:"Pinguin.png"},
+                {name:"Die Schildkröte", img:"Schildkroete.png"},
+                {name:"Der Seehund", img:"Seehund.png"},
+                {name:"Der Tiger", img:"Tiger.png"},
+                {name:"Das Zebra", img:"Zebra.png"},
+            ]
+
+                function holeRateZahlen(anzahl, max) {
+                    var zahlen = []
+                    for(i=0;i<anzahl;i++) {
+                    do {
+                        z = Math.floor(Math.random() * max)
+
+                    } while (zahlen.find(e => e == z) != undefined)
+                    zahlen.push(z)
+                    }
+                    return zahlen
+                }
+
+                function starteRateRunde() {
+                    let rateZahlen = holeRateZahlen(4, tiere.length)
+                    let rateTiere = []
+                    rateZahlen.forEach(z => rateTiere.push(tiere[z]))
+                    let elTab = document.getElementById("tabAnimals")
+                    for(i=0;i<4;i++) {
+                        // Bei jedem 2. Element neue Zeile anlegen
+                        if (i % 2 == 0) {
+                        tr = document.createElement("tr")
+                        elTab.appendChild(tr)
+                    }
+                    td = document.createElement("td")
+                    divAnimal = document.createElement("div")
+                    divAnimal.setAttribute("data-index", i)
+                    divAnimal.addEventListener("click", (event) => {
+                        let index = event.currentTarget.getAttribute("data-index")
+                        let target = event.currentTarget
+                        event.currentTarget.querySelector("img").setAttribute("src", "Material/Tiere/" + rateTiere[index].img)
+                        event.currentTarget.querySelector("div").innerText = rateTiere[index].name
+                        setTimeout(() => {
+                            target.querySelector("img").setAttribute("src", "Material/Tiere/RedQuestionMark.png")
+                            target.querySelector("div").innerText = ""
+                        }, 2500)
+                    })
+                    img = document.createElement("img")
+                    img.setAttribute("src", "Material/Tiere/RedQuestionMark.png")
+                    divName = document.createElement("div")
+                    divName.setAttribute("class", "animalInfo")
+                    divAnimal.appendChild(img)
+                    divAnimal.appendChild(divName)
+                    td.appendChild(divAnimal)
+                    tr.appendChild(td)
+                    }
+                }
+
+                window.addEventListener("load", (event) => {
+                    starteRateRunde()
+                });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

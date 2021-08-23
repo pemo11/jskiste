@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Maze - Step 1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Maze - Step 2</h3>
+        <div id="maze_container">
+     
+        </div>
+
+        <script>
+            mazeWidth = 10;
+            mazeHeight = mazeWidth;
+
+            function createBlankMaze() {
+
+                var table = document.createElement("table");
+                var tbody = document.createElement("tbody");
+
+                for (rowIndex=1;rowIndex <= mazeHeight; rowIndex++) {
+                    var row = document.createElement("tr");
+                    for (colIndex=1;colIndex <= mazeWidth;colIndex++) {
+                        var col = document.createElement("td");
+                        if (rowIndex == 1 && colIndex == 1) {
+                            col.style.background = "rgb(244,0,0)";
+                            col.setAttribute("type", "start")
+                        } else if (rowIndex == mazeHeight && colIndex == mazeWidth) {
+                            col.style.background = "rgb(0,244,0)";
+                            col.setAttribute("type", "finish")
+                        } else {
+                            col.style.background = "rgb(255,255,255)";
+                        }
+                        col.setAttribute("id","cell_" + rowIndex + "_" + colIndex);
+                        row.appendChild(col);
+                    }
+                    tbody.appendChild(row);
+                }
+                table.appendChild(tbody);
+                document.getElementById("maze_container").appendChild(table);
+
+            }
+
+            function paintMaze() {
+                createBlankMaze();
+
+                var rowIndex = 1;
+                var colIndex = 1;
+                var exit;
+                
+                var exits = ["right","right","right",
+                              "right","right","right",
+                              "right","right","right",
+                              "bottom","bottom","bottom",
+                              "bottom","bottom","bottom",
+                              "bottom","bottom","bottom"]
+
+                 exits = [];
+                
+                for (exit=1; exit < mazeWidth -1; exit++) {
+                     exits.push("right");
+                     exits.push("bottom");
+                }
+
+                var currentCell = document.getElementById("cell_1_1");
+
+                for(exitIndex = 0; exitIndex < exits.length; exitIndex++) {
+                    exit = exits[exitIndex];
+                    currentCell.style["border-"+"exit"] = "none";
+
+                    switch(exit) {
+                        case "right":
+                            colIndex = colIndex + 1;
+                            break;
+
+                        case "bottom":
+                            rowIndex = rowIndex + 1;
+                            break;
+                    }
+
+                    currentCell = document.getElementById("cell_" + rowIndex + "_" + colIndex);
+
+                    currentCell.style.background = "#F00000";
+
+                    switch(exit) {
+                        case "right":
+                            currentCell.style["border-left"] = "none";
+                            break;
+                        case "bottom":
+                            currentCell.style["border-top"] = "none";
+                            break;
+                    }
+                }
+            }
+
+            window.addEventListener("load", (event) => {
+                paintMaze();
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

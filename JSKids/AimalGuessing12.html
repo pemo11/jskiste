@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Das lustige Tierrate-Spiel Teil 12</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet">
+    </head>
+    <body>
+        <!-- Bild wird nach 1s wieder unsichtbar -->
+        <h3>Das lustige Tierrate-Spiel Teil 12</h3>
+        <script src=""></script>
+        <input type="range" id="anzahlTiere" min="4" max="25">
+        <div id="anzahlWert" style="height:32px;width:100px;text-align:center;background-color: pink;"></div>
+        <table id="tabAnimals">
+        </table>
+        <script src="AnimalGameFunctions1.js"></script>
+        <script>
+                let anzahl = 9
+                
+                window.addEventListener("load", (event) => {
+                    var elTiere = document.querySelector("#anzahlTiere")
+                    var elAnzahl = document.querySelector("#anzahlWert")
+                    elTiere.addEventListener("input", (event) => {
+                        let anzahl = Math.pow(Math.floor(Math.sqrt(elTiere.value)), 2)
+                        elAnzahl.innerText = anzahl
+                        starteRateRunde(anzahl)
+                    })
+                });
+                var elAnzahl = document.querySelector("#anzahlWert")
+                var elTiere = document.querySelector("#anzahlTiere")
+                elTiere.value = anzahl
+                elAnzahl.innerText = anzahl
+                starteRateRunde(anzahl)
+
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Das lustige Tierrate-Spiel Teil 4</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet">
+    </head>
+    <body>
+        <h3>Das lustige Tierrate-Spiel Teil 4</h3>
+        <script src=""></script>
+        <table id="tabAnimals">
+        </table>
+        <script>
+            var tiere = [{name:"Affe",img:"Affe.png"},
+                         {name:"Bär", img:"Baer.png"},
+                         {name:"Elefant", img:"Elefant.png"},
+                         {name:"Eule", img:"Eule.png"}
+                        ]
+
+                window.addEventListener("load", (event) => {
+                    let elTab = document.getElementById("tabAnimals");
+                    for(i=0;i<4;i++) {
+                        tr = document.createElement("tr")
+                        td = document.createElement("td")
+                        divAnimal = document.createElement("div")
+                        img = document.createElement("img")
+                        img.setAttribute("src", "Material/Tiere/" + tiere[i].img)
+                        divName = document.createElement("div")
+                        divName.innerText = tiere[i].name
+                        divName.setAttribute("class", "animalInfo")
+                        divAnimal.appendChild(img)
+                        divAnimal.appendChild(divName)
+                        td.appendChild(divAnimal)
+                        tr.appendChild(td)
+                        elTab.appendChild(tr)
+                    }
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 
