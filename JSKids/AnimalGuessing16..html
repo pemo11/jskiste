@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Das lustige Tierrate-Spiel Teil 16</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet">
+    </head>
+    <body>
+        <!-- Bild wird nach 1s wieder unsichtbar -->
+        <h3>Das lustige Tierrate-Spiel Teil 16</h3>
+        <script src=""></script>
+        <table id="tabAnimals">
+        </table>
+        <div class="spielStatus">
+            <h3>Spielstand</h3>
+            <table id="tabSpielStatus">
+                <tr>
+                    <td>Zeit:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Versuche:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Treffer:</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <script src="AnimalGameFunctions4.js"></script>
+        <script>
+            let anzahlKarten = 8
+            
+            window.addEventListener("load", (event) => {
+                starteRateRunde(anzahlKarten)
+            })
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

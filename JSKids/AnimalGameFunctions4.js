@@ -1,4 +1,4 @@
-// AnimalGameFunctions3.js1
+// AnimalGameFunctions4.js1
 
 var tiere = [
     {name:"Affe", img:"Affe.png", info:"Lebt auf Bäumen und springt von Ast zu Ast"},
@@ -32,6 +32,9 @@ var tiere = [
 var rateTiere = null
 var indexTier1 = -1
 var treffer = false
+var anzahlVersuche = 0
+var anzahlTreffer = 0
+var startZeit = 0
 
 // Gibt ein Feld mit allen Karten zurück (z.B. 2x8)
 function holeRateFeld(anzahl, max) {
@@ -62,8 +65,18 @@ function holeRateFeld(anzahl, max) {
     return rateFeld
 }
 
+function spielStatusAusgabe() {
+    var elTab = document.querySelector("#tabSpielStatus")
+    elTab.rows[0].cells[1].innerText = new Date().getTime() - startZeit
+    elTab.rows[1].cells[1].innerText = anzahlVersuche
+    elTab.rows[2].cells[1].innerText = anzahlTreffer
+}
+
 function starteRateRunde(anzahlTiere) {
     console.log(`*** Aufruf mit starteRateRunde mit anzahlTiere=${anzahlTiere} ***`)
+    startZeit = new Date()
+    anzahlTreffer = 0
+    anzahlVersuche = 0
     let anzahlFelder = anzahlTiere * 2
     let rateFeld = holeRateFeld(anzahlTiere, tiere.length)
     rateTiere = []
@@ -89,11 +102,11 @@ function starteRateRunde(anzahlTiere) {
             } else {
                 treffer = rateTiere[index].name == rateTiere[indexTier1].name ? true : false
                 if (treffer) {
-                    alert("Treffer!")
                     anzahlTreffer++
                 }
                 indexTier1 = -1
             }
+            spielStatusAusgabe()
             let target = event.currentTarget
             event.currentTarget.querySelector("img").setAttribute("src", "Material/Tiere/" + rateTiere[index].img)
             event.currentTarget.querySelector("div").innerText = rateTiere[index].name
