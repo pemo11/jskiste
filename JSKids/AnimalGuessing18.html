@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Das lustige Tierrate-Spiel Teil 18</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet">
+    </head>
+    <body>
+        <!-- Bild wird nach 1s wieder unsichtbar -->
+        <h3>Das lustige Tierrate-Spiel Teil 18</h3>
+        <script src=""></script>
+        <input type="range" id="anzahlTiere" min="4" max="25">
+        <div id="anzahlWert" style="height:32px;width:100px;text-align:center;background-color: pink;"></div>
+        <table id="tabAnimals">
+        </table>
+        <div class="spielKontrolle">
+            <input type="button" value="Spiel starten" id="btnStart" />
+            <input type="button" value="Spiel beenden" id="btnEnde" >
+        </div>
+        <div class="spielStatus">
+            <h3>Spielstand</h3>
+            <table id="tabSpielStatus">
+                <tr>
+                    <td>Zeit:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Versuche:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Treffer:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Spielstatus:</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <script src="AnimalGameFunctions5.js"></script>
+        <script>
+            let anzahlKarten = 8
+            
+            window.addEventListener("load", (event) => {
+
+                var elStart = document.querySelector("#btnStart")
+                var elTiere = document.querySelector("#anzahlTiere")
+                var elAnzahl = document.querySelector("#anzahlWert")
+
+                elTiere.addEventListener("input", (event) => {
+                    // anzahlKarten = Math.pow(Math.floor(Math.sqrt(elTiere.value)), 2)
+                    anzahlKarten = elTiere.value
+                    elAnzahl.innerText = anzahlKarten
+                })
+
+                var elAnzahl = document.querySelector("#anzahlWert")
+                var elTiere = document.querySelector("#anzahlTiere")
+                elTiere.value = anzahlKarten
+                elAnzahl.innerText = anzahlKarten
+
+                elStart.addEventListener("click", (event) => {
+                    starteRateRunde(anzahlKarten)
+
+                })
+                var elEnde = document.querySelector("#btnEnde")
+                elEnde.addEventListener("click", (event) => {
+                    beendeRateRunde()
+                })
+            })
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 
