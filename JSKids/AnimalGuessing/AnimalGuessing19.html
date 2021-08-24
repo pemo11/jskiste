@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Das lustige Tierrate-Spiel Teil 19</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet">
+    </head>
+    <!-- Spielername und Highscore-Liste  -->
+    <body>
+        <h3>Das lustige Tierrate-Spiel Teil 19</h3>
+        <input type="range" id="anzahlTiere" min="4" max="25" />
+        <div id="anzahlWert" style="height:32px;width:100px;text-align:center;background-color: pink;"></div>
+        <form id="frmAnmelden">
+            <label for="playerName">Dein Name:</label>
+            <input type="text" id="playerName"></input><p>
+            <input type="submit" value="Anmelden"></input><p></p>
+        </form>
+        <img id="imgAvatar" />
+        <div id="playerStatus" class="playerStatus"></div>
+        <table id="tabAnimals">
+        </table>
+        <div class="spielKontrolle">
+            <input type="button" value="Spiel starten" id="btnStart" />
+            <input type="button" value="Spiel beenden" id="btnEnde" >
+        </div>
+        <div class="spielStatus">
+            <h3>Spielstand</h3>
+            <table id="tabSpielStatus">
+                <tr>
+                    <td>Zeit:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Versuche:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Treffer:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Spielstatus:</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <script src="AnimalGameFunctions6.js"></script>
+        <script>
+            let anzahlKarten = 8
+            
+            window.addEventListener("load", (event) => {
+
+                var elStart = document.querySelector("#btnStart")
+                var elTiere = document.querySelector("#anzahlTiere")
+                var elAnzahl = document.querySelector("#anzahlWert")
+                var elEnde = document.querySelector("#btnEnde")
+
+                elTiere.addEventListener("input", (event) => {
+                    // anzahlKarten = Math.pow(Math.floor(Math.sqrt(elTiere.value)), 2)
+                    anzahlKarten = elTiere.value
+                    elAnzahl.innerText = anzahlKarten
+                })
+
+                var elAnzahl = document.querySelector("#anzahlWert")
+                var elTiere = document.querySelector("#anzahlTiere")
+                var elAnmelden = document.querySelector("#frmAnmelden")
+
+                elTiere.innerText = anzahlKarten
+                // anzahlKarten ist automatisch vom Typ number
+                // console.log(typeof anzahlKarten)
+                // Mit der Zuweisung gibt es irgendein Problem?
+                // Danach wird der Rest der Seite nicht mehr angezeigt?
+                // Der Grund war offenbar, dass das div-Element nicht per </div> abgeschlossen wurde
+                // Jetzt wird alles angezeigt
+                elAnzahl.innerText = anzahlKarten.toString()
+
+                elStart.addEventListener("click", (event) => {
+                    starteRateRunde(anzahlKarten)
+                })
+
+                elEnde.addEventListener("click", (event) => {
+                    beendeRateRunde()
+                })
+
+
+                elAnmelden.onsubmit = (event) => {
+                    var elPlayer = document.querySelector("#playerName")
+                    var playerStatus = anmeldenPlayer(elPlayer.value)
+                    var elPlayerStatus = document.querySelector("#playerStatus")
+                    elPlayerStatus.innerText = `Hallo, ${playerStatus.name}, das ist Dein ${playerStatus.gameCount} tes Spiel`
+                }
+
+            })
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

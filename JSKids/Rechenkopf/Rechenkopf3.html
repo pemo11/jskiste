@@ -1,0 +1,117 @@
+<!-- Rechenkopf V3 - die dritte Version mit Schwierigkeitsstufen -->
+
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Rechnen-Kopf V3</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h2>Rechnen-Kopf V3</h2>
+        <div class="container">
+            <table>
+                <tr class="rechner">
+                    <td></td><td></td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <label>Schwierigkeitsstufen</label>
+                        <br/>
+                        <input type="radio" id="leicht" value="Leicht" name="rechenLevel" checked />
+                        <label for="leicht">Leicht</label>
+                        <br/>
+                        <input type="radio" id="mittel" value="Mittel" name="rechenLevel"/>
+                        <label for="mittel">Mittel</label>
+                        <br/>
+                        <input type="radio" id="spezial" value="Spezial" name="rechenLevel"/>
+                        <label for="spezial">Spezial</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="button" id="btnAufgabe" value="Aufgabe"></td>
+                    <td><input type="button" id="btnErgebnis" value="Ergebnis"></td>
+                </tr>
+            </table>
+        </div>
+        <script>
+
+            window.addEventListener("load", (event) => {
+                // Event-Handler einrichten
+                var btnAufgabe = document.querySelector("#btnAufgabe")
+                btnAufgabe.addEventListener("click", (event) => {
+                    let elTable = document.querySelector("table")
+                    // Neu: val1 und val2 müssen glatt teilbar sein
+                    let val1 = 0
+                    let val2 = 0
+                    let limit1 = 0
+                    let limit2 = 0
+                    let limit3 = 1
+                    let op = null
+                    // Geniale CSS-Selektor-Abfrage
+                    var elLevel = document.querySelector('input[name="rechenLevel"]:checked').value
+                    if (elLevel == "Leicht") {
+                        limit1 = 20
+                        limit2 = 10
+                        op = ["+", "-", ":", "*"][Math.floor(Math.random() * 4)]
+                    } else if (elLevel == "Mittel") {
+                        limit1 = 100
+                        limit2 = 20
+                        limit3 = 10
+                        op = [":", "*"][Math.floor(Math.random() * 2)]
+                    } else {
+                        limit1 = 1000
+                        limit2 = 100
+                        limit3 = 50
+                        op = "*"
+                    }
+                    do {
+                        val1 = Math.floor(Math.random() * limit1) + limit3
+                        val2 = Math.floor(Math.random() * limit2) + limit3
+
+                    } while (val1 % val2 != 0)
+                    elTable.rows[0].cells[0].innerText = val1
+                    elTable.rows[0].cells[1].innerText = op
+                    elTable.rows[0].cells[2].innerText = val2
+                    elTable.rows[0].cells[3].innerText = "="
+                    elTable.rows[0].cells[4].innerText = "?"
+                })
+
+                var btnErgebnis = document.querySelector("#btnErgebnis")
+                btnErgebnis.addEventListener("click", (event) => {
+                    let elTable = document.querySelector("table")
+                    let val1 = elTable.rows[0].cells[0].innerText
+                    let val2 = elTable.rows[0].cells[2].innerText
+                    let ergebnis = 0
+                    switch(elTable.rows[0].cells[1].innerText)
+                    {
+                        case "+": {
+                            // parseInt ist optional
+                            ergebnis = parseInt(val1) + parseInt(val2)
+                            break
+                        }
+                        case "-": {
+                            // Number als Alternative zu parseInt ist ebenfalls optional
+                            ergebnis = Number(val1) - Number(val2)
+                            break
+                        }
+                        case ":": {
+                            ergebnis = val1 / val2
+                            break
+                        }
+                        case "*": {
+                            ergebnis = val1 * val2
+                            break
+                        }
+                    }
+                    elTable.rows[0].cells[4].innerText = ergebnis
+
+                });
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 
