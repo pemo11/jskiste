@@ -1,0 +1,62 @@
+<!-- In diese Version ist der kleine Fehler behoben -->
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Flacker-Div V2</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="flacker.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Flacker-Div V2</h3>
+        <div class="flacker" id="dvFlacker">
+
+        </div>
+        <div>
+            <input type="button" id="bnStart" value="Start">
+            <input type="button" id="bnStop" value="Stop">
+        </div>
+
+        <script>
+            var interval = 300;
+            var intervalIdList = [];
+            var onoff = false;
+
+            window.addEventListener("load", (event) => {
+
+                var elStart = document.querySelector("#bnStart")
+                var elStop = document.querySelector("#bnStop")
+
+                elStart.addEventListener("click", event => {
+
+                    intervalId = setInterval(() => {
+                        onoff = !onoff
+                        var elFacker = document.querySelector("#dvFlacker")
+                        if (onoff) {
+                            elFacker.style.background = "lightgreen"
+                        } else {
+                            elFacker.style.background = "lightyellow"
+
+                        }
+                    }, interval);
+                    console.log(`*** Timer mit Id=${intervalId} gestartet ***`)
+                    // Id merken
+                    intervalIdList.push(intervalId)
+
+                })
+                elStop.addEventListener("click", event => {
+                    console.log(`*** Timer mit Id=${intervalId} beendet ***`)
+                    // Jetzt alle IntervalIds clearen
+                    intervalIdList.forEach(id => {
+                        clearInterval(id)
+                    })
+                    intervalIdList = []
+                })
+
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

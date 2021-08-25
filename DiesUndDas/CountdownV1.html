@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Super Countdown</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="countdown.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h2>Super Countdown</h2>
+        <input id="rgValue" type="range" min="1" max="60" />
+        <div class="value" id="value"></div>
+        <input type="button" value="Start" id="bnStart"/>
+        <div class="countdown" id="countdown"></div>
+ 
+        <script>
+            var elRange = document.querySelector("#rgValue")
+            var elValue = document.querySelector("#value")
+            var elCountdown = document.querySelector("#countdown")
+            var elStart = document.querySelector("#bnStart")
+            var counter = 0
+            var id = 0
+
+            window.addEventListener("load", (event) => {
+
+                elValue.innerText = elRange.value
+
+                elRange.addEventListener("change", event => {
+                    elValue.innerText = event.target.value
+                })
+
+                elStart.addEventListener("click", event => {
+                    counter = parseInt(document.querySelector("#rgValue").value)
+
+                    id = setInterval(() => {
+                        console.log(`*** Interval mit Counter=${counter} ***`);
+                        elCountdown.innerText = counter
+                        counter -= 1
+                        if (counter == 0) {
+                            elCountdown.innerText = "Liftoff!"
+                            clearInterval(id)
+                            console.log("*** Clear-Interval ***");
+                        }
+                    }, 1000)
+                })
+
+
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

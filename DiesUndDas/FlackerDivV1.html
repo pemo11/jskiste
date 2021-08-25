@@ -1,0 +1,54 @@
+<!-- Diese Version enthält noch einen kleinen Fehler -->
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Flacker-Div V1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="flacker.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Flacker-Div V1</h3>
+        <div class="flacker" id="dvFlacker">
+
+        </div>
+        <div>
+            <input type="button" id="bnStart" value="Start">
+            <input type="button" id="bnStop" value="Stop">
+        </div>
+
+        <script>
+            window.addEventListener("load", (event) => {
+                var interval = 300;
+                var intervalId ;
+                var onoff = false;
+
+                var elStart = document.querySelector("#bnStart")
+                var elStop = document.querySelector("#bnStop")
+
+                elStart.addEventListener("click", event => {
+                    intervalId = setInterval(() => {
+                        onoff = !onoff
+                        var elFacker = document.querySelector("#dvFlacker")
+                        if (onoff) {
+                            elFacker.style.background = "lightgreen"
+                        } else {
+                            elFacker.style.background = "lightyellow"
+
+                        }
+                    }, interval);
+                    console.log(`*** Timer mit Id=${intervalId} gestartet ***`)
+
+                })
+                elStop.addEventListener("click", event => {
+                    console.log(`*** Timer mit Id=${intervalId} beendet ***`)
+                    clearInterval(intervalId)
+                })
+
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

@@ -1,0 +1,89 @@
+<!-- Kein Dauerflackern, sondern nur für einen einstellbaren Intervall -->
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Flacker-Div V3</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="flacker.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Flacker-Div V3</h3>
+        <div class="flacker" id="dvFlacker">
+
+        </div>
+        <p></p>
+        <div>
+            <label id="lbTimeout">0</label>
+            <input type="range" id="rgTimeout" value="5" min="1" max="10" ><br>
+            <label id="lbInterval">0</label>
+            <input type="range" id="rgInterval" value="300" min="0" max="1000" ><p>
+            <input type="button" id="bnFlackern" value="Flackern">
+        </div>
+
+        <script>
+            var interval = 500;
+            var timeout = 1000;
+            var intervalIdList = [];
+            var onoff;
+            
+            window.addEventListener("load", (event) => {
+
+                var elFlackern = document.querySelector("#bnFlackern")
+                var elTimeout = document.querySelector("#rgTimeout")
+                var elInterval = document.querySelector("#rgInterval")
+                var lbTimeout = document.querySelector("#lbTimeout")
+                var lbInterval = document.querySelector("#lbInterval")
+
+                lbTimeout.innerText = elTimeout.value
+                lbInterval.innerText = elInterval.value
+
+                elTimeout.addEventListener("change", (event) => {
+                    lbTimeout.innerText = event.target.value
+                })
+
+                elInterval.addEventListener("change", (event) => {
+                    lbInterval.innerText = event.target.value
+                })
+
+                elFlackern.addEventListener("click", event => {
+                    interval = parseInt(lbInterval.innerText)
+   
+                    intervalId = setInterval(() => {
+                        onoff = !onoff
+                        var elFacker = document.querySelector("#dvFlacker")
+                        if (onoff) {
+                            elFacker.style.background = "lightgreen"
+                        } else {
+                            elFacker.style.background = "lightyellow"
+                        }
+                    }, interval);
+                    console.log(`*** Timer mit Id=${intervalId} gestartet ***`)
+
+                    // Id merken
+                    intervalIdList.push(intervalId)
+
+                    // Timeout setzen, so dass nach n Sekunden der Spuk wieder vorbei ist
+                    timeout = parseInt(elTimeout.value) * 1000
+
+                    setTimeout(() => {
+
+                        intervalIdList.forEach(id => {
+                            clearInterval(id)
+                        })
+                        intervalIdList = []
+                        console.log(`*** Alle Timer wurden wieder beendet ***`)
+                        var elFacker = document.querySelector("#dvFlacker")
+                        elFacker.style.background = "lightgrey"
+                    }, timeout)
+
+                  
+                })
+
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 
