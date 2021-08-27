@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Super Countdown V2</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="countdown.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h2>Super Countdown V2</h2>
+        <div class="countdown" id="countdown">
+            <div class="counter" id="counter"></div>
+            <div>
+                <input type="button" value="Start" id="bnStart"/>
+                <input type="button" value="Stop" id="bnStop"/>
+            </div>
+        </div>
+        <script>
+            var elStart = document.querySelector("#bnStart")
+            var elStop = document.querySelector("#bnStop")
+            var elCounter = document.querySelector("#counter")
+            var elCountdown = document.querySelector("#countdown")
+            var counter = 10
+            var id = 0
+            var interval = 1000
+
+            window.addEventListener("load", (event) => {
+                elCounter.innerText = counter
+
+                // Countdown starten
+                elStart.addEventListener("click", event => {
+                    // Countdown soll immer wieder bei 10 beginnen
+                    counter = 10
+                    elCountdown.style.background = "white"
+                    elCounter.innerText = ""
+                    // Stop-Button wieder aktiv
+                    elStop.disabled = false
+                    id = setInterval(() => {
+                        console.log(`*** Interval mit Counter=${counter} ***`);
+                        elCounter.innerText = counter
+                        counter -= 1
+                        // kritischer Bereich?
+                        if (counter < 4) {
+                            // Kritischen Bereich optisch anzeigen
+                            elCountdown.style.background = "yellow"
+                            // Im kritischen Bereich ist kein Abbruch mehr möglich
+                            // Setzen des disabled-attributs
+                            elStop.disabled = true
+                        }
+                        if (counter == 0) {
+                            elCountdown.style.background = "red"
+                            elCounter.innerText = "Liftoff!"
+                            clearInterval(id)
+                            console.log("*** Clear-Interval ***");
+                        }
+                    }, interval)
+                })
+
+                // Timer vorzeitig abbrechen
+                elStop.addEventListener("click", event => {
+                    clearInterval(id)
+                    elCounter.innerText = "Cancel!"
+                    elCountdown.style.background = "lightgray"
+                    console.log("*** Clear-Interval ***");
+                })
+
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

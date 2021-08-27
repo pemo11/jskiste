@@ -24,3 +24,19 @@ input[type=button] {
     border-radius: 2em;
     margin:20px;
 }
+
+#bewertung {
+    background-color:lightgrey;
+}
+
+.countdown {
+    background-color:lightgreen;
+    font-size: 11pt;
+    color:black;
+
+}
+.countdownDone {
+    font-size: 14pt;
+    color:red;
+    background-color:yellow;
+}

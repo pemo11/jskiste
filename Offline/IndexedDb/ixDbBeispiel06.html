@@ -7,7 +7,7 @@
         <link href="styles.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <h3>Länder dieser Welt Nr. 6</h3>
+        <h3>LÃ¤nder dieser Welt Nr. 6</h3>
         <hr>
         <div id="divSelection" style="width:400px">
 
@@ -28,7 +28,7 @@
             function displayCountries(filter, countries) {
                 var elTab = document.getElementById("tabCountries")
                 var elBody = elTab.getElementsByTagName("tbody")[0]
-                // tbody zurücksetzen
+                // tbody zurÃ¼cksetzen
                 elBody.innerHTML = "";
 
                 countries.forEach(country => {
@@ -63,7 +63,7 @@
             window.addEventListener("load", async (event) => {
                 var countries = await getCountryData()
                     .then(countries => { return countries})
-                console.log(`*** ${countries.length} Länder im DOM verfügbar ***`);
+                console.log(`*** ${countries.length} Lï¿½nder im DOM verfï¿½gbar ***`);
                 // 26 Buttons platzieren
                 const elSelection = document.getElementById("divSelection");
                 for(i=0;i<26;i++) {

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Der Titel</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            
+            body {
+                font-family: verdana;
+                font-size: 20pt;
+            }
+
+            .labelRot {
+                background-color: crimson;
+            }
+
+            .labelGruen {
+                background-color: lightgreen;
+            }
+
+            input[type="button"] {
+                width:120px;
+                height: 40px;
+                background-color:goldenrod;
+            }
+        </style>
+    </head>
+    <body>
+        <h3>CSS-Klassen ändern</h3>
+        <label id="label1">Lorem ipsum usw.</label>
+        <p>
+        <input type="button" id="change" value="Change">
+
+        <script>
+            const elLabel = document.querySelector("#label1")
+
+            window.addEventListener("load", (event) => {
+                var elBtn = document.querySelector("#change")
+                elBtn.addEventListener("click", () => {
+                    elLabel.className = elLabel.className != "labelRot" ? "labelRot" : "labelGruen"
+                })
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

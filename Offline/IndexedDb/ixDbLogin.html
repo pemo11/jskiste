@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Lokales Login mit IndexedDb</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="stylesLogin.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h2>Lokales Login mit IndexedDb</h2>
+        <h3>Login</h3>
+        <div class="login">
+            <input type="text" id="txUsernameLogin" value="Max">
+            <p/>
+            <input type="text" id="txPIN" value="PIN" length="4">
+            <p/>
+            <input type="button" id="bnLogin" value="Login">
+        </div>
+        <h3>Register</h3>
+        <div class="register">
+            <input type="text" id="txUsernameRegister" value="Max">
+            <p/>
+            <input type="button" id="bnRegister" value="Registrieren">
+        </div>
+        <label id="status">Status</label>
+        <input type="button" id="bnAdmin" value="Admin" style="visibility: hidden;">
+        <div id="adminArea">
+
+        </div>
+
+        <script src="ixDbLoginHelpers.js"></script>
+
+        <script>
+            const elLoginBtn = document.querySelector("#bnLogin")
+            const elRegisterBtn = document.querySelector("#bnRegister")
+            const elUsername = document.querySelector("#txUsernameLogin")
+            const elUsernameNeu = document.querySelector("#txUsernameRegister")
+            const elPIN = document.querySelector("#txPIN")
+            const elStatus = document.querySelector("#status")
+            const elAdmin = document.querySelector("#bnAdmin")
+            const elAdminArea = document.querySelector("#adminArea")
+
+            window.addEventListener("load", async (event) => {
+                // Datenbank initialisieren
+                initDb();
+
+                elLoginBtn.addEventListener("click",  event => {
+                    var username = elUsername.value
+                    var pin = elPIN.value
+                    getUser(username, pin)
+                    .then(result => {
+                        if (result) {
+                            elStatus.innerText = "Login OK"
+                            if (username == "admin") {
+                                elAdmin.style.visibility = "visible";
+                            } else {
+                                elAdmin.style.visibility = "hidden";
+                                elAdminArea.innerText = ""
+                            }
+                        } else {
+                            elStatus.innerText = "Kein Login!"
+                        }
+                    })
+                })
+
+                elRegisterBtn.addEventListener("click", event => {
+                    var username = elUsernameNeu.value
+                    newUser(username)
+                    .then(result => {
+                        if (result) {
+                            elStatus.innerText = `Registrierung erfolgreich - Dein PIN ist ${result}`
+                        } else {
+                            elStatus.innerText = `Irgendetwas ging leider total schief`
+                        }
+                    })
+                })
+
+                elAdmin.addEventListener("click", event => {
+                    getAllUsers()
+                    .then(result => {
+                        var elTab = document.createElement("table")
+                        var elTr = document.createElement("tr")
+                        var elTh = document.createElement("th")
+                        elTh.innerText = "Nr"
+                        elTr.appendChild(elTh)
+                        elTh = document.createElement("th")
+                        elTh.innerText = "Name"
+                        elTh = document.createElement("th")
+                        elTh.innerText = "PIN"
+                        elTr.appendChild(elTh)
+                        elTab.appendChild(elTr)
+                        i = 0
+                        for(user of result) {
+                            i++
+                            elTr = document.createElement("tr")
+                            var elTd = document.createElement("td")
+                            elTd.innerText = i
+                            elTr.appendChild(elTd)
+                            elTd = document.createElement("td")
+                            elTd.innerText = user.name
+                            elTr.appendChild(elTd)
+                            elTd = document.createElement("td")
+                            elTd.innerText = user.pin
+                            elTr.appendChild(elTd)
+                            elTab.appendChild(elTr)
+                        }
+                        elAdminArea.appendChild(elTab)
+                    })
+                })
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 
