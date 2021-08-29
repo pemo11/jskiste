@@ -1,0 +1,34 @@
+/* Standard-Style */
+
+body {
+    font-family: verdana;
+    font-size: 11pt;
+}
+
+div.neuerEintrag {
+    margin: 20px;
+    background-color: lightblue;
+    width: 320px;
+}
+
+input[type="button"] {
+    width: 180px;
+    height: 32px;
+    margin: 6px;
+    background-color:darkkhaki;
+}
+
+input[type="text"] {
+    margin: 6px;
+    background-color:lightgreen
+}
+
+input[type="date"] {
+    margin: 6px;
+    background-color:lightyellow;
+}
+
+#monat {
+    font-size: 20pt;
+    margin: 6px;
+}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Der große Geburtskalender V1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="kalender.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h2>Der große Geburtskalender V1</h2>
+        <script src="kalenderHelper.js"></script>
+        <div>
+            <div id="monat"></div>
+        </div>
+        <div>
+            <input type="button" value="Vorheriger Monat" id="bnPrev">
+            <input type="button" value="Nächster Monat" id="bnNext">
+            <input type="button" value="Neuer Eintrag" id="bnNeu">
+        </div>
+        <div id="termine">
+
+        </div>
+        <div class="neuerEintrag">
+            <div>Neuer Eintrag</div>
+            <input type="text" value="<Name>" id="txName"><p></p>
+            <input type="date" id="dtDatum"><p></p>
+            <input type="button" value="Anlegen" id="bnAnlegen">
+        </div>
+        <div id="status"></div>
+
+        <script>
+            var elPrevMonat = null
+            var elNextMonat = null
+            var elNeuMonat = null
+            var elMonat = null
+            var elStatus = null
+            // Der akteille Monat wird voreingestellt
+            var monat = new Date().getMonth()
+            const monate = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"]
+
+                window.addEventListener("load", (event) => {
+                elPrevMonat = document.querySelector("#bnPrev")
+                elNextMonat = document.querySelector("#bnNext")
+                elNewMonat = document.querySelector("#bnNeu")
+                elAnlegen = document.querySelector("#bnAnlegen")
+                elMonat = document.querySelector("#monat")
+                elMonat.innerText = `Monat ${monate[monat]}`
+                elTermine = document.querySelector("#termine")
+                elStatus = document.querySelector("#status")
+
+                elNeuerEintrag = document.querySelector(".neuerEintrag")
+                elNeuerEintrag.style.visibility = "collapse"
+
+                initDb()
+
+                // Die Geburtstage des vorherigen Moants abrufen
+                elPrevMonat.addEventListener("click", event => {
+                    if (monat > 0) {
+                        monat--
+                    } else {
+                        monat = 11
+                    }
+                    // Aktuellen Monat abfragen
+                    elMonat.innerText = `Alle Geburtstage für den Monat ${monate[monat]}`
+                    elStatus.innerText = ""
+                    // Alle Termine aus diesem Monat holen und anzeigen
+                    holeTermine(monat)
+                    .then(termine => {
+                        // Wie kann man de Ausgabe bei einem Termin schöner gestalten? Tipp: ? und :
+                        elStatus.innerText = `${termine.length} Termine`
+                        elTermine.innerText = ""
+                        for (const termin of termine) {
+                            var elTermin = document.createElement("div")
+                            // Wichtig: Damit ich ein .toLocaleDateString() anhängen kann, muss ich aus dem string-Wert termin.date wieder ein Date-Objekt machen
+                            // Etwas umständlich, aber eigentlich ganz logisch, wenn man/frau/* in Objekten denkt
+                            elTermin.innerText = `${termin.name} am ${new Date(termin.date).toLocaleDateString()}`
+                            elTermin.innerText = `${termin.name} am ${termin.date}`
+                            elTermine.appendChild(elTermin)
+                        }
+                    })
+
+                })
+
+               
+                // Die Geburtstage des nächsten Monats abrufen
+                elNextMonat.addEventListener("click", event => {
+                    if (monat < 11) {
+                        monat++
+                    } else {
+                        monat = 1
+                    }
+                    // Aktuellen Monat abfragen
+                    elMonat.innerText = `Alle Geburtstage für den Monat ${monate[monat]}`
+                    elStatus.innerText = ""
+                    // Alle Termine aus diesem Monat holen und anzeigen
+                    holeTermine(monat)
+                    .then(termine => {
+                        // Wie kann man de Ausgabe bei einem Termin schöner gestalten? Tipp: ? und :
+                        elStatus.innerText = `${termine.length} Termine`
+                        elTermine.innerText = ""
+                        for (const termin of termine) {
+                            var elTermin = document.createElement("div")
+                            elTermin.innerText = `${termin.name} am ${new Date(termin.date).toLocaleDateString()}`
+                            elTermine.appendChild(elTermin)
+                        }
+                    })
+                })
+
+                // Neuen Eintrag anlegen
+                elNewMonat.addEventListener("click", event => {
+                    elNeuerEintrag.style.visibility = "visible"
+                    
+                })
+
+                // Neuen Eintrag bestätigen
+                elAnlegen.addEventListener("click", event => {
+                    var name = document.querySelector("#txName").value
+                    var gebDatum = document.querySelector("#dtDatum").value
+                    neuerTermin(name, gebDatum)
+                    .then(result => {
+                        if (result == "OK") {
+                            elStatus.innerText = `Der Eintrag wurde angelegt.`
+
+                        } else {
+                            elStatus.innerText = `Der Eintrag konnte nicht angelegt werden.`
+                        }
+                    })
+                    elNeuerEintrag.style.visibility = "collapse"
+                    // ? Wie lässt sich ereichen, dass alle Termine für den Monat aufgelistet werden?
+                    // Tipp: Auslagern in eine Function
+                })
+                
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 
