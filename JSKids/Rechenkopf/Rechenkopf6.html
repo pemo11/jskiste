@@ -1,4 +1,4 @@
-<!-- Rechenkopf V5 - die fünfte Version mit Countdown-Timer -->
+<!-- Rechenkopf V5 - die sechste Version mit Punkten und einer Highscore-Liste -->
 
 <!DOCTYPE html>
 <html lang="de">
@@ -9,12 +9,19 @@
         <link href="styles.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <h2>Rechnen-Kopf V5</h2>
+        <script src="Rechenkopf.js"></script>
+        <h2>Rechnen-Kopf V6</h2>
         <div class="container">
             <table>
                 <tr class="rechner">
                     <td></td><td></td><td></td><td></td><td></td>
                 </tr>
+                <tr><td>&nbsp;</td></tr>
+                <tr>
+                    <td><label for="player">Dein Name:</label></td>
+                    <td><input type="text" id="player" value="Norbert"/></td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
                 <tr>
                     <td colspan="3">
                         <label>Schwierigkeitsstufen</label>
@@ -29,9 +36,12 @@
                         <label for="spezial">Spezial</label>
                     </td>
                 </tr>
+                <tr><td>&nbsp;</td></tr>
                 <tr>
+                    <td><label for="countdown">Countdown:</label></td>
                     <td><label id="countdown">0</label></td>
                 </tr>
+                <tr><td>&nbsp;</td></tr>
                 <tr>
                     <td>Ergebnis:</td>
                     <td><input type="text" id="ergebnis"></input></td>
@@ -41,6 +51,12 @@
                     <td colspan="2"><label id="bewertung">Keine</label></td>
                 </tr>
                 <tr>
+                    <td>Punkte:</td>
+                    <td><label id="punkte">0</label></td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+                <tr>
+                    <td><input type="button" id="btnStart" value="Start"></td>
                     <td><input type="button" id="btnAufgabe" value="Aufgabe"></td>
                     <td><input type="button" id="btnCheck" value="Check"></td>
                     <td><input type="button" id="btnErgebnis" value="Ergebnis"></td>
@@ -60,8 +76,14 @@ window.addEventListener("load", (event) => {
             let elTable = document.querySelector("table")
             var elBewertung = document.querySelector("#bewertung")
             var elCheck = document.querySelector("#btnCheck")
+            var elPunkte = document.querySelector("#punkte")
 
             // Event-Handler einrichten
+            var btnStart = document.querySelector("#btnStart")
+            btnStart.addEventListener("click", (event) => {
+
+            })
+
             var btnAufgabe = document.querySelector("#btnAufgabe")
             btnAufgabe.addEventListener("click", (event) => {
                 anzahlVersuche = 0

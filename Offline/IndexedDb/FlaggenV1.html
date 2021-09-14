@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>FlaggenV1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="flaggen.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Flaggen V1</h3>
+        <div>
+            <div id="country"></div>
+            <img></img>
+            <div>
+                <input type="button" id="bnPrev" value="&lt;">
+                <input type="button" id="bnNext" value="&gt;">
+            </div>
+        </div>
+        <script src="flaggenV1.js"></script>
+
+        <script>
+            let flaggenIndex = 0;
+            let elCountry = document.querySelector("#country")
+            let elPrev = document.querySelector("#bnPrev")
+            let elNext = document.querySelector("#bnNext")
+
+            window.addEventListener("load", (event) => {
+                initDb()
+
+                getFlagge()
+                .then(result => {
+                    elCountry.innerText = result.country
+                })
+
+                elPrev.addEventListener("click", event => {
+                    getFlagge()
+                    .then(result => {
+                        elCountry.innerText = result.country
+                    })
+                })
+
+                elNext.addEventListener("click", event => {
+                    getFlagge()
+                    .then(result => {
+                        elCountry.innerText = result.country
+                    })
+
+                })
+
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

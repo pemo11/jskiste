@@ -37,7 +37,7 @@ function initDb() {
         var userStore = tx.objectStore(ostName);
         
         // Einen User in der Datenbank anlegen - der key wird automatisch generiert
-        userStore.put({name:"admin",pin:1234})
+        userStore.put({name:"admin", pin:1234})
 
         return tx.complete; 
         console.log("*** Die Datenbank wurde komplett aktualisiert ***");

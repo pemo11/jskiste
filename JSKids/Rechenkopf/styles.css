@@ -14,7 +14,13 @@ div.container {
 tr.rechner {
     font-size: 24pt;
     font-weight: bold;
-    width: 100px;
+    background-color: lavender;
+}
+
+tr.rechner td { 
+    width:200px;
+    height: 40px;
+    text-align: center;
 }
 
 input[type=button] {

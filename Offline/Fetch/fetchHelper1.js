@@ -24,9 +24,11 @@ async function getJsonData(url) {
     }
 }
 
-// Holt die Wiki-Länder-Daten als Objekte
+// Holt die Wiki-LÃ¤nder-Daten als Objekte
 async function getLaenderData() {
-    let urlLaender = "https://www.activetraining.de/WikiLaender.json";
+    // let urlLaender = "https://www.activetraining.de/WikiLaender.json";
+    let urlLaender = "../../Material/WikiLaender.json";
+
     try {
         let res = await getJsonData(urlLaender);
         return JSON.parse(res)

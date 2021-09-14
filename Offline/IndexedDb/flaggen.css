@@ -1,0 +1,14 @@
+/* Standard-Style für Flaggen */
+
+body {
+    font-family: verdana;
+    font-size: 11pt;
+}
+
+input[type="button"] {
+    width:100px;
+    height: 32px;
+    border-radius: 1em;
+    background-color: black;
+    color:white;
+}
