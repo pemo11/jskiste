@@ -22,7 +22,6 @@ function initDb() {
     }
     
     // Datenbank wurde geöffnet
-    // genial, dass der Event-Handler auch async sein kann
     openRequest.onsuccess = () => {
         console.log("*** initDb - onsuccess ***");
         userDb = openRequest.result;

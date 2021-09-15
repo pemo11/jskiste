@@ -1,5 +1,5 @@
-<!-- Rechenkopf V5 - die sechste Version mit Punkten und einer Highscore-Liste -->
-
+<!-- Rechenkopf V6 - die sechste Version mit Punkten und einer Highscore-Liste -->
+<!-- Es geht noch einiges  nicht, z.B. läuft der Timer weiter, die Punktevergabe, die Highscore-Liste usw. - IndexedDb geht aber grundsätzlich -->
 <!DOCTYPE html>
 <html lang="de">
     <head>
@@ -52,150 +52,190 @@
                 </tr>
                 <tr>
                     <td>Punkte:</td>
-                    <td><label id="punkte">0</label></td>
+                    <td><label id="score">0</label></td>
                 </tr>
                 <tr><td>&nbsp;</td></tr>
                 <tr>
                     <td><input type="button" id="btnStart" value="Start"></td>
-                    <td><input type="button" id="btnAufgabe" value="Aufgabe"></td>
+                    <td><input type="button" id="btnAufgabe" value="Neue Aufgabe"></td>
                     <td><input type="button" id="btnCheck" value="Check"></td>
                     <td><input type="button" id="btnErgebnis" value="Ergebnis"></td>
                 </tr>
             </table>
+            <div id="scores"></div>
         </div>
         <script>
-
-window.addEventListener("load", (event) => {
-            let ergebnis = 0
-            let anzahlVersuche = 0
-            let idTimer = 0
-            const interval = 1000
-            let counter = 0
-            let initCounter = 0
-            let elCounter = document.querySelector("#countdown")
-            let elTable = document.querySelector("table")
-            var elBewertung = document.querySelector("#bewertung")
-            var elCheck = document.querySelector("#btnCheck")
-            var elPunkte = document.querySelector("#punkte")
-
-            // Event-Handler einrichten
-            var btnStart = document.querySelector("#btnStart")
-            btnStart.addEventListener("click", (event) => {
-
-            })
-
-            var btnAufgabe = document.querySelector("#btnAufgabe")
-            btnAufgabe.addEventListener("click", (event) => {
-                anzahlVersuche = 0
-                counter = -1
-                elCounter.innerText = counter
-                elCheck.disabled = false
-                elCounter.className = "countdown"
-                elBewertung.innerText = ""
-
-                // Neu: val1 und val2 müssen glatt teilbar sein
-                let val1 = 0
-                let val2 = 0
-                let limit1 = 0
-                let limit2 = 0
-                let limit3 = 1
-                let op = null
-                // Geniale CSS-Selektor-Abfrage
-                var elLevel = document.querySelector('input[name="rechenLevel"]:checked').value
-                if (elLevel == "Leicht") {
-                    limit1 = 20
-                    limit2 = 10
-                    op = ["+", "-", ":", "*"][Math.floor(Math.random() * 4)]
-                    initCounter = 10
-                } else if (elLevel == "Mittel") {
-                    limit1 = 100
-                    limit2 = 20
-                    limit3 = 10
-                    initCounter = 20
-                    op = [":", "*"][Math.floor(Math.random() * 2)]
-                } else {
-                    limit1 = 1000
-                    limit2 = 100
-                    limit3 = 50
-                    op = "*"
-                    initCounter = 40
-                }
-                do {
-                    val1 = Math.floor(Math.random() * limit1) + limit3
-                    val2 = Math.floor(Math.random() * limit2) + limit3
-
-                } while (val1 % val2 != 0)
-
-                counter = initCounter
-
-                elTable.rows[0].cells[0].innerText = val1
-                elTable.rows[0].cells[1].innerText = op
-                elTable.rows[0].cells[2].innerText = val2
-                elTable.rows[0].cells[3].innerText = "="
-                elTable.rows[0].cells[4].innerText = "?"
-
-                switch(op)
-                {
-                    case "+": {
-                        ergebnis = parseInt(val1) + parseInt(val2)
-                        break
+            const elScores = document.querySelector("#scores")
+            
+            function displayScoreList() {
+                getScores()
+                .then(result => {
+                    elScores.innerText = ""
+                    for(score of result) {
+                        elScores.append(score.playerName)
                     }
-                    case "-": {
-                        ergebnis = parseInt(val1) - parseInt(val2)
-                        break
-                    }
-                    case ":": {
-                        ergebnis = parseInt(val1) / parseInt(val2)
-                        break
-                    }
-                    case "*": {
-                        ergebnis = parseInt(val1) * parseInt(val2)
-                        break
-                    }
-                }
+                })
+            }
 
-                // Countdown starten
-                idTimer = setInterval(() => {
-                    console.log(`*** Interval mit Counter=${counter} ***`);
+            window.addEventListener("load", (event) => {
+                let ergebnis = 0
+                let anzahlVersuche = 0
+                let idTimer = 0
+                const interval = 1000
+                let counter = 0
+                let initCounter = 0
+                let gameMode = false
+                let gameList = []
+                let timeIdList = []
+                let currentGame = null
+                let playerName = "none"
+                let elCounter = document.querySelector("#countdown")
+                let elTable = document.querySelector("table")
+                var elBewertung = document.querySelector("#bewertung")
+                var elCheck = document.querySelector("#btnCheck")
+                var elScore = document.querySelector("#score")
+                var elPlayer = document.querySelector("#player")
+
+                // IndexedDb initialisieren
+                initDb()
+
+                // Event-Handler einrichten
+                var btnStart = document.querySelector("#btnStart")
+                btnStart.addEventListener("click", (event) => {
+                    gameMode = !gameMode
+                    btnStart.value = gameMode ? "Stop" : "Start"
+                    // Neues Game?
+                    if (gameMode) {
+                        // GameList initialisieren
+                        gameList = []
+                    } else {
+                        // Alle Spiele speichern
+                        playerName = elPlayer.value
+                        for(game of gameList) {
+                            newScore(playerName, game.score)
+                        }
+                        // Highscore-Liste ausgeben
+                        displayScoreList()
+                    }
+
+                })
+
+                var btnAufgabe = document.querySelector("#btnAufgabe")
+                btnAufgabe.addEventListener("click", (event) => {
+                    anzahlVersuche = 0
+                    counter = -1
                     elCounter.innerText = counter
-                    counter -= 1
-                    if (counter < 0) {
-                        elCounter.className = "countdownDone"
-                        elBewertung.innerText = "Abgelaufen"
-                        elCheck.disabled = true
-                        clearInterval(idTimer)
-                        console.log("*** Clear-Interval ***");
+                    elCheck.disabled = false
+                    elCounter.className = "countdown"
+                    elBewertung.innerText = ""
+                    currentGame = {player:playerName, score:0}
+
+                    // Neu: val1 und val2 müssen glatt teilbar sein
+                    let val1 = 0
+                    let val2 = 0
+                    let limit1 = 0
+                    let limit2 = 0
+                    let limit3 = 1
+                    let op = null
+                    // Geniale CSS-Selektor-Abfrage
+                    var elLevel = document.querySelector('input[name="rechenLevel"]:checked').value
+                    if (elLevel == "Leicht") {
+                        limit1 = 20
+                        limit2 = 10
+                        op = ["+", "-", ":", "*"][Math.floor(Math.random() * 4)]
+                        initCounter = 10
+                    } else if (elLevel == "Mittel") {
+                        limit1 = 100
+                        limit2 = 20
+                        limit3 = 10
+                        initCounter = 20
+                        op = [":", "*"][Math.floor(Math.random() * 2)]
+                    } else {
+                        limit1 = 1000
+                        limit2 = 100
+                        limit3 = 50
+                        op = "*"
+                        initCounter = 40
                     }
-                }, interval)
-            })
+                    do {
+                        val1 = Math.floor(Math.random() * limit1) + limit3
+                        val2 = Math.floor(Math.random() * limit2) + limit3
 
-            var btnCheck = document.querySelector("#btnCheck")
-            btnCheck.addEventListener("click", (event) => {
-                // Eingabe holen
-                var eingabe = parseInt(document.querySelector("#ergebnis").value)
-                anzahlVersuche++
-                // Mit Ergebnis vergleichen und richtig oder falsch anzeigen
-                if (eingabe == ergebnis) {
-                    // Hier kännte man den Text an die Anzahl anpassen, z.B. bei 1 => beim ersten Versuch
-                    let bewertung = anzahlVersuche == 1 ? "einem Versuch"  : `${anzahlVersuche} Versuchen`
-                    elBewertung.innerText = `Richtig! (nach ${bewertung})`
-                } else {
-                    elBewertung.innerText = `Dein ${anzahlVersuche}ter Versuch ist leider falsch`
-                    // countdown zurücksetzen
+                    } while (val1 % val2 != 0)
+
                     counter = initCounter
-                }
-                // countdown stoppen
-                clearInterval(idTimer)
-            })
 
-            var btnErgebnis = document.querySelector("#btnErgebnis")
-            btnErgebnis.addEventListener("click", (event) => {
-                // Es wird nur das Ergebnis angezeigt
-                elTable.rows[0].cells[4].innerText = ergebnis
-                // countdown stoppen
-                clearInterval(idTimer)
+                    elTable.rows[0].cells[0].innerText = val1
+                    elTable.rows[0].cells[1].innerText = op
+                    elTable.rows[0].cells[2].innerText = val2
+                    elTable.rows[0].cells[3].innerText = "="
+                    elTable.rows[0].cells[4].innerText = "?"
+
+                    switch(op)
+                    {
+                        case "+": {
+                            ergebnis = parseInt(val1) + parseInt(val2)
+                            break
+                        }
+                        case "-": {
+                            ergebnis = parseInt(val1) - parseInt(val2)
+                            break
+                        }
+                        case ":": {
+                            ergebnis = parseInt(val1) / parseInt(val2)
+                            break
+                        }
+                        case "*": {
+                            ergebnis = parseInt(val1) * parseInt(val2)
+                            break
+                        }
+                    }
+
+                    // Countdown starten
+                    idTimer = setInterval(() => {
+                        console.log(`*** Interval mit Counter=${counter} ***`);
+                        elCounter.innerText = counter
+                        counter -= 1
+                        if (counter < 0) {
+                            elCounter.className = "countdownDone"
+                            elBewertung.innerText = "Abgelaufen"
+                            elCheck.disabled = true
+                            clearInterval(idTimer)
+                            console.log("*** Clear-Interval ***");
+                        }
+                    }, interval)
+                })
+
+                var btnCheck = document.querySelector("#btnCheck")
+                btnCheck.addEventListener("click", (event) => {
+                    // Eingabe holen
+                    var eingabe = parseInt(document.querySelector("#ergebnis").value)
+                    anzahlVersuche++
+                    // Mit Ergebnis vergleichen und richtig oder falsch anzeigen
+                    if (eingabe == ergebnis) {
+                        // Hier könnte man den Text an die Anzahl anpassen, z.B. bei 1 => beim ersten Versuch
+                        let bewertung = anzahlVersuche == 1 ? "einem Versuch"  : `${anzahlVersuche} Versuchen`
+                        elBewertung.innerText = `Richtig! (nach ${bewertung})`
+                        // Am Anfang nur 5 Punkte, später werden Schwierigkeitsgrad und Anzahl Versuche berücksichtigt
+                        currentGame.score += 5
+                        elScore.innerText = currentGame.score
+                    } else {
+                        elBewertung.innerText = `Dein ${anzahlVersuche}ter Versuch ist leider falsch`
+                        // countdown zurücksetzen
+                        counter = initCounter
+                    }
+                    // Countdown stoppen
+                    clearInterval(idTimer)
+                })
+
+                var btnErgebnis = document.querySelector("#btnErgebnis")
+                btnErgebnis.addEventListener("click", (event) => {
+                    // Es wird nur das Ergebnis angezeigt
+                    elTable.rows[0].cells[4].innerText = ergebnis
+                    // countdown stoppen
+                    clearInterval(idTimer)
+                });
             });
-        });
 
         </script>
 
