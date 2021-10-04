@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Morsetrainer V1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Morsetrainer V1</h3>
+
+        <div
+            style="text-align:center;width:400px"
+        >
+            <canvas
+                id="light"
+                width="200"
+                height="100"
+            >
+            </canvas>
+            <input type="button" id="bnStart" value="Start" />
+        </div>
+
+
+        <script src=""></script>
+
+        <script>
+            const elCanvas = document.querySelector("#light")
+            const bnStart = document.querySelector("#bnStart")
+
+            var context = elCanvas.getContext("2d")
+            context.beginPath()
+            const radius = 30
+
+            const timeoutShort = 400
+            const timeoutLong = 800
+            var timeout = 0
+            var digits = 0
+            var counter = 0
+            var intervalId = 0
+            var isRunning = false
+            var morseText = [".",".",".","-","-","-",".",".","."]
+            const interval = timeoutLong + 100
+
+            const drawCircle = (fillColor) => {
+                context.arc(100, 50, radius, 0, 2 * Math.PI, false)
+                context.fillStyle = fillColor
+                context.fill()
+                context.linewidth = 1
+                context.strokeStyle = "#00300"
+                context.stroke()
+            }
+
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            window.addEventListener("load", (event) => {
+
+                bnStart.addEventListener("click", async (event)  => {
+                    if (!isRunning) {
+                        isRunning = true
+                        for(counter=0;counter<morseText.length;counter++) {
+                            console.log(`*** Digit Nr. ${counter+1} ***`)
+                            timeout = morseText[counter] == "." ? timeoutShort : timeoutLong
+                            console.log(timeout, morseText[counter])
+                            drawCircle("red")
+                            setTimeout(() => {
+                                drawCircle("yellow")
+                            }, timeout)
+                            await sleep(timeout+200)
+                        }
+                        isRunning = false
+                    }
+                })
+
+                drawCircle("yellow")
+            })
+
+/*
+
+
+                        counter = 0
+                        digits = morseText.length
+                        console.log("*** Start ***")
+                        intervalId = setInterval(() => {
+                            counter++
+                            console.log(timeout, morseText[counter])
+                            if (counter == digits) {
+                                clearInterval(intervalId)
+                                console.log("*** Fertig ***")
+                                isRunning = false
+                            } else {
+                                drawCircle("red")
+                                setTimeout(() => {
+                                    drawCircle("yellow")
+                                }, timeout)
+                            }
+                    }, interval)
+                    }
+                })
+*/
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

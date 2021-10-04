@@ -1,0 +1,48 @@
+/* Die Standard-CSS */
+
+body {
+    font-family: verdana;
+    font-size: 11pt;
+}
+
+div.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+tr.rechner {
+    font-size: 24pt;
+    font-weight: bold;
+    background-color: lavender;
+}
+
+tr.rechner td { 
+    width:200px;
+    height: 40px;
+    text-align: center;
+}
+
+input[type=button] {
+    background-color: aqua;
+    width: 160px;
+    height: 40px;
+    border-radius: 2em;
+    margin:20px;
+}
+
+#bewertung {
+    background-color:lightgrey;
+}
+
+.countdown {
+    background-color:lightgreen;
+    font-size: 11pt;
+    color:black;
+
+}
+.countdownDone {
+    font-size: 14pt;
+    color:red;
+    background-color:yellow;
+}

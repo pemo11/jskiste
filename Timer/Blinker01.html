@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Blinker V1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Blinker V1</h3>
+
+        <canvas
+            id="light"
+            width="200"
+            height="100"
+        >   
+        </canvas>
+
+        <script>
+
+            const sleep = (ms) => {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            const drawCircle = (fillColor) => {
+                var elLight = document.querySelector("#light")
+                var context = elLight.getContext("2d")
+                context.beginPath()
+                const radius = 30
+                context.arc(100, 50, radius, 0, 2 * Math.PI, false)
+                context.fillStyle = fillColor
+                context.fill()
+                context.linewidth = 1
+                context.strokeStyle = "#00300"
+                context.stroke()
+            }
+
+            window.addEventListener("load", async (event) => {
+
+                while(true) {
+                    drawCircle("red")
+                    await sleep(1000)
+                    drawCircle("green")
+                    await sleep(1000)
+
+                }
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Muster-Merker V1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Muster-Merker V1</h3>
+        <table id="tdGame">
+            <tr><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td></tr>
+        </table>
+        <input type="button" id="bnStart" value="Start" />
+        <img id="imResult">
+
+        <script>
+            const elTable = document.querySelector("#tdGame")
+            const elStart = document.querySelector("#bnStart")
+            const elResult = document.querySelector("#imResult")  
+           
+            const fieldCount = 9
+            const lightCount = 3
+            var clickCount = 0
+            var fields = null
+
+            const sleep = (ms) => {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            const clearTable = () => {
+                for(var row=0;row<elTable.rows.length;row++) {
+                    for(var col=0;col<elTable.rows[row].cells.length;col++) {
+                        elTable.rows[row].cells[col].style.backgroundColor = 'lightsteelblue'
+                    }
+                }
+            }
+
+            window.addEventListener("load", (event) => {
+
+                elResult.src = ""
+
+                // Alle Table-Cells mit einem Click-Eventhandler verknüpfen
+                for(var i=0;i<elTable.rows.length;i++) {
+                    for(var j=0;j<elTable.rows[i].cells.length;j++) {
+                        elTable.rows[i].cells[j].setAttribute("data", `r${i}c${j}`);
+                        elTable.rows[i].cells[j].onclick = (event) => {
+                            let cellId = event.target.getAttribute("data")
+                            // z.B. r1c2
+                            let re = /r(\d)c(\d)/
+                            // let row = cellId.match(re)[0]
+                            // let col = cellId.match(re)[1]
+                            let row = re.exec(cellId)[1]
+                            let col = re.exec(cellId)[2]
+                            let fieldId = parseInt(row) * 3 + parseInt(col)
+                            console.log(`*** fieldId=${fieldId} fields=${fields[clickCount]} ***`)
+                            // Richtiges Feld?
+                            if (fields[clickCount] == fieldId) {
+                                elTable.rows[row].cells[col].style.backgroundColor = 'green'
+                            } else {
+                                elTable.rows[row].cells[col].style.backgroundColor = 'red'
+                                elResult.setAttribute("src","images/SadFace256.png")
+                                return
+                            }
+                            clickCount++
+                            if (clickCount == lightCount) {
+                                elResult.setAttribute("src","images/HappyFace256.png")
+                            }
+                        }
+                    }
+
+                }
+
+                elStart.addEventListener("click", async (event) => {
+                    elStart.disabled = true
+                    clearTable()
+                    elResult.setAttribute("src","")
+                    fields = []
+                    for(i=0;i<lightCount;i++) {
+                        do {
+                            // let geht an dieser Stelle nicht
+                            var z = Math.floor(Math.random() * fieldCount)
+                        } while (fields.indexOf(z) > - 1)
+                        fields.push(z)
+                    }
+                    for(i=0;i<fields.length;i++) {
+                        let row = Math.floor(fields[i] / 3)
+                        let col = fields[i] % 3
+                        elTable.rows[row].cells[col].style.backgroundColor = 'blue'
+                        await sleep(1000)
+                        elTable.rows[row].cells[col].style.backgroundColor = 'lightsteelblue'
+                    }
+                    elStart.disabled = false
+                    clickCount = 0
+                })
+            })
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

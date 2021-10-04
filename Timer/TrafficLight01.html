@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Traffic Light V1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Traffic Light V1</h3>
+
+        <canvas
+            id="drawCanvas"
+            width="200"
+            height="300"
+        >   
+        </canvas>
+        <input type="button" id="bnStart" value="Start" >
+
+        <script>
+
+            const drawCircle = (xPos, yPos, fillColor) => {
+                var elCanvas = document.querySelector("#drawCanvas")
+                var context = elCanvas.getContext("2d")
+                context.beginPath()
+                const radius = 30
+                context.arc(xPos, yPos, radius, 0, 2 * Math.PI, false)
+                context.fillStyle = fillColor
+                context.fill()
+                context.linewidth = 1
+                context.strokeStyle = "#00300"
+                context.stroke()
+            }
+
+            window.addEventListener("load", (event) => {
+
+                var elStart = document.querySelector("#bnStart")
+                elStart.addEventListener("click", (event) => {
+                    // 1. Grün-Phase
+                    drawCircle(50, 50, "white")
+                    drawCircle(50, 150, "white")
+                    drawCircle(50, 250, "green")
+                    elStart.disabled = true
+                    setTimeout(()=> {
+                        // 2. Phase Gelb
+                        drawCircle(50, 50, "white")
+                        drawCircle(50, 150, "yellow")
+                        drawCircle(50, 250, "white")
+                        setTimeout(()=> {
+                            // 3. Phase Rot
+                            drawCircle(50, 50, "red")
+                            drawCircle(50, 150, "white")
+                            drawCircle(50, 250, "white")
+                            setTimeout(()=> {
+                                // 4. Phase Rot Gelb
+                                drawCircle(50, 50, "red")
+                                drawCircle(50, 150, "yellow")
+                                drawCircle(50, 250, "white")
+                                setTimeout(()=> {
+                                    // 5. Phase Grün
+                                    drawCircle(50, 50, "white")
+                                    drawCircle(50, 150, "white")
+                                    drawCircle(50, 250, "green")
+                                    elStart.disabled = false
+                                }, 2000)
+                            }, 2000)
+                        }, 2000)
+                    }, 2000);
+                })
+            })
+ 
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

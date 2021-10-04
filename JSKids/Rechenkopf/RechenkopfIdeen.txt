@@ -1,0 +1,6 @@
+// Weitere Ideen:
+// Anzahl der Aufgaben und Level werden vorab eingestellt und auch das Zeitlimit
+// Mit jedem Punkt wird ein weiteres Bild eines Puzzles angezeigt -> Lernmotivation
+// Oder ein Glass wird voller oder es kommen z.B Tiere dazu
+// Und dann muss das Ganze natürlich auf dem Smartphone spielbar sein
+
