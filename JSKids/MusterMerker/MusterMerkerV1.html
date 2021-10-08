@@ -14,11 +14,13 @@
             <tr><td></td><td></td><td></td></tr>
         </table>
         <input type="button" id="bnStart" value="Start" />
+        <input type="button" id="bnWdh" value="Wiederholung" />
         <img id="imResult">
 
         <script>
             const elTable = document.querySelector("#tdGame")
             const elStart = document.querySelector("#bnStart")
+            const elWdh = document.querySelector("#bnWdh")
             const elResult = document.querySelector("#imResult")  
            
             const fieldCount = 9
@@ -75,6 +77,7 @@
 
                 elStart.addEventListener("click", async (event) => {
                     elStart.disabled = true
+                    elWdh.disabled = true
                     clearTable()
                     elResult.setAttribute("src","")
                     fields = []
@@ -93,7 +96,23 @@
                         elTable.rows[row].cells[col].style.backgroundColor = 'lightsteelblue'
                     }
                     elStart.disabled = false
+                    elWdh.disabled = false
                     clickCount = 0
+                })
+
+                elWdh.addEventListener("click", async (event) => {
+                    elStart.disabled = true
+                    elWdh.disabled = true
+                    clearTable()
+                    for(i=0;i<fields.length;i++) {
+                        let row = Math.floor(fields[i] / 3)
+                        let col = fields[i] % 3
+                        elTable.rows[row].cells[col].style.backgroundColor = 'blue'
+                        await sleep(1000)
+                        elTable.rows[row].cells[col].style.backgroundColor = 'lightsteelblue'
+                    }
+                    elStart.disabled = false
+                    elWdh.disabled = false
                 })
             })
 

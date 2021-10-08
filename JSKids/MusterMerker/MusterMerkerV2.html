@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Muster-Merker V2</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Muster-Merker V2</h3>
+        <table id="tdGame">
+            <tbody></tbody>
+        </table>
+        <div style="background-color: greenyellow;width:200px;margin:10px">
+            <input type="radio" id="leicht" name="level" value="9" checked>Leicht</input><p>
+            <input type="radio" id="mittel" name="level" value="16">Mittel</input><p>
+            <input type="radio" id="schwer" name="level" value="25" data-interval="1500">Schwer</input><p>
+            <input type="radio" id="sehrschwer" name="level" value="25" data-interval="500">Sehr schwer</input><p>
+        </div>
+        <input type="button" id="bnStart" value="Start" />
+        <input type="button" id="bnWdh" value="Wiederholung" />
+        <input type="button" id="bnLoesung" value="Lösung" />
+        <div style="text-align: left;margin:16px">
+            <img id="imResult" width="100" height="100" src="images/NeutralFace256.png">
+        </div>
+
+        <script>
+            const elTable = document.querySelector("#tdGame")
+            const elStart = document.querySelector("#bnStart")
+            const elWdh = document.querySelector("#bnWdh")
+            const elLoesung = document.querySelector("#bnLoesung")
+            const elResult = document.querySelector("#imResult") 
+            const tabWidth = 480
+            const tabHeight = 480
+           
+            var fieldCount = 9
+            var lightCount = 3
+            var clickCount = 0
+            var interval = 1000
+            var fields = null
+
+            const sleep = (ms) => {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            var elLevels = document.getElementsByName("level")
+            elLevels.forEach(radio => {
+                radio.addEventListener("click", (event)=> {
+                    // alert(event.target.value)
+                    fieldCount = event.target.value
+                    lightCount = Math.floor(Math.sqrt(fieldCount))
+                    clearTable()
+                    drawTable(fieldCount)
+                    // Soll der Interval geändert werden?
+                    interval = event.target.dataset.interval == undefined ? 1000 : parseInt(event.target.dataset.interval)
+                    elLoesung.disabled = true
+                })
+            })
+
+            const clearTable = () => {
+                for(var row=0;row<elTable.rows.length;row++) {
+                    for(var col=0;col<elTable.rows[row].cells.length;col++) {
+                        elTable.rows[row].cells[col].style.backgroundColor = "lightsteelblue"
+                    }
+                }
+            }
+
+            const drawTable = (fieldCount) => {
+                elResult.src = "images/NeutralFace256.png"
+                elTable.getElementsByTagName("tbody")[0].innerHTML = ""
+                let count = Math.floor(Math.sqrt(fieldCount))
+                for(row=0;row<count;row++) {
+                    let elTr = elTable.insertRow(-1)
+                    for(col=0;col<count;col++) {
+                        let elTh = elTr.insertCell(-1)
+                        // Breite der Zelle anpassen
+                        elTh.style.width = (tabWidth / count) + "px"
+                        elTh.style.height = (tabHeight / count) + "px"
+                        elTr.appendChild(elTh)
+                    }
+                    elTable.getElementsByTagName("tbody")[0].appendChild(elTr)
+                }
+                elTable.height = tabHeight
+                elTable.width = tabWidth
+
+                // Alle Table-Cells mit einem Click-Eventhandler verknüpfen
+                for(var i=0;i<elTable.rows.length;i++) {
+                    for(var j=0;j<elTable.rows[i].cells.length;j++) {
+                        elTable.rows[i].cells[j].setAttribute("data", `r${i}c${j}`);
+                        elTable.rows[i].cells[j].onclick = (event) => {
+                            let cellId = event.target.getAttribute("data")
+                            // z.B. r1c2
+                            let re = /r(\d)c(\d)/
+                            // let row = cellId.match(re)[0]
+                            // let col = cellId.match(re)[1]
+                            let row = re.exec(cellId)[1]
+                            let col = re.exec(cellId)[2]
+                            let fieldId = parseInt(row) * lightCount + parseInt(col)
+                            console.log(`*** fieldId=${fieldId} fields=${fields[clickCount]} ***`)
+                            // Richtiges Feld?
+                            if (fields[clickCount] == fieldId) {
+                                elTable.rows[row].cells[col].style.backgroundColor = 'green'
+                            } else {
+                                elTable.rows[row].cells[col].style.backgroundColor = 'red'
+                                elResult.setAttribute("src","images/SadFace256.png")
+                                elLoesung.disabled = false
+                                return
+                            }
+                            clickCount++
+                            if (clickCount == lightCount) {
+                                elResult.setAttribute("src","images/HappyFace256.png")
+                            }
+                        }
+                    }
+
+                }
+
+            }
+
+            // Der Browser-Inhalt wurde vollständig geladen
+            window.addEventListener("load", (event) => {
+
+                elResult.src = ""
+
+                // Anzeige eines neuen Musters
+                elStart.addEventListener("click", async (event) => {
+                    elStart.disabled = true
+                    elWdh.disabled = true
+                    elLoesung.disabled = true
+                    clearTable()
+                    drawTable(fieldCount)
+                    fields = []
+                    for(i=0;i<lightCount;i++) {
+                        do {
+                            // let geht an dieser Stelle nicht
+                            var z = Math.floor(Math.random() * fieldCount)
+                        } while (fields.indexOf(z) > - 1)
+                        fields.push(z)
+                    }
+                    for(i=0;i<fields.length;i++) {
+                        let row = Math.floor(fields[i] / lightCount)
+                        let col = fields[i] % lightCount
+                        elTable.rows[row].cells[col].style.backgroundColor = "blue"
+                        await sleep(interval)
+                        elTable.rows[row].cells[col].style.backgroundColor = "lightsteelblue"
+                    }
+                    elStart.disabled = false
+                    elWdh.disabled = false
+                    clickCount = 0
+                })
+
+                // Wiederholung
+                elWdh.addEventListener("click", async (event) => {
+                    elStart.disabled = true
+                    elWdh.disabled = true
+                    elLoesung.disabled = true
+                    clearTable()
+                    for(i=0;i<fields.length;i++) {
+                        let row = Math.floor(fields[i] / lightCount)
+                        let col = fields[i] % lightCount
+                        elTable.rows[row].cells[col].style.backgroundColor = "blue"
+                        await sleep(interval)
+                        elTable.rows[row].cells[col].style.backgroundColor = "lightsteelblue"
+                    }
+                    elStart.disabled = false
+                    elWdh.disabled = false
+                    elLoesung.disabled = false
+                })
+
+                drawTable(fieldCount)
+                elLoesung.disabled = true
+                elWdh.disabled = true
+
+            })
+
+            // Anzeigen der Lösung
+            elLoesung.addEventListener("click", async (event) => {
+                elStart.disabled = true
+                elWdh.disabled = true
+                for(i=0;i<fields.length;i++) {
+                    let row = Math.floor(fields[i] / lightCount)
+                    let col = fields[i] % lightCount
+                    elTable.rows[row].cells[col].innerText = i + 1
+                    elTable.rows[row].cells[col].style.backgroundColor = 'gray'
+                    elTable.rows[row].cells[col].style.fontSize = "48pt"
+                    elTable.rows[row].cells[col].style.fontFamily = "Arial"
+                    elTable.rows[row].cells[col].style.textAlign = "Center"
+                    await sleep(200)
+                }
+
+                elStart.disabled = false
+                elWdh.disabled = false
+
+            })
+
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

@@ -1,0 +1,53 @@
+<!-- https://codepen.io/Rumyra/pen/qyMzqN/ -->
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>WAAPI-Beispiel Nr. 1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>WAAPI-Beispiel Nr. 1</h3>
+        <input type="button" id="bnPlay" value="Play" data-playing="false" role="switch">
+        <audio src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/858/outfoxing.mp3" crossorigin="anonymous" ></audio>
+
+        <script>
+            const elPlay = document.querySelector("#bnPlay")
+
+            window.addEventListener("load", (event) => {
+
+                elPlay.addEventListener("click", (event) => {
+
+                    const AudioContext = window.AudioContext || window.webkitAudioContext
+                    const audioCtx = new AudioContext()
+
+                    // load some sound
+                    const audioElement = document.querySelector("audio")
+                    const track = audioCtx.createMediaElementSource(audioElement)
+
+                    if (this.dataset.playing === "false") {
+                        audioElement.play()
+                        this.dataset.playing === "true"
+                    // if track is playing pause it
+                    // was ist dataset?
+                    } else if (this.dataset.playing === "true") {
+                        audioElement.pause()
+                        this.dataset.playing = "false"
+                    }
+
+                    // if track ends
+                    audioElement.addEventListener('ended', () => {
+                        elPlay.dataset.playing = 'false';
+                        elPlay.setAttribute( "aria-checked", "false" );
+                    }, false);
+
+                })
+
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 
