@@ -22,13 +22,162 @@
     </head>
     <body>
         <h3>Follow the dot - V1</h3>
-        <script src=""></script>
+        <label>Hitcount:</label>
+        <label id="lbCounter" >0</label><p>
+        <label>xPos/yPos:</label>
+        <label id="lbMousePos" >0</label><p>
+        <div style="text-align:center;width:600px">
 
+            <canvas
+                id="gamePad"
+                width="600"
+                height="600"
+            >
+            </canvas>
+
+
+        </div>
+        <input type="button" id="bnStart" value="Start" />
+ 
         <script>
+            const elPad = document.querySelector("#gamePad")
+            const bnStart = document.querySelector("#bnStart")
+            const lbCounter = document.querySelector("#lbCounter")
+            const lbMousePos = document.querySelector("#lbMousePos")
+            const radius = 40
+            const padWidth = 600
+            const padHeight = 600
+            var intervalId = 500
+            var timeoutId = 0
+            var duration = 20000
+            var slow = 50
+            var redPhase = 1000
+            var xPos = 250
+            var yPos = 250
+            var directionX = 1
+            var directionY = 1
+            var ballColor = "blue"
+            var hitCount = 0
+            var gameRunning = false
+            var xMoveDelta = 5
+            var yMoveDelta = 5
+            var preventColorChangeCounter = 5
+
+            var context = elPad.getContext("2d")
+            
+            elPad.style.background = "green"
+
+            // Abfrage der "wahren" Mouse-Zeiger-Position
+            // https://stackoverflow.com/questions/17130395/real-mouse-position-in-canvas
+            const getMousePos = (canvas, event) => {
+                var rect = canvas.getBoundingClientRect();
+                return {
+                    x: event.clientX - rect.left,
+                    y: event.clientY - rect.top
+                }
+            }
+
+            const drawCircle = (xPos, yPos, fillColor) => {
+                // Löscht die Zeichenfläche (warum auch immer;)
+                elPad.width = elPad.width
+                context.arc(xPos, yPos, radius, 0, 2 * Math.PI, false)
+                context.fillStyle = fillColor
+                context.fill()
+                context.linewidth = 1
+                context.strokeStyle = "#00300"
+                context.stroke()
+            }
+
             window.addEventListener("load", (event) => {
 
+                // Canvas wird angeklickt
+                elPad.addEventListener("click", (event) => {
+                    console.log(event);
+                    // x und y im Bereich des Kreises?
+                    var mousePos = getMousePos(elPad, event)
+                    if (gameRunning && ballColor === "red") {
+                        console.log(`x=${mousePos.x} y=${mousePos.y} xPos=${xPos} yPos=${yPos}`)
+                        if (mousePos.x > xPos -radius && mousePos.x < xPos + radius &&
+                            mousePos.y > yPos -radius && mousePos.y < yPos + radius) {
+                            console.log("*** Treffer ***")
+                            hitCount++
+                            lbCounter.textContent = hitCount
+                            // Timeout vorzeitig beenden und Ball wieder auf "Blau"
+                            clearTimeout(timeoutId)
+                            ballColor = "blue"
+                        }
+                    }
+
+                })
+
+                // Mauszeiger bewegt sich über dem Canvas
+                elPad.addEventListener("mousemove", (event) => {
+                    var mousePos = getMousePos(elPad, event);
+                    lbMousePos.textContent = `${mousePos.x}/${mousePos.y}`
+                })
+
+                // Click-Event beim Button bnStart
+                bnStart.addEventListener("click", (event) => {
+                    hitCount = 0
+                    preventColorChangeCounter = 10
+                    lbCounter.textContent = hitCount
+                    gameRunning = true
+                    intervalId = setInterval(() => {
+                        // Positionssprung?
+                        let z = Math.floor(Math.random() * 1000) + 1
+                        // Darf nur selten auftreten
+                        if (z < 10) {
+                            // Kugel soll nach einem Positionssprung nicht am Rand kleben bleiben, daber immer mit Abstand positionieren
+                            xPos = Math.floor(Math.random() * (padWidth - radius)) + radius 
+                            YPos = Math.floor(Math.random() * (padHeight - radius)) + radius
+                            console.log(`*** Positionssprung auf ${xPos}/${yPos} ***`)
+                        }
+
+                        xPos += xMoveDelta * directionX
+                        if (xPos > padWidth - radius || xPos < radius) {
+                            directionX = directionX == 1 ? -1 : 1
+                        }
+
+                        z = Math.floor(Math.random() * 100) + 1
+                        // console.log(`z=${z}`)
+
+                        // Richtungsänderung?
+                        if (z > 70) {
+                            yPos += yMoveDelta * directionY
+                            if (yPos > padHeight - radius || yPos < radius) {
+                                directionY = directionY == 1 ? -1 : 1
+                            }
+                        }
+
+                        // Farbänderung?
+                        z = Math.floor(Math.random() * 1000) + 1
+                        if (z > 900 && ballColor === "blue") {
+                            preventColorChangeCounter--
+                            if (preventColorChangeCounter === 0) {
+                                // Nach dieser Farbänderung soll nicht so schnell die nächste folgen
+                                preventColorChangeCounter = 5
+                                console.log(`*** Farbänderung bei z=${z}`)
+                                ballColor = "red"
+                                timeoutId = setTimeout(() => {
+                                    ballColor = "blue"
+                                }, redPhase);
+                            }
+                        }
+                        
+                        drawCircle(xPos, yPos, ballColor)
+                    }, slow)
+
+                    setTimeout(() => {
+                        clearInterval(intervalId)
+                        ballColor = "blue"
+                        drawCircle(xPos, yPos, ballColor)
+                        gameRunning = false
+                    }, duration)
+                });
             });
 
+            drawCircle(xPos, yPos, ballColor)
+            
         </script>
 
         <h6>Remembering an important person</h6>
