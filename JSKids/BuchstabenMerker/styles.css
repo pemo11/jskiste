@@ -1,0 +1,54 @@
+/* Die Standard-CSS */
+
+body {
+    font-family: verdana;
+    font-size: 11pt;
+}
+
+table {
+    width: 480px;
+    height: 480px;
+    background-color: lightsteelblue;
+}
+
+td {
+    width: 160px;
+    height: 160px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+input[type="button"] {
+    height: 32px;
+    width: 120px;
+    margin: 10px;
+    border-radius: 1em;
+    background-color:salmon;
+}
+
+div.rateWort {
+    font-size: 32pt;
+    font-weight: bold;
+    letter-spacing: 1em;
+    font-family: Verdana;
+    margin: 10px;
+}
+
+div.buchstabenFeld {
+    width: 400px;
+    margin: 10px;
+}
+
+input[type="button"].buchstabe {
+    font-size: 12pt;
+    width: 80px;
+    height: 32px;
+    margin: 10px;
+    background-color:lightblue;
+}
+
+img.bewertung {
+    margin: 10px;
+    width: 100px;
+    height: 100px;
+}

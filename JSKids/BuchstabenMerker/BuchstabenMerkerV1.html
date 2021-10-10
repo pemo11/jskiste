@@ -1,0 +1,125 @@
+    <!--
+    Nach dem Start wird ein Wort angezeigt und nach 2s wieder unsichtbar.
+
+    Dann muss das Wort in der richtigen Reichenfolge über die Buchstbaen-Auswhal buchbstaniert werden
+
+    in V2 mit Schwierigkeitsgraden (nur Wortlänge) und Blockieren der Buttons
+
+    In V3 mit einer Zeitvorgabe
+
+    -->
+
+    <!DOCTYPE html>
+    <html lang="de">
+        <head>
+            <meta charset="utf-8">
+            <title>Buchstaben Merker V1</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link href="styles.css" rel="stylesheet" type="text/css">
+        </head>
+        <body>
+            <h3>Buchstaben Merker V1</h3>
+
+            <div id="rateWort" class="rateWort"></div>
+            <div>
+                <img id="bewertung" class="bewertung"></img>
+            </div>
+
+            <input type="button" id="bnStart" value="Start"></input>
+
+            <div id="buchstabenFeld" class="buchstabenFeld"></div>
+
+            <script>
+                const elWort = document.querySelector("#rateWort")
+                const elBuchstabenFeld = document.querySelector("#buchstabenFeld")
+                const elBewertung = document.querySelector("#bewertung")
+                const wortListe = ["Hase", "Igel", "Sonne", "Auto", "Kinder", "Garten", "Pudding"]
+                const buchstabenFarben = ["Green", "Red", "Brown", "Blue", "Black", "Yellow", "Magenta"]
+                var buchstabenFarbe = ""
+                var timeoutUnsichtbar = 3000
+                var buchstabenCounter = 0
+
+                var wort = ""
+
+                const sleep = (ms) => {
+                    return new Promise(resolve => setTimeout(resolve, ms))
+                }
+
+                // Alle 26 Buchstaben anzeigen
+                const buchstabenAuswahl = () => {
+                    for(c=65;c<91;c++) {
+                        let elBuchstabenButton = document.createElement("input")
+                        elBuchstabenButton.setAttribute("type", "button")
+                        elBuchstabenButton.setAttribute("class", "buchstabe")
+                        elBuchstabenButton.value = String.fromCharCode(c)
+                        elBuchstabenButton.addEventListener("click", (event) => {
+                            let buchstabe = event.target.value
+                            // Stimmt der Buchstabe?
+                            if (wort[buchstabenCounter].toUpperCase() == buchstabe) {
+                                // Geniale Syntax!
+                                elWort.getElementsByTagName("span")[buchstabenCounter].style.color = "green"
+                                elWort.getElementsByTagName("span")[buchstabenCounter++].textContent = buchstabe
+                                // Ganzes Wort eingegeben?
+                                if (buchstabenCounter == wort.length) {
+                                    elBewertung.style.display = "inline"
+                                    elBewertung.setAttribute("src", "images/HappyFace256.png")
+                                }
+                            }
+                        })
+                        elBuchstabenFeld.appendChild(elBuchstabenButton)
+                    }
+                }
+
+                window.addEventListener("load", (event) => {
+
+                    console.log(`*** load-Event ***`)
+
+                    // bnStart Click-Event einrichten
+                    bnStart.addEventListener("click", async (event) => {
+                        elWort.textContent = ""
+                        buchstabenCounter = 0
+                        // Mit visibility hat es nicht funktioniert?
+                        elBewertung.style.display = "none"
+                        // Wort soll nicht 2x nacheiander gezogen werden
+                        let z = 0
+                        do {
+                            z = Math.floor(Math.random() * wortListe.length)
+                        } while (wortListe[z] === wort)
+                        wort = wortListe[z]
+                        console.log(`*** Das Wort ist ${wort} ***`)
+                        for (const c in wort) {
+                            // elWort.textContent += wort[c].toUpperCase()
+                            let elSpan = document.createElement("span")
+                            // Farbe soll nicht 2x nacheinander gezogen werden
+                            do {
+                                z = Math.floor(Math.random() * buchstabenFarben.length)
+                            } while (buchstabenFarben[z] == buchstabenFarbe)
+                            buchstabenFarbe = buchstabenFarben[z]
+                            elSpan.style.color = buchstabenFarbe
+                            elSpan.textContent = wort[c].toUpperCase()
+                            elWort.appendChild(elSpan)
+                            await sleep(500)
+                        }
+
+                        // Nach Ablauf einer Zeitspanne unsichtbar machen
+                        setTimeout(async () => {
+                            // Wichtig: of statt in !
+                            for (const elBuchstabe of elWort.getElementsByTagName("span")) {
+                                elBuchstabe.textContent = "_"
+                                elBuchstabe.style.color = "black"
+                                await sleep(500)
+                            }
+                        }, timeoutUnsichtbar)
+                    })
+
+                    buchstabenAuswahl()
+                    elBewertung.style.display  = "none"
+
+                })
+
+
+            </script>
+
+            <h6>Remembering an important person</h6>
+        </body>
+    </html> 
