@@ -1,7 +1,4 @@
     <!--
-    Nach dem Start wird ein Wort angezeigt und nach 2s wieder unsichtbar.
-
-    Dann muss das Wort in der richtigen Reichenfolge über die Buchstbaen-Auswhal buchbstaniert werden
 
     in V2 mit Schwierigkeitsgraden (nur Wortlänge) und Blockieren der Buttons
 
@@ -13,18 +10,24 @@
     <html lang="de">
         <head>
             <meta charset="utf-8">
-            <title>Buchstaben Merker V1</title>
+            <title>Buchstaben Merker V2</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link href="styles.css" rel="stylesheet" type="text/css">
         </head>
         <body>
-            <h3>Buchstaben Merker V1</h3>
+            <h3>Buchstaben Merker V2</h3>
 
             <div id="rateWort" class="rateWort"></div>
             <div>
                 <img id="bewertung" class="bewertung" src="images/HappyFace256.png"></img>
             </div>
 
+            <div style="background-color: greenyellow;width:200px;margin:10px">
+                <input type="radio" id="leicht" name="level" value="A" checked>Leicht</input><p>
+                <input type="radio" id="mittel" name="level" value="B">Mittel</input><p>
+                <input type="radio" id="schwer" name="level" value="C">Schwer</input><p>
+            </div>
+    
             <input type="button" id="bnStart" value="Start"></input>
 
             <div id="buchstabenFeld" class="buchstabenFeld"></div>
@@ -33,11 +36,14 @@
                 const elWort = document.querySelector("#rateWort")
                 const elBuchstabenFeld = document.querySelector("#buchstabenFeld")
                 const elBewertung = document.querySelector("#bewertung")
-                const wortListe = ["Hase", "Igel", "Sonne", "Auto", "Kinder", "Garten", "Pudding"]
+                const wortListeA = ["Hase", "Igel", "Sonne", "Auto", "Kinder", "Garten", "Pudding"]
+                const wortListeB = ["Badewanne", "Möve", "Sonnenblume", "Hühnerstall", "Lokomotive", "Klassenzimmer", "Flugzeug", "Yxolofon"]
+                const wortListeC = ["Sympathie", "Demokratie", "Parlament", "Universität", "Kreuzfahrt", "Mikroskop", "Garantie"]
                 const buchstabenFarben = ["Green", "Red", "Brown", "Blue", "Black", "Yellow", "Magenta"]
                 var buchstabenFarbe = ""
                 var timeoutUnsichtbar = 3000
                 var buchstabenCounter = 0
+                var level = "A"
 
                 var wort = ""
 
@@ -45,27 +51,57 @@
                     return new Promise(resolve => setTimeout(resolve, ms))
                 }
 
-                // Alle 26 Buchstaben anzeigen
+                var elLevels = document.getElementsByName("level")
+                elLevels.forEach(radio => {
+                    radio.addEventListener("click", (event)=> {
+                        level = event.target.value
+                        // Buchstaben-Auswahl anzeigen
+                        buchstabenAuswahl()
+
+                    })
+                })
+
+                const buchstabenClickHandler = (event) => {
+                    let buchstabe = event.target.value
+                    // Stimmt der Buchstabe?
+                    if (wort[buchstabenCounter].toUpperCase() == buchstabe) {
+                        // Geniale Syntax!
+                        elWort.getElementsByTagName("span")[buchstabenCounter].style.color = "green"
+                        elWort.getElementsByTagName("span")[buchstabenCounter++].textContent = buchstabe
+                        // Ganzes Wort eingegeben?
+                        if (buchstabenCounter == wort.length) {
+                            elBewertung.style.display = "block"
+                            // Start-Button wird wieder freigegeben
+                            bnStart.disabled = false
+                        }
+                    }
+                }
+
+                // Alle 26 Buchstaben anzeigen - bei Level B und C auch die Umlaute
                 const buchstabenAuswahl = () => {
+                    // ALle Buttons entfernen
+                    while (elBuchstabenFeld.firstChild) {
+                        elBuchstabenFeld.removeChild(elBuchstabenFeld.lastChild);
+                    }
                     for(c=65;c<91;c++) {
                         let elBuchstabenButton = document.createElement("input")
                         elBuchstabenButton.setAttribute("type", "button")
                         elBuchstabenButton.setAttribute("class", "buchstabe")
                         elBuchstabenButton.value = String.fromCharCode(c)
-                        elBuchstabenButton.addEventListener("click", (event) => {
-                            let buchstabe = event.target.value
-                            // Stimmt der Buchstabe?
-                            if (wort[buchstabenCounter].toUpperCase() == buchstabe) {
-                                // Geniale Syntax!
-                                elWort.getElementsByTagName("span")[buchstabenCounter].style.color = "green"
-                                elWort.getElementsByTagName("span")[buchstabenCounter++].textContent = buchstabe
-                                // Ganzes Wort eingegeben?
-                                if (buchstabenCounter == wort.length) {
-                                    elBewertung.style.display = "block"
-                                }
-                            }
-                        })
+                        elBuchstabenButton.addEventListener("click", buchstabenClickHandler)
                         elBuchstabenFeld.appendChild(elBuchstabenButton)
+                    }
+                    // Auch Umlaute anzeigen?
+                    if (level != "A") {
+                        let umlaute = ["Ä", "Ö", "Ü"]
+                        umlaute.forEach(umlaut => {
+                            elBuchstabenButton = document.createElement("input")
+                            elBuchstabenButton.setAttribute("type", "button")
+                            elBuchstabenButton.setAttribute("class", "buchstabe")
+                            elBuchstabenButton.value = umlaut
+                            elBuchstabenButton.addEventListener("click", buchstabenClickHandler)
+                            elBuchstabenFeld.appendChild(elBuchstabenButton)
+                        })
                     }
                 }
 
@@ -77,8 +113,25 @@
                     bnStart.addEventListener("click", async (event) => {
                         elWort.textContent = ""
                         buchstabenCounter = 0
+                        // Start-Button wird gesperrt
+                        bnStart.disabled = true
+                        // Anklicken der Buchstaben wird gesperrt
+                        elBuchstabenFeld.disabled = true
                         // Mit visibility hat es nicht funktioniert?
                         elBewertung.style.display = "none"
+                        // Wortliste in Abhängigkeit vom Level zuordnen
+                        let wortListe = null
+                        switch (level) {
+                            case "A": 
+                                wortListe = wortListeA
+                                break
+                            case "B":
+                                wortListe = wortListeB
+                                break
+                            case "C":
+                                wortListe = wortListeC
+                                break
+                    }
                         // Wort soll nicht 2x nacheiander gezogen werden
                         let z = 0
                         do {
@@ -108,11 +161,13 @@
                                 elBuchstabe.style.color = "black"
                                 await sleep(500)
                             }
+                            // Das Buchstabenfeld wird freigegeben
+                            elBuchstabenFeld.disabled = false
                         }, timeoutUnsichtbar)
                     })
 
-                    buchstabenAuswahl()
                     elBewertung.style.display = "none"
+                    buchstabenAuswahl()
 
                 })
 
