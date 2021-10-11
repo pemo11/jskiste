@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Reaktionstester V1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h1>Reaktionstester V1</h1>
+        <h3>Klicke so schnell Du kannst auf den roten Punkt, sobald er zu sehen ist</h3>
+        <canvas
+            id="gamePad"
+            width="400"
+            height="400"
+        ></canvas>
+        <div id="infoArea">
+        </div>
+        <div class="timerDisplay">
+            00 : 00 : 00 : 000
+         </div>
+         <input type="button" id="startButton" value="Start"></input>
+
+        <script>
+            const elStart = document.querySelector("#startButton")
+            const elPad = document.querySelector("#gamePad")
+            const elCurTime = document.querySelector('.timerDisplay');
+            const radius = 120
+            const xPos = 250
+            const yPos = 180
+            const timerInterval = 10
+            let [milliseconds,seconds,minutes,hours] = [0,0,0,0];
+
+            var phase = ""
+            var durationPhase1 = 1000
+            var durationPhase2 = 2000
+            var durationPhase3 = 3000
+            var intervalId = 0
+
+            var context = elPad.getContext("2d")
+
+            const sleep = (ms) => {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            const getMousePos = (canvas, event) => {
+                var rect = canvas.getBoundingClientRect();
+                return {
+                    x: event.clientX - rect.left,
+                    y: event.clientY - rect.top
+                }
+            }
+
+            const drawCircle = (xPos, yPos, fillColor) => {
+                // Löscht die Zeichenfläche (warum auch immer das funktioniert;)
+                elPad.width = elPad.width
+                context.arc(xPos, yPos, radius, 0, 2 * Math.PI, false)
+                context.fillStyle = fillColor
+                context.fill()
+                context.linewidth = 1
+                context.strokeStyle = "#00300"
+                context.stroke()
+            }
+
+            // https://www.foolishdeveloper.com/2021/10/simple-stopwatch-using-javascript.html
+            const displayTimer = () => {
+                milliseconds += 10
+
+                if (milliseconds == 1000) {
+                    milliseconds = 0
+                    seconds++
+
+                    if (seconds == 60) {
+                        seconds = 0
+                        minutes++
+
+                        if (minutes == 60) {
+                            minutes = 0
+                            hours++
+                        }
+                    }
+                }
+
+                let h = hours < 10 ? "0" + hours : hours
+                let m = minutes < 10 ? "0" + minutes : minutes
+                let s = seconds < 10 ? "0" + seconds : seconds
+                let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds
+
+                elCurTime.innerHTML = ` ${h} : ${m} : ${s} : ${ms}`
+            }
+
+            window.addEventListener("load", (event) => {
+
+                 // Canvas wird angeklickt
+                 elPad.addEventListener("click", (event) => {
+                    console.log(event);
+                    // x und y im Bereich des Kreises?
+                    var mousePos = getMousePos(elPad, event)
+                    if (phase === "red") {
+                        console.log(`x=${mousePos.x} y=${mousePos.y} xPos=${xPos} yPos=${yPos}`)
+                        if (mousePos.x > xPos - radius && mousePos.x < xPos + radius &&
+                            mousePos.y > yPos -radius && mousePos.y < yPos + radius) {
+                            console.log("*** Treffer ***")
+                            // Timer anhalten
+                            clearInterval(intervalId)
+                            elStart.disabled = false
+                        }
+                    }
+
+                })
+
+                // click-Eventhanler für startButton
+                elStart.addEventListener("click", async (event) => {
+                    [milliseconds,seconds,minutes,hours] = [0,0,0,0]
+                    elCurTime.innerHTML = '00 : 00 : 00 : 000 '
+                    elStart.disabled = true
+                    drawCircle(xPos, yPos, "white")
+                    durationPhase1 += Math.floor(Math.random() * 3000)
+                    await sleep(durationPhase1)
+                    phase = "green"
+                    drawCircle(xPos, yPos, "Green")
+                    durationPhase2 += Math.floor(Math.random() * 2000)
+                    await sleep(durationPhase2)
+                    phase = "yellow"
+                    drawCircle(xPos, yPos, "Yellow")
+                    durationPhase3 += Math.floor(Math.random() * 4000)
+                    await sleep(durationPhase3)
+                    drawCircle(xPos, yPos, "Red")
+                    phase = "red"
+                    intervalId = setInterval(() => {
+                        displayTimer()
+                    }, timerInterval)
+                    startTime = new Date()
+
+                })
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 
