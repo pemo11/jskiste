@@ -17,7 +17,21 @@ input#startButton[type="button"] {
     justify-content: space-around;
 }
 
+input.buchstabe[type="button"] {
+    font-size: 12pt;
+    height: 48px;
+    width: 96px;
+    border-radius:  10px;
+    background-color:orchid;
+    margin:10px;
+}
+
 div.infoArea {
+    width: 480px;
+    height: 240px;
+}
+
+div.buchstabenFeld {
     width: 480px;
     height: 240px;
 }

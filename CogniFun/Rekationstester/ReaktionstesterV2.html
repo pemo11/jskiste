@@ -14,7 +14,7 @@ Alternativ: Tastatureingabe
     </head>
     <body>
         <h1>Reaktionstester V2</h1>
-        <h3>Klicke so schnell Du kannst auf den roten Punkt, sobald er zu sehen ist</h3>
+        <h3>Klicke so schnell Du kannst auf den Buchstaben, sobald er in dem Kreis zu sehen ist</h3>
         <canvas
             id="gamePad"
             width="400"
@@ -22,6 +22,7 @@ Alternativ: Tastatureingabe
         ></canvas>
         <div id="infoArea">
         </div>
+        <div id="buchstabenFeld" class="buchstabenFeld"></div>
         <div class="timerDisplay">
             00 : 00 : 00 : 000
          </div>
@@ -31,6 +32,8 @@ Alternativ: Tastatureingabe
             const elStart = document.querySelector("#startButton")
             const elPad = document.querySelector("#gamePad")
             const elCurTime = document.querySelector('.timerDisplay');
+            const elBuchstabenFeld = document.querySelector("#buchstabenFeld")
+            const canvasColor = "#add8e6"
             const radius = 120
             const xPos = 250
             const yPos = 180
@@ -38,15 +41,30 @@ Alternativ: Tastatureingabe
             let [milliseconds,seconds,minutes,hours] = [0,0,0,0];
 
             var phase = ""
-            var durationPhase1 = 1000
-            var durationPhase2 = 2000
+            var durationPhase1 = 2000
+            var durationPhase2 = 3000
             var durationPhase3 = 3000
             var intervalId = 0
+            var aktuellerBuchstabe = 0
+            var buchstaben = null
 
             var context = elPad.getContext("2d")
 
             const sleep = (ms) => {
                 return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            // Liefert ein Array mit n Zufallszahlen im Bereich 0 bis upperBound
+            const getRandomNumbers = (count, upperBound) => {
+                let numbers = []
+                for (i=0;i<count;i++) {
+                    let z = 0
+                    do {
+                        z = Math.floor(Math.random() * upperBound)
+                    } while (numbers.findIndex(n => n == z) >= 0)
+                    numbers.push(z)
+                }
+                return numbers
             }
 
             const getMousePos = (canvas, event) => {
@@ -58,8 +76,7 @@ Alternativ: Tastatureingabe
             }
 
             const drawCircle = (xPos, yPos, fillColor) => {
-                // Löscht die Zeichenfläche (warum auch immer das funktioniert;)
-                elPad.width = elPad.width
+                clearCanvas()
                 context.arc(xPos, yPos, radius, 0, 2 * Math.PI, false)
                 context.fillStyle = fillColor
                 context.fill()
@@ -68,18 +85,26 @@ Alternativ: Tastatureingabe
                 context.stroke()
             }
 
+            const clearCanvas = () => {
+                // Löscht die Zeichenfläche (warum auch immer das funktioniert;)
+                elPad.width = elPad.width
+            }
+
+            const drawText = (text, xPos, yPos, color) => {
+                context.fillStyle = color
+                context.font = "bold 124px Arial";
+                context.fillText(text, xPos, yPos)
+            }
+
             // https://www.foolishdeveloper.com/2021/10/simple-stopwatch-using-javascript.html
             const displayTimer = () => {
                 milliseconds += 10
-
                 if (milliseconds == 1000) {
                     milliseconds = 0
                     seconds++
-
                     if (seconds == 60) {
                         seconds = 0
                         minutes++
-
                         if (minutes == 60) {
                             minutes = 0
                             hours++
@@ -92,53 +117,76 @@ Alternativ: Tastatureingabe
                 let s = seconds < 10 ? "0" + seconds : seconds
                 let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds
 
-                elCurTime.innerHTML = ` ${h} : ${m} : ${s} : ${ms}`
+                elCurTime.innerHTML = `${h} : ${m} : ${s} : ${ms}`
+            }
+
+            const buchstabenClickHandler = (event) => {
+                let buchstabe = event.target.value
+                // Stimmt der Buchstabe?
+                if (buchstabe == aktuellerBuchstabe) {
+                    console.log("*** Treffer ***")
+                    // Timer anhalten
+                    clearInterval(intervalId)
+                    elStart.disabled = false
+                }
+            }
+
+            const clearBuchstabenFeld = () => {
+                // ALle Buttons entfernen
+                while (elBuchstabenFeld.firstChild) {
+                    elBuchstabenFeld.removeChild(elBuchstabenFeld.lastChild);
+                }
+            }
+
+            // Buchstaben anzeigen
+            const showBuchstabenFeld = () => {
+                for(i=0;i<buchstaben.length;i++) {
+                    let elBuchstabenButton = document.createElement("input")
+                    elBuchstabenButton.setAttribute("type", "button")
+                    elBuchstabenButton.setAttribute("class", "buchstabe")
+                    elBuchstabenButton.value = String.fromCharCode(buchstaben[i]+65)
+                    elBuchstabenButton.addEventListener("click", buchstabenClickHandler)
+                    elBuchstabenFeld.appendChild(elBuchstabenButton)
+                }
             }
 
             window.addEventListener("load", (event) => {
-
-                 // Canvas wird angeklickt
-                 elPad.addEventListener("click", (event) => {
-                    console.log(event);
-                    // x und y im Bereich des Kreises?
-                    var mousePos = getMousePos(elPad, event)
-                    if (phase === "red") {
-                        console.log(`x=${mousePos.x} y=${mousePos.y} xPos=${xPos} yPos=${yPos}`)
-                        if (mousePos.x > xPos - radius && mousePos.x < xPos + radius &&
-                            mousePos.y > yPos -radius && mousePos.y < yPos + radius) {
-                            console.log("*** Treffer ***")
-                            // Timer anhalten
-                            clearInterval(intervalId)
-                            elStart.disabled = false
-                        }
-                    }
-
-                })
 
                 // click-Eventhanler für startButton
                 elStart.addEventListener("click", async (event) => {
                     [milliseconds,seconds,minutes,hours] = [0,0,0,0]
                     elCurTime.innerHTML = '00 : 00 : 00 : 000 '
                     elStart.disabled = true
-                    drawCircle(xPos, yPos, "white")
-                    durationPhase1 += Math.floor(Math.random() * 3000)
+                    clearBuchstabenFeld()
+                    clearCanvas()
+                    durationPhase1 += Math.floor(Math.random() * 2000)
                     await sleep(durationPhase1)
-                    phase = "green"
-                    drawCircle(xPos, yPos, "Green")
+                    phase = "red"
+                    drawCircle(xPos, yPos, "Red")
                     durationPhase2 += Math.floor(Math.random() * 2000)
-                    await sleep(durationPhase2)
+                    await sleep(durationPhase1)
                     phase = "yellow"
                     drawCircle(xPos, yPos, "Yellow")
-                    durationPhase3 += Math.floor(Math.random() * 4000)
+                    durationPhase3 += Math.floor(Math.random() * 2000)
                     await sleep(durationPhase3)
-                    drawCircle(xPos, yPos, "Red")
-                    phase = "red"
+                    drawCircle(xPos, yPos, "white")
+                    // Buchstaben anzeigen
+                    buchstaben = getRandomNumbers(10, 26)
+                    showBuchstabenFeld()
+                    let z = Math.floor(Math.random() * buchstaben.length)
+                    aktuellerBuchstabe = String.fromCharCode(buchstaben[z] + 65)
+                    console.log(`*** AktuellerBuchstabe = ${aktuellerBuchstabe} ***`)
+                    // Aktuell ist die Position nur provirorisch wie alles in dem Programm
+                    drawText(aktuellerBuchstabe, 220, 220, "black")
+                    phase = "green"
                     intervalId = setInterval(() => {
                         displayTimer()
                     }, timerInterval)
-                    startTime = new Date()
-
+ 
                 })
+
+                elPad.style.background = canvasColor
+
             });
 
         </script>
