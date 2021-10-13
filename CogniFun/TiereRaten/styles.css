@@ -1,0 +1,50 @@
+/* Die Standard-CSS */
+
+body {
+    font-family: verdana;
+    font-size: 11pt;
+}
+
+img.tierBild {
+    padding: 10px;
+    animation-duration: 5s;
+    animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+.fadeIn {
+    animation: fadeIn;
+}
+
+div.buchstabenFeld {
+    width: 480px;
+    height: 240px;
+}
+
+div.rateTier {
+    letter-spacing: 10px;
+    font-size: 48pt;
+    font-weight: bold;
+}
+
+
+input[type="button"] {
+    font-size: 12pt;
+    width: 160px;
+    height: 40px;
+    margin: 10px;
+    background-color:lightblue;
+}
+
+input.buchstabe[type="button"] {
+    font-size: 12pt;
+    height: 48px;
+    width: 96px;
+    border-radius:  10px;
+    background-color:orchid;
+    margin:10px;
+}

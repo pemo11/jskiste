@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Tiere raten V1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+        <!-- https://www.titania-foto.com/kostenlose-bilder/tiere/page/2/ -->
+    </head>
+    <body>
+        <h3>Tiere raten V1</h3>
+        <div>
+            <img id="tierBild" class="tierBild" width="250" height="250"></img>
+        </div>
+        <div id="rateTier" class="rateTier"></div>
+        <input type="button" id="bnStart" value="Start"></input>
+        <div id="buchstabenFeld" class="buchstabenFeld"></div>
+        <div>
+            <img id="bewertung" class="bewertung" src="images/HappyFace256.png"></img>
+        </div>
+        <script>
+            const elTierImg = document.querySelector("#tierBild")
+            const elRateTier = document.querySelector("#rateTier")
+            const elBewertung = document.querySelector("#bewertung")
+            const elBuchstabenFeld = document.querySelector("#buchstabenFeld")
+            const bnStart = document.querySelector("#bnStart")
+            var tierliste = {}
+            var rateTier = ""
+            var buchstabenCounter = 0
+            
+            const sleep = (ms) => {
+                return new Promise(resolve => setTimeout(resolve, ms))
+            }
+
+            const buchstabenClickHandler = (event) => {
+                let buchstabe = event.target.value
+                // Ist der Buchstabe im Ratewort enthalten und wurde noch nicht geraten?
+                if (buchstabe ) {
+                    console.log("*** Treffer ***")
+                }
+            }
+
+            const clearBuchstabenFeld = () => {
+                // ALle Buttons entfernen
+                while (elBuchstabenFeld.firstChild) {
+                    elBuchstabenFeld.removeChild(elBuchstabenFeld.lastChild);
+                }
+            }
+
+            // Buchstaben anzeigen - aber in einer anderen Reihenfolge als das Wort es vorgibt
+            const showBuchstabenFeld = () => {
+                let buchstaben = []
+                // Weiteres Array für das Merken des Index erforderlich, da ein Buchstabe mehrfach vorkommen kann
+                let gezogen = []
+                let z = 0
+                for(i=0;i<rateTier.length;i++) {
+                    do {
+                        z = Math.floor(Math.random() * rateTier.length)
+                    } while (gezogen.findIndex(j => j == z) >= 0)
+                    gezogen.push(z)
+                    buchstaben.push(rateTier[z])
+                }
+
+                for(i=0;i<buchstaben.length;i++) {
+                    let elBuchstabenButton = document.createElement("input")
+                    elBuchstabenButton.setAttribute("type", "button")
+                    elBuchstabenButton.setAttribute("class", "buchstabe")
+                    elBuchstabenButton.value = buchstaben[i].toUpperCase()
+                    elBuchstabenButton.addEventListener("click", buchstabenClickHandler)
+                    elBuchstabenFeld.appendChild(elBuchstabenButton)
+                }
+            }
+
+            window.addEventListener("load", (event) => {
+                
+                bnStart.addEventListener("click", (event) => {
+                    clearBuchstabenFeld()
+                    // Das Ratefeld löschen
+                    // Typisch JavaScript, dass child nicht deklariert werden muss (aber sollte)
+                    // Twhile(child = elRateTier.firstChild) {
+                    // T    elRateTier.removeChild(child)
+                    // T}
+                    // Bessere Alternative
+                    while(child = elRateTier.firstChild) {
+                        elRateTier.removeChild(elRateTier.lastChild)
+                    }
+
+                    let z = Math.floor(Math.random() * Object.keys(tierliste).length)
+                    // Um einen index verwenden zu können, benötigen wir die keys als Array - das liefert object.keys()
+                    let tierbild = Object.keys(tierliste)[z] 
+                    let imgPfad = "images/" + tierbild + ".png"
+                    rateTier = tierliste[tierbild]
+                    console.log(`*** Das Ratetier ist ${rateTier} ***`)
+                    elTierImg.setAttribute("src", imgPfad)
+                    // Animation starten durch setzen des Attributs
+                    elTierImg.setAttribute("class", "tierBild fadeIn")
+                    // Nach 2s wieder wegnehmen
+                    setTimeout(async () => {
+                        elTierImg.setAttribute("class", "tierBild")
+                        showBuchstabenFeld()
+                        // _ für jeden Buchstaben anzeigen
+                        for(c in rateTier) {
+                            let cSpan = document.createElement("span")
+                            cSpan.innerText = "-"
+                            sleep(500)
+                            elRateTier.appendChild(cSpan)
+                        }
+                    }, 2000)
+
+                })
+
+                tierliste["Hund1"] = "Hund"
+                tierliste["Hund2"] = "Hund"
+                tierliste["Kaninchen1"] = "Kanninchen"
+                tierliste["Kaninchen2"] = "Kanninchen"
+                tierliste["Katze1"] = "Katze"
+                tierliste["Katze2"] = "Katze"
+                tierliste["Meerschweinchen1"] = "Meerschweinchen"
+                tierliste["Meerschweinchen2"] = "Meerschweinchen"
+                tierliste["Schaf1"] = "Schaf"
+
+                elBewertung.style.display = "none"
+                showBuchstabenFeld()
+             });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 
