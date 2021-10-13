@@ -21,9 +21,9 @@ img.tierBild {
     animation: fadeIn;
 }
 
-div.buchstabenFeld {
+div.buchstabenfeld {
     width: 480px;
-    height: 240px;
+    height: 480px;
 }
 
 div.rateTier {
@@ -48,4 +48,20 @@ input.buchstabe[type="button"] {
     border-radius:  10px;
     background-color:orchid;
     margin:10px;
+}
+
+.timerDisplay{
+    position: relative;
+    width: 30%;
+    background: #ffffff;
+    left: 4%;
+    padding: 20px 0;
+    font-family: 'Roboto mono',monospace;
+    color: #0381bb;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0,139,253,0.25);
 }

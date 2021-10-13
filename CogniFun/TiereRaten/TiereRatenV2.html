@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Tiere raten V2</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+        <!-- https://www.titania-foto.com/kostenlose-bilder/tiere/page/2/ -->
+    </head>
+    <body>
+        <h3>Tiere raten V2</h3>
+        <div>
+            <img id="tierBild" class="tierBild" width="250" height="250"></img>
+        </div>
+        <div id="rateTier" class="rateTier"></div>
+        <input type="button" id="bnStart" value="Start"></input>
+        <div style="background-color: greenyellow;width:200px;margin:10px">
+            <input type="radio" id="leicht" name="level" value="A" checked>Leicht</input><p>
+            <input type="radio" id="mittel" name="level" value="B">Mittel</input><p>
+        </div>
+
+        <div id="buchstabenfeld" class="buchstabenfeld"></div>
+        <div>
+            <img id="bewertung" class="bewertung" src="images/HappyFace256.png"></img>
+        </div>
+        <h6>Remembering an important person</h6>
+
+        <script>
+            const elTierImg = document.querySelector("#tierBild")
+            const elRateTier = document.querySelector("#rateTier")
+            const elBewertung = document.querySelector("#bewertung")
+            const elBuchstabenfeld = document.querySelector("#buchstabenfeld")
+            const bnStart = document.querySelector("#bnStart")
+            const elLevels = document.getElementsByName("level")
+            var tierliste = []
+            var rateTierliste = null
+            var rateTier = ""
+            var buchstabenCounter = 0
+            var level = "A"
+            var gameOver = false
+            
+            const sleep = (ms) => {
+                return new Promise(resolve => setTimeout(resolve, ms))
+            }
+
+            elLevels.forEach(radio => {
+                radio.addEventListener("click", (event)=> {
+                    level = event.target.value
+                    clearBuchstabenfeld()
+                    elBewertung.style.display = "none"
+                })
+            })
+
+            const buchstabenClickHandler = (event) => {
+                // darf geraten werden?
+                if (gameOver) {
+                    return
+                }
+                let buchstabe = event.target.value
+                // Ist der Buchstabe im Ratewort enthalten und wurde noch nicht geraten?
+                if (buchstabe == rateTier[buchstabenCounter].toUpperCase()) {
+                    console.log("*** Treffer ***")
+                    elRateTier.getElementsByTagName("span")[buchstabenCounter].innerText = rateTier[buchstabenCounter]
+                    buchstabenCounter++
+                    // Tier erraten?
+                    if (buchstabenCounter === rateTier.length) {
+                        console.log("*** Das Tier wurde erraten ***")
+                        elBewertung.style.display = "block"
+                        gameOver = true
+                    }
+                }
+            }
+
+            const clearBuchstabenfeld = () => {
+                // ALle Buttons entfernen
+                while (elBuchstabenfeld.firstChild) {
+                    elBuchstabenfeld.removeChild(elBuchstabenfeld.lastChild);
+                }
+            }
+
+            const clearRatefeld = () => {
+                // Das Ratefeld löschen
+                while(child = elRateTier.firstChild) {
+                        elRateTier.removeChild(elRateTier.lastChild)
+                }
+            }
+
+            // In V2 werden je nach Level entweder nur die Buchstaben aus dem Namen oder alle Buchstaben zur Auswahl angeboten
+            const showBuchstabenfeld = () => {
+                let buchstaben = []
+                if (level == "A") {
+                    // Weiteres Array für das Merken des Index erforderlich, da ein Buchstabe mehrfach vorkommen kann
+                    let gezogen = []
+                    let z = 0
+                    for(i=0;i<rateTier.length;i++) {
+                        do {
+                            z = Math.floor(Math.random() * rateTier.length)
+                        } while (gezogen.findIndex(j => j == z) >= 0)
+                        gezogen.push(z)
+                        buchstaben.push(rateTier[z])
+                    }
+                } else if (level = "B") {
+                    for(i=65;i<91;i++) {
+                        buchstaben.push(String.fromCharCode(i))
+                    }
+                }
+
+                for(i=0;i<buchstaben.length;i++) {
+                    let elBuchstabenButton = document.createElement("input")
+                    elBuchstabenButton.setAttribute("type", "button")
+                    elBuchstabenButton.setAttribute("class", "buchstabe")
+                    elBuchstabenButton.value = buchstaben[i].toUpperCase()
+                    elBuchstabenButton.addEventListener("click", buchstabenClickHandler)
+                    elBuchstabenfeld.appendChild(elBuchstabenButton)
+                }
+            }
+
+            window.addEventListener("load", (event) => {
+                
+                bnStart.addEventListener("click", (event) => {
+                    clearBuchstabenfeld()
+                    buchstabenCounter = 0
+                    gameOver = false
+                    elBewertung.style.display = "none"
+                    clearRatefeld()
+                    // Liste mit Tiere, die geraden werden können, hängt vom Level, dank filter-function genial einfach
+                    rateTierliste = tierliste.filter(t => t.level == level)
+                    let z = Math.floor(Math.random() * rateTierliste.length)
+                    // Jetzt gibt es zum Glück Objekte...
+                    let tierbild = rateTierliste[z].image
+                    let imgPfad = "images/" + tierbild + ".png"
+                    rateTier = rateTierliste[z].name
+                    console.log(`*** Das Ratetier ist ${rateTier} ***`)
+                    elTierImg.setAttribute("src", imgPfad)
+                    // Animation starten durch setzen des Attributs
+                    elTierImg.setAttribute("class", "tierBild fadeIn")
+                    // Nach 2s wieder wegnehmen
+                    setTimeout(async () => {
+                        elTierImg.setAttribute("class", "tierBild")
+                        showBuchstabenfeld()
+                        // _ für jeden Buchstaben anzeigen
+                        for(c in rateTier) {
+                            let cSpan = document.createElement("span")
+                            cSpan.innerText = "-"
+                            sleep(500)
+                            elRateTier.appendChild(cSpan)
+                        }
+                    }, 2000)
+
+                })
+
+                // Das Array enthält jetzt Objekte
+                tierliste.push({level:"A",name:"Hase",image:"hase1"})
+                tierliste.push({level:"A",name:"Hase",image:"hase2"})
+                tierliste.push({level:"A",name:"Hund",image:"hund1"})
+                tierliste.push({level:"A",name:"Hund",image:"hund2"})
+                tierliste.push({level:"A",name:"Hund",image:"hund3"})
+                tierliste.push({level:"A",name:"Hund",image:"hund4"})
+                tierliste.push({level:"A",name:"Hund",image:"hund5"})
+                tierliste.push({level:"A",name:"Kaninchen",image:"kaninchen1"})
+                tierliste.push({level:"A",name:"Kaninchen",image:"kaninchen2"})
+                tierliste.push({level:"A",name:"Katze",image:"katze1"})
+                tierliste.push({level:"A",name:"Katze",image:"katze2"})
+                tierliste.push({level:"A",name:"Katze",image:"katze3"})
+                tierliste.push({level:"B",name:"Meerschweinchen",image:"meerschweinchen1"})
+                tierliste.push({level:"B",name:"Meerschweinchen",image:"meerschweinchen2"})
+                tierliste.push({level:"B",name:"Meerschweinchen",image:"meerschweinchen3"})
+                tierliste.push({level:"B",name:"Meerschweinchen",image:"meerschweinchen3"})
+                tierliste.push({level:"A",name:"Schaf",image:"schaf1"})
+
+                elBewertung.style.display = "none"
+                clearBuchstabenfeld()
+             });
+
+        </script>
+
+    </body>
+</html> 
