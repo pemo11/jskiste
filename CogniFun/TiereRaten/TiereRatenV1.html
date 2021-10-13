@@ -35,8 +35,15 @@
             const buchstabenClickHandler = (event) => {
                 let buchstabe = event.target.value
                 // Ist der Buchstabe im Ratewort enthalten und wurde noch nicht geraten?
-                if (buchstabe ) {
+                if (buchstabe == rateTier[buchstabenCounter].toUpperCase()) {
                     console.log("*** Treffer ***")
+                    elRateTier.getElementsByTagName("span")[buchstabenCounter].innerText = rateTier[buchstabenCounter]
+                    buchstabenCounter++
+                    // Tier erraten?
+                    if (buchstabenCounter === rateTier.length) {
+                        console.log("*** Tier wurde erraten ***")
+                        elBewertung.style.display = "block"
+                    }
                 }
             }
 
@@ -75,6 +82,8 @@
                 
                 bnStart.addEventListener("click", (event) => {
                     clearBuchstabenFeld()
+                    buchstabenCounter = 0
+                    elBewertung.style.display = "none"
                     // Das Ratefeld löschen
                     // Typisch JavaScript, dass child nicht deklariert werden muss (aber sollte)
                     // Twhile(child = elRateTier.firstChild) {
