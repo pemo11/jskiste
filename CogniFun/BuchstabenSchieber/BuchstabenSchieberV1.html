@@ -20,11 +20,15 @@
         <div id="rateTier" class="rateTier"></div>
         <input type="button" id="bnStart" value="Start"></input>
         <div id="buchstabenFeld"></div>
+        <div>
+            <img id="bewertung" class="bewertung" src="images/HappyFace256.png"></img>
+        </div>
 
         <script>
             const elTierImg = document.querySelector("#tierBild")
             const bnStart = document.querySelector("#bnStart")
             const elrateTier = document.querySelector("#rateTier")
+            const elBewertung = document.querySelector("#bewertung")
 
             var tierliste = {}
             var rateTier = ""
@@ -43,11 +47,22 @@
                 return nameNeu
             }
 
+            const rateName = () => {
+                let divListe = document.querySelectorAll('[id^="buchstabe"]')
+                let name = ""
+                divListe.forEach((elDiv) => {
+                    name += elDiv.innerText
+                })
+                console.log(`rateName=${name}`)
+                return name
+            }
+
 
             window.addEventListener("load", (event) => {
 
                 bnStart.addEventListener("click", (event) => {
                     elrateTier.innerHTML = ""
+                    elBewertung.style.display = "none"
                     let z = Math.floor(Math.random() * Object.keys(tierliste).length)
                     // Jetzt gibt es zum Glück Objekte...
                     let tierbild = Object.keys(tierliste)[z] 
@@ -72,23 +87,32 @@
                             let divC = document.createElement("div")
                             divC.setAttribute("class", "buchstabe")
                             divC.innerText = nameNeu[c]
+                            divC.id = `buchstabe${c}`
 
-                            divC.addEventListener("ondragstart", (event) => {
+                            divC.addEventListener("dragstart", (event) => {
                                 event.dataTransfer.effectAllowed = "copy"
-                                event.dataTransfer.setData("text", event.target.getAttribute("id"))
-                                return true
+                                // event.dataTransfer.setData("text/plain", event.target.innerText)
+                                // Beim Draggen wird die Div-ID übertragen
+                                event.dataTransfer.setData("text/plain", event.target.id)
                             })
 
-                            divC.addEventListener("ondrop", (event) => {
+                            divC.addEventListener("drop", (event) => {
                                 event.preventDefault()
-                                let data = event.dataTransfer.getData("text")
-                                let elDiv = document.getElementById(data)
-                                event.target.innerText = evDiv.innerText
+                                let divId = event.dataTransfer.getData("text/plain")
+                                console.log(divId)
+                                let elDiv = document.getElementById(divId)
+                                let tmp = event.target.innerText
+                                event.target.innerText = elDiv.innerText
+                                elDiv.innerText = tmp
+                                // Wurde das Tier erraten?
+                                if (rateTier == rateName()) {
+                                    console.log("*** Erfolg - der Name stimmt ***")
+                                    elBewertung.style.display = "block"
+                                }
                             })
 
-                            divC.addEventListener("ondragover", (event) => {
+                            divC.addEventListener("dragover", (event) => {
                                 event.preventDefault()
-                                return false
                             })
 
                             divC.draggable = true
@@ -109,6 +133,8 @@
                 tierliste["Meerschweinchen2"] = "Meerschweinchen"
                 tierliste["Schaf1"] = "Schaf"
                 
+                elBewertung.style.display = "none"
+
             })
 
         </script>
