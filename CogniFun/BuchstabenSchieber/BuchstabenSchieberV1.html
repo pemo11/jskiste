@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Buchstabenschieber V1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <!--
+        Zu einem angezeigten Tierbild müssen die angezeigten Buchstaben richtig sortiert werden, so dass sich der Name des Tiers ergibt 
+        Drag&Drop innerhalb eines Div - jeder Buchstabe ist ebenfalls kein div (kein Span)
+        In V2 kann der Schwierigkeitsgrad eingestellt werden - bei Schwierig läuft ein Timer mit
+        Bewertung durch Smiley
+    -->
+    <body>
+        <h3>Buchstabenschieber V1</h3>
+        <div>
+            <img id="tierBild" class="tierBild" width="250" height="250"></img>
+        </div>
+        <div id="rateTier" class="rateTier"></div>
+        <input type="button" id="bnStart" value="Start"></input>
+        <div id="buchstabenFeld"></div>
+
+        <script>
+            const elTierImg = document.querySelector("#tierBild")
+            const bnStart = document.querySelector("#bnStart")
+            const elrateTier = document.querySelector("#rateTier")
+
+            var tierliste = {}
+            var rateTier = ""
+
+            // Verdreht alle Buchstaben in einem Namen
+            const mixName = (name) =>  {
+                let gezogen = []
+                let nameNeu = []
+                for(i=0;i<name.length;i++) {
+                        do {
+                            z = Math.floor(Math.random() * name.length)
+                        } while (gezogen.findIndex(j => j == z) >= 0)
+                        gezogen.push(z)
+                        nameNeu.push(name[z])
+                }
+                return nameNeu
+            }
+
+
+            window.addEventListener("load", (event) => {
+
+                bnStart.addEventListener("click", (event) => {
+                    elrateTier.innerHTML = ""
+                    let z = Math.floor(Math.random() * Object.keys(tierliste).length)
+                    // Jetzt gibt es zum Glück Objekte...
+                    let tierbild = Object.keys(tierliste)[z] 
+                    let imgPfad = "images/" + tierbild + ".png"
+                    rateTier = tierliste[tierbild]
+                    console.log(`*** Das Ratetier ist ${rateTier} ***`)
+                    elTierImg.setAttribute("src", imgPfad)
+                    // Animation starten durch setzen des Attributs
+                    elTierImg.setAttribute("class", "tierBild fadeIn")
+                    // Nach 2s wieder wegnehmen
+                    setTimeout(async () => {
+                        elTierImg.setAttribute("class", "tierBild")
+                        // Buchstaben vertauscht anzeigen
+                        // Wichtig: Es darf nicht das Originalwort sein und der erste Buchstabe darf nicht übereinstimmen
+                        let nameNeu = ""
+                        do {
+                            nameNeu = mixName(rateTier)
+                        } while (nameNeu == rateTier && nameNeu[0] == rateTier[0])
+                        // neuen Namen ausgeben
+                        // elrateTier.innerText = nameNeu
+                        for(c in nameNeu) {
+                            let divC = document.createElement("div")
+                            divC.setAttribute("class", "buchstabe")
+                            divC.innerText = nameNeu[c]
+
+                            divC.addEventListener("ondragstart", (event) => {
+                                event.dataTransfer.effectAllowed = "copy"
+                                event.dataTransfer.setData("text", event.target.getAttribute("id"))
+                                return true
+                            })
+
+                            divC.addEventListener("ondrop", (event) => {
+                                event.preventDefault()
+                                let data = event.dataTransfer.getData("text")
+                                let elDiv = document.getElementById(data)
+                                event.target.innerText = evDiv.innerText
+                            })
+
+                            divC.addEventListener("ondragover", (event) => {
+                                event.preventDefault()
+                                return false
+                            })
+
+                            divC.draggable = true
+
+                            elrateTier.appendChild(divC)
+                        }
+                    }, 2000)
+
+                })
+
+                tierliste["Hund1"] = "Hund"
+                tierliste["Hund2"] = "Hund"
+                tierliste["Kaninchen1"] = "Kanninchen"
+                tierliste["Kaninchen2"] = "Kanninchen"
+                tierliste["Katze1"] = "Katze"
+                tierliste["Katze2"] = "Katze"
+                tierliste["Meerschweinchen1"] = "Meerschweinchen"
+                tierliste["Meerschweinchen2"] = "Meerschweinchen"
+                tierliste["Schaf1"] = "Schaf"
+                
+            })
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

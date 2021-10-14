@@ -1,0 +1,39 @@
+/* Standard-Style */
+
+body {
+    font-family: verdana;
+    font-size: 11pt;
+}
+
+input[type="button"] {
+    height: 32px;
+    width: 120px;
+    background-color:greenyellow;
+}
+
+img.tierBild {
+    padding: 10px;
+    animation-duration: 5s;
+    animation-fill-mode: both;
+}
+
+
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+.fadeIn {
+    animation: fadeIn;
+}
+
+
+div.buchstabe {
+    background-color: lightblue;
+    font-size: 72pt;
+    font-weight: bold;
+    margin: 10px;
+    letter-spacing: 20px;
+    color: blue;
+    display: inline-block;
+}
