@@ -1,0 +1,185 @@
+<!--
+
+geht noch nicht, es wird immer das letzte Element gezeichnet
+
+Grund ist Scope bzw. Objekt wird wieder gelöscht
+https://stackoverflow.com/questions/8404937/drawing-multiple-images-on-one-canvas
+
+Sollte es mit requestAnimationFrame() probieren
+
+https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Basic_animations
+
+-->
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Maus will nach Haus - Teil 1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Maus will nach Haus - Teil 1</h3>
+        <canvas
+            id="gamePad"
+            class="gamePad"
+            width="600"
+            height="600"
+        >
+        </canvas>
+        <div>
+            <label id="infoFeld"></label>
+        </div>
+        <div>
+            <input type="button" id="startButton" value="Start"></input>
+        </div>
+
+
+        <script>
+            const elCanvas = document.querySelector("#gamePad")
+            const elStartButton = document.querySelector("#startButton")
+            const elInfoFeld = document.querySelector("#infoFeld")
+            const ctx = elCanvas.getContext("2d")
+            const anzahlKaese = 5
+            const anzahlSteine = 10
+            const breiteSpielfeld = 600
+            const breiteFigur = 40
+            const hoeheFigur = 40
+            const hoeheSpielfeld = 600
+            const anzahlFigurenZeile = breiteSpielfeld / breiteFigur
+            const maus = 1
+            const stein = 2
+            const kaese = 3
+            const delta = 10
+            var spielFeld = null
+            var imgListe = []
+
+            var anzahlSpalten = breiteSpielfeld
+
+            var xPos = 300
+            var yPos = 300
+
+            var img = new Image()
+
+            var imgPos = {
+                x:xPos,
+                y:yPos,
+                width:breiteFigur,
+                height:hoeheFigur
+            }
+
+            const feldAnlegen = () => {
+                anzahlSpalten  = breiteSpielfeld / breiteFigur
+                spielFeld = new Array(anzahlSpalten)
+                for (var i=0;i<anzahlSpalten;i++) {
+                    spielFeld[i] = new Array(anzahlSpalten)
+                }
+            }
+
+            const itemsVerteilen = (type, count) => {
+                for(var i=0;i<count;i++) {
+                    let x = 0
+                    let y = 0
+                    do {
+                        x = Math.floor(Math.random() * anzahlSpalten)
+                        y = Math.floor(Math.random() * anzahlSpalten)
+                    } while (spielFeld[x][y] == type)
+                    spielFeld[x][y] = type
+                }
+            }
+
+            const feldAnzeigen = () => {
+                for(var i=0;i<anzahlSpalten;i++) {
+                    let x = 0
+                    let y = 0
+                    for(var j=0;j<anzahlSpalten;j++) {
+                        x = i  * breiteFigur
+                        y = j * hoeheFigur
+                        switch(spielFeld[i][j]) {
+                            case kaese:
+                                itemZeichnen(x, y, kaese)
+                                break
+                            case stein:
+                                itemZeichnen(x, y, stein)
+                                break
+                        }
+                    }
+                }
+            }
+
+            const itemZeichnen = (xPos, yPos, type) => {
+
+                console.log(`*** Zeichne ein ${type} an ${xPos}/${yPos} ***`)
+
+                img.onload = () => {
+                    ctx.drawImage(img, imgPos.x, imgPos.y, imgPos.width, imgPos.height)
+                }
+
+                switch (type) {
+                    case 1:
+                        img.src = "images/KleineMaus2.png"
+                        break;
+                    case 2:
+                        img.src = "images/Kaese1.png"
+                        break;
+                    case 3:
+                        img.src = "images/Stein1.png"
+                        break;
+                }
+
+                // Aktuelle Position ausgeben
+                elInfoFeld.innerText = `xPos:${xPos} yPos:${yPos} `
+
+            }
+
+            window.addEventListener("load", (event) => {
+
+                elStartButton.addEventListener("click", (event) => {
+                    feldAnlegen()
+                    itemsVerteilen(stein, anzahlSteine)
+                    itemsVerteilen(kaese, anzahlKaese)
+                    feldAnzeigen()
+                })
+
+                window.addEventListener("keydown", (event) => {
+                    switch (event.keyCode) {
+                        case 37:
+                            if (xPos >= delta) {
+                                xPos -= delta
+                            }
+                            break;
+                        case 38:
+                            if (yPos >= delta) {
+                                yPos -= delta
+                            }
+                            break;
+                        case 39:
+                            if (xPos < elCanvas.width - breiteFigur) {
+                                xPos += delta
+                            }
+                            break;
+                        case 40:
+                            if (yPos < elCanvas.height - hoeheFigur) {
+                                yPos += delta
+                            }
+                            break;
+                    }
+
+                    // Fläche leeren
+                    // ctx.clearRect(imgPos.x, imgPos.y, imgPos.x + imgPos.width, imgPos.y + imgPos.height)
+                    imgPos.x = xPos
+                    imgPos.y = yPos
+                    itemZeichnen(xPos, yPos, maus)
+                    // Ist der Aufruf erforderlich?
+                    event.preventDefault()
+                }, false)
+
+            });
+
+            itemZeichnen(xPos, yPos, maus)
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

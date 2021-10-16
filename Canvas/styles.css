@@ -1,0 +1,25 @@
+/* Die Standard-CSS */
+
+body {
+    font-family: verdana;
+    font-size: 11pt;
+}
+
+div.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input[type=button] {
+    background-color: aqua;
+    width: 160px;
+    height: 40px;
+    border-radius: 2em;
+    margin:20px;
+}
+
+canvas {
+    background-color: lightyellow;
+    margin: 20px;
+}

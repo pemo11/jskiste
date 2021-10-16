@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Canvas-Beispiel - Mehrere Bitmaps V2</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Canvas-Beispiel - Mehrere Bitmaps V2</h3>
+        <canvas id="mainCanvas" width="600" height="600"></canvas>
+        <div>
+            <input type="button" id="startButton" value="Start">
+        </div>
+
+        <script>
+            var elCanvas = document.querySelector("#mainCanvas")
+            var elStart = document.querySelector("#startButton")
+            var ctx = null
+            var spielFeld = null
+            var smileyListe = []
+            var colCount = 15
+            var rowCount = 15
+
+            smileyListe.push("images/Smiley01.png")
+            smileyListe.push("images/Smiley02.png")
+            smileyListe.push("images/Smiley03.png")
+            smileyListe.push("images/Smiley04.png")
+            smileyListe.push("images/Smiley05.png")
+
+            window.addEventListener("load", (event) => {
+
+                ctx = elCanvas.getContext("2d")
+
+                elStart.addEventListener("click", (event) => {
+
+                    // Spielfeld einrichten
+                    spielFeld = new Array(rowCount)
+                    for(i=0;i<rowCount;i++) {
+                        spielFeld[i] = new Array(colCount)
+                        for(j=0;j<colCount;j++) {
+                            spielFeld[i][j] = -1
+                        }
+                    }
+
+                    // Spielfeld einrichten
+                    let smileyCount = 20
+                    for (i=0;i<smileyCount;i++) {
+                        let x = 0
+                        let y = 0
+                        do {
+                            x = Math.floor(Math.random() * colCount)
+                            y = Math.floor(Math.random() * rowCount)
+                        } while (spielFeld[x][y] != -1)
+                        let z = Math.floor(Math.random() * smileyListe.length)
+                        console.log(`*** Setze Smiley Nr ${i+1}=${z} bei x=${x} und y=${y} ***`)
+                        spielFeld[x][y] = z
+                    }
+
+                    // Spielfeld belegen
+
+                    ctx.clearRect(0, 0, 600, 600)
+
+                    for(i=0;i<rowCount;i++) {
+                        for(j=0;j<colCount;j++) {
+                            let x = 0
+                            let y = 0
+                            if (spielFeld[i][j] >= 0) {
+                                let img = new Image()
+                                x = j * 40
+                                y = i * 40
+                                console.log(`i=${i} j=${j} `)
+                                img.onload = () => {
+                                    ctx.drawImage(img, x, y, 40, 40)
+                                    console.log(`*** Smiley ${z} bei x=${x}/y=${y} ***`)
+                                }
+                                let z = spielFeld[i][j]
+                                img.src = smileyListe[z]
+                            }
+                        }
+                    }
+                })
+            })
+                
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Canvas-Beispiel - Rechteck</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Canvas-Beispiel - Rechteck</h3>
+        <canvas id="mainCanvas" width="480" height="320"></canvas>
+        <div id="info"></div>
+
+        <script>
+            var elInfo = document.querySelector("#info")
+            var elCanvas = document.querySelector("#mainCanvas")
+
+            window.addEventListener("load", (event) => {
+                
+                elCanvas = document.getElementById("mainCanvas")
+                // Auf Mouse Events reagieren
+                elCanvas.addEventListener("mousemove", (event) => {
+                    var rect = elCanvas.getBoundingClientRect()
+                    elInfo.innerText = `*** x-Pos: ${event.clientX - rect.left} Offset-X: ${event.offsetX} y-Pos: ${event.clientY - rect.top} Offset-Y: ${event.offsetY}***`
+                })
+                let ctx = elCanvas.getContext("2d")
+                ctx.beginPath()
+                ctx.rect(20, 40, 250, 250)
+                ctx.fillStyle = "#FF0000"
+                ctx.fill()
+                ctx.closePath()
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

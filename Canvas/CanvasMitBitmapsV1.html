@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Canvas-Beispiel - Mehrere Bitmaps V1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Canvas-Beispiel - Mehrere Bitmaps V1</h3>
+        <canvas id="mainCanvas" width="600" height="600"></canvas>
+        <div>
+            <input type="button" id="startButton" value="Start">
+        </div>
+
+        <script>
+            var elCanvas = document.querySelector("#mainCanvas")
+            var elStart = document.querySelector("#startButton")
+            var ctx = null
+            var smileyListe = []
+            smileyListe.push("images/Smiley01.png")
+            smileyListe.push("images/Smiley02.png")
+            smileyListe.push("images/Smiley03.png")
+            smileyListe.push("images/Smiley04.png")
+            smileyListe.push("images/Smiley05.png")
+
+            window.addEventListener("load", (event) => {
+
+                ctx = elCanvas.getContext("2d")
+
+                elStart.addEventListener("click", (event) => {
+                    ctx.clearRect(0, 0, 600, 600)
+                    for(i=0;i<10;i++) {
+                        let x = Math.floor(Math.random() * 600 - 40)
+                        let y = Math.floor(Math.random() * 600 - 40)
+                        let img = new Image()
+                        img.onload = () => {
+                            ctx.drawImage(img, x, y, 60, 60)
+                        }
+                        let z = Math.floor(Math.random() * smileyListe.length)
+                        let srcPfad = smileyListe[z]
+                        img.src = srcPfad
+                    }
+                })
+            })
+                
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 
