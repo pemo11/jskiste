@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Canvas tutorial - Beispiel Nr. 9</title>
+    <link href="styles.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+      <h3>Canvas-Beispiel - zeichnen eines Rechteck mit bunten Feldern</h3>
+    <canvas
+        id="tutorial"
+        width="600"
+        height="600"
+        >
+    </canvas>
+    <div>
+          <input type="button" id="startButton" value="Start">
+          <input type="button" id="stopButton" value="Stop">
+    </div>
+
+
+    <script type="text/javascript">
+        const canvas = document.getElementById("tutorial")
+        const elStartButton = document.querySelector("#startButton")
+        const elStopButton = document.querySelector("#stopButton")
+        const ctx = canvas.getContext("2d")
+        const breiteSpielfeld = 400
+        const hoeheSpielfeld = 400
+        const xOffset = 100
+        const yOffset = 100
+        const farbFeld = ["red","green","blue","yellow","brown"]
+        var intervalId = 0
+        var interval = 500
+        const anzahlFelder = 25
+        const groesseFeld = 20
+
+        function draw() {
+          if (canvas.getContext) {
+            ctx.lineWidth = 2
+            ctx.strokeStyle = "red"
+            ctx.strokeRect(xOffset, yOffset, breiteSpielfeld, hoeheSpielfeld)
+            ctx.fillStyle = "black"
+            ctx.fillRect(xOffset, yOffset, breiteSpielfeld, hoeheSpielfeld)
+            // Feld löschen
+            // ctx.clearRect(xOffset, yOffset, breiteSpielfeld, hoeheSpielfeld)
+            // 15 Felder ausfüllen
+            for(var i=0;i<anzahlFelder;i++) {
+                let x = Math.floor(Math.random() * groesseFeld) 
+                let y = Math.floor(Math.random() * groesseFeld) 
+                let color = farbFeld[Math.floor(Math.random() * farbFeld.length)]
+                let xPos = x * groesseFeld + xOffset
+                let yPos = y * groesseFeld + yOffset
+                ctx.fillStyle = color
+                ctx.fillRect(xPos, yPos, groesseFeld, groesseFeld)
+            }
+          }
+        }
+
+        window.addEventListener("load", (event) => {
+
+            elStartButton.addEventListener("click", () => {
+                intervalId = setInterval(() => {
+                    draw()
+                }, interval)
+            })
+
+            elStopButton.addEventListener("click", () => {
+                clearInterval(intervalId)
+            })
+
+        })
+
+
+      </script>
+
+  </body>
+</html>

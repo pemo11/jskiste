@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Canvas tutorial - Beispiel Nr. 5</title>
+    <link href="styles.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+      <h3>Canvas-Beispiel Nr. 5</h3>
+        <div>
+            Zeichnen einer Bezier-Kurve
+            Keywords: bezierCurve()
+        </div>
+        <canvas
+            id="tutorial"
+            width="150"
+            height="150">
+        </canvas>
+
+        <script type="text/javascript">
+            const canvas = document.getElementById("tutorial")
+
+            function draw() {
+                if (canvas.getContext) {
+                    var ctx = canvas.getContext("2d")
+                }
+
+                ctx.beginPath()
+                ctx.moveTo(75, 40)
+                ctx.bezierCurveTo(75, 37, 70, 25, 50, 25)
+                ctx.bezierCurveTo(20, 25, 20, 62.5, 20, 62.5)
+                ctx.bezierCurveTo(20, 80, 40, 102, 75, 120)
+                ctx.bezierCurveTo(110, 102, 130, 80, 130, 62.5)
+                ctx.bezierCurveTo(130, 62.5, 130, 25, 100, 25)
+                ctx.bezierCurveTo(85, 25, 75, 37, 75, 40)
+                ctx.stroke()
+
+                // Reihenfolge stroke() fill() spielt in diesem Beispiel keine Rolle
+                ctx.fillStyle = "red"
+                ctx.fill()
+            }
+
+            window.addEventListener("load", (event) => {
+                draw()
+            })
+
+
+      </script>
+
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Canvas tutorial - Beispiel Nr. 7</title>
+    <link href="styles.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+      <h3>Canvas-Beispiel - Beispiel Nr. 7 - Path2D</h3>
+      <div>
+          Zeichnen mit Path2D-Objekten
+          Keywords: Path2D-Objekten
+      </div>
+    <canvas
+        id="tutorial"
+        width="600"
+        height="400">
+    </canvas>
+
+    <script type="text/javascript">
+        const canvas = document.getElementById("tutorial")
+
+        function draw() {
+          if (canvas.getContext) {
+            var ctx = canvas.getContext("2d")
+
+            // Ein SVG-Pfad (what ever the numbers mean;)
+            let path = "M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0"
+            var kreis = new Path2D(path)
+
+            ctx.fillStyle = "green"
+
+            // Beim Aufruf von stroke()/fill() wird nur das Path2D-Objekt angegeben
+            ctx.stroke(kreis)
+            ctx.fill(kreis)
+
+          }
+        }
+
+
+
+        window.addEventListener("load", (event) => {
+            draw()
+        })
+
+
+      </script>
+
+  </body>
+</html>

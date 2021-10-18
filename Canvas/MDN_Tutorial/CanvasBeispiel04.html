@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Canvas Tutorial-Beispiel Nr. 4</title>
+    <link href="styles.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+      <h3>Canvas-Beispiel Nr. 4</h3>
+      <div>
+        Zeichnen eines Smileys mit arc()
+        Keywords: beginPath(), arc(), moveTo(), fill()
+      </div>
+      <canvas
+          id="tutorial"
+          width="150"
+          height="150">
+      </canvas>
+
+    <script type="text/javascript">
+        const canvas = document.getElementById("tutorial")
+
+        function draw() {
+          if (canvas.getContext) {
+            var ctx = canvas.getContext("2d")
+            // Alles schön smiley-gelb (deep yellow)
+            ctx.fillStyle = "#f5c71a"
+            ctx.beginPath()
+
+            // Zeichnen eines Kreises
+            ctx.arc(75,75,50,0,Math.PI * 2, true)
+            // kein fill() an dieser Stelle, damit der Mund nicht gelb wird
+
+            ctx.fill()
+            // Zeichnen eines Halbkreises (Mund) gegen den Uhrzeigersinn
+            // Neuen Path für den Halbmund starten, damit unterschiedliche FillStyles möglich sind
+            ctx.beginPath()
+            ctx.moveTo(110,75)
+            ctx.arc(75,75,35,0,Math.PI, false)
+            ctx.fillStyle = "green"
+
+            ctx.fill()
+
+            // Neuen Path starten für die Augen
+            ctx.beginPath()
+            ctx.fillStyle = "red"
+
+            // Zeichnen des linken Auges
+            ctx.moveTo(65,65)
+            ctx.arc(60,65,5,0,Math.PI * 2, true)
+
+            // Zeichnen des rechten Auges
+            ctx.moveTo(95,65)
+            ctx.arc(90,65,5,0,Math.PI * 2, true)
+
+            // Ausfüllen und Zeichnen der beiden Augen
+            ctx.fill()
+
+            // Es kommt auf die Reihenfolge von fill() und stroke() an
+            
+            // stroke()-Aufruf nicht mehr erforderlich
+            // ctx.stroke()
+
+            }
+        }
+
+        window.addEventListener("load", (event) => {
+            draw()
+        })
+
+
+      </script>
+
+  </body>
+</html>

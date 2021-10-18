@@ -22,3 +22,20 @@ canvas.gamePad {
     background-color: #448aff;
 }
 
+.timerDisplay{
+    position: relative;
+    width: 40%;
+    height: 10%;
+    margin: 10px;
+    background: #ffffff;
+    left: 4%;
+    padding: 20px 0;
+    font-family: 'Roboto mono',monospace;
+    color: #0381bb;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0,139,253,0.25);
+}

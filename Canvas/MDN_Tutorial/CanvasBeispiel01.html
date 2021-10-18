@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Canvas tutorial-Beispiel Nr. 1</title>
+    <link href="styles.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+      <h3>Canvas-Beispiel Nr. 1</h3>
+      <div>
+        Zeichnen zweier sich überlappender Rechtecke mit unterschiedlicher Füllung
+        Keywords: fillRect(), fillStyle, Alpha-Transparenz, rgb() und rgba()
+      </div>
+      <canvas
+          id="tutorial"
+          width="150"
+          height="150">
+      </canvas>
+
+    <script type="text/javascript">
+        const canvas = document.getElementById("tutorial")
+
+        function draw() {
+          if (canvas.getContext) {
+            var ctx = canvas.getContext("2d")
+            ctx.fillStyle = "rgb(200, 0, 0)"
+            ctx.fillRect(10, 10, 50, 50)
+            ctx.fillStyle = "rgba(0, 0, 200, 0.5)"
+            ctx.fillRect(30, 30, 50, 50)
+          }
+        }
+
+        window.addEventListener("load", (event) => {
+            draw()
+        })
+
+
+      </script>
+
+  </body>
+</html>

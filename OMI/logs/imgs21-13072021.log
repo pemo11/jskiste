@@ -1,0 +1,36 @@
+13-07-2021 08:23:59.9 [INFO] *** Der OMI-Studi-Helper horcht per HTTP auf Port undefined ***
+13-07-2021 08:23:59.9 [INFO] *** Der OMI-Studi-Helper horcht per HTTPS auf Port undefined ***
+13-07-2021 08:23:59.9 [ERROR] !!! Fehler beim Herstellen der Datenbankverbindung !!!
+13-07-2021 08:26:36.5 [INFO] *** Der OMI-Studi-Helper horcht per HTTP auf Port 5042 ***
+13-07-2021 08:26:36.5 [INFO] *** Die Datenbankverbindung wurde hergestellt ***
+13-07-2021 08:26:54.8 [INFO] *** Der OMI-Studi-Helper horcht per HTTP auf Port 5042 ***
+13-07-2021 08:26:54.8 [INFO] *** Die Datenbankverbindung wurde hergestellt ***
+13-07-2021 08:28:00.2 [INFO] *** Der OMI-Studi-Helper horcht per HTTP auf Port 5042 ***
+13-07-2021 08:28:00.2 [INFO] *** Die Datenbankverbindung wurde hergestellt ***
+13-07-2021 08:28:10.5 [INFO] *** Standard Controller - calling login get ***
+13-07-2021 08:28:26.3 [INFO] *** Standard Controller - calling Register User Account get ***
+13-07-2021 08:28:26.3 [INFO] *** (Standard Controller) current UserId= 60ec0ce9bb858f47b46e851a ***
+13-07-2021 08:28:26.3 [INFO] *** Standard Controller) - UserInfo-Objekt mit Id= 60ec0ce9bb858f47b46e851a gefunden 
+13-07-2021 08:28:36.9 [ERROR] *** Standard Controller - calling adminuser ***
+13-07-2021 08:28:42.5 [INFO] *** Standard Controller->useraccount_getId - UserId= 60ec0ceabb858f47b46e8529 ***
+13-07-2021 08:28:42.5 [INFO] *** Standard Controller->useraccount_getId - UserInfo-Objekt 60ec0ceabb858f47b46e8529 gefunden ***
+13-07-2021 08:28:42.6 [INFO] *** Standard Controller->useraccount_getId - UserId= sw.js ***
+13-07-2021 08:28:51.3 [INFO] *** Standard Controller - calling login get ***
+13-07-2021 08:29:27.1 [INFO] *** Standard Controller - calling login get ***
+13-07-2021 08:29:36.2 [ERROR] *** Standard Controller - calling adminuser ***
+13-07-2021 09:54:35.7 [INFO] *** Standard Controller - calling login get ***
+13-07-2021 09:55:17.8 [INFO] *** Standard Controller - calling Register User Account get ***
+13-07-2021 09:55:17.8 [INFO] *** (Standard Controller) current UserId= 60ec0ce9bb858f47b46e851a ***
+13-07-2021 09:55:17.8 [INFO] *** Standard Controller) - UserInfo-Objekt mit Id= 60ec0ce9bb858f47b46e851a gefunden 
+13-07-2021 09:55:28.1 [ERROR] *** Standard Controller - calling adminuser ***
+13-07-2021 09:55:36.2 [INFO] *** Standard Controller->useraccount_getId - UserId= 60ec0ceabb858f47b46e8527 ***
+13-07-2021 09:55:36.2 [INFO] *** Standard Controller->useraccount_getId - UserInfo-Objekt 60ec0ceabb858f47b46e8527 gefunden ***
+13-07-2021 09:55:36.3 [INFO] *** Standard Controller->useraccount_getId - UserId= sw.js ***
+13-07-2021 09:56:39.8 [INFO] *** Standard Controller - calling login get ***
+13-07-2021 09:56:43.6 [INFO] Standard Controller - calling register get ***
+13-07-2021 09:57:05.5 [INFO] *** Standard Controller - calling register post ***
+13-07-2021 09:57:05.6 [INFO] *** Standard Controller - Registration was good ***
+13-07-2021 09:57:05.7 [INFO] *** Inside the authenticate callback ***
+13-07-2021 09:57:05.7 [INFO] *** Standard Controller - calling login get ***
+13-07-2021 09:58:29.9 [ERROR] *** Standard Controller - calling about ***
+13-07-2021 10:02:50.5 [INFO] *** Standard Controller - calling login get ***

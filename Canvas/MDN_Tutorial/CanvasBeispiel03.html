@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Canvas Tutorial-Beispiel Nr. 3</title>
+    <link href="styles.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+      <h3>Canvas-Beispiel Nr. 3</h3>
+      <div>
+        Zeichnen eines Dreiecks
+        Keywords: beginPath(), moveTo(), lineTo(), fill()
+      </div>
+      <canvas
+          id="tutorial"
+          width="150"
+          height="150">
+      </canvas>
+
+    <script type="text/javascript">
+        const canvas = document.getElementById("tutorial")
+
+        function draw() {
+          if (canvas.getContext) {
+            var ctx = canvas.getContext("2d")
+            ctx.beginPath()
+            ctx.moveTo(75,20)
+            ctx.lineTo(25,100)
+            ctx.moveTo(75,20)
+            ctx.lineTo(125,100)
+            ctx.lineTo(25,100)
+            ctx.stroke()
+            ctx.fillStyle = "red"
+            ctx.fill()
+            }
+        }
+
+        window.addEventListener("load", (event) => {
+            draw()
+        })
+
+
+      </script>
+
+  </body>
+</html>

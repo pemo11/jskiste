@@ -1,0 +1,377 @@
+<!--
+    V2 = mit Timer und Mauseloch, das durch einen Stein verdeckt wird
+    V3 = Schwierigkeitsgrade - viele Steine und weniger Käse, es können neue Steine dazu kommen
+    Die Maus braucht Kraft - pro Kösestück kann es mehrere Steine freiräumen 
+    Die Anzahl ergibt sich aus dem Quotienten Steine/Käse, z.B. 15/3, also 5 Steine pro Käse
+    Diese "Kraftzahl" wird aber nicht angezeigt, so dass der Spieler alleine darauf kommen muss
+
+    Erweiterung: Erscheint ein neues Käsestück, läuft die Maus zum Köse und es kommen wieder nehr Steine dazu
+
+-->
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Maus will nach Haus - Teil 2</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Maus will nach Haus - Teil 2</h3>
+        <div style="font-size: 20pt;margin:10pt;color:blue">
+            Suche das Mauseloch hinter einem Stein, damit sich die Maus in ihr Haus verstecken kann
+        </div>
+        <canvas
+            id="gamePad"
+            class="gamePad"
+            width="600"
+            height="600"
+        >
+        </canvas>
+        <div>
+            <label id="infoFeld"></label>
+            <label style="background-color: lightyellow;font-size: 24pt;" id="kaeseCounter"></label>
+        </div>
+        <div>
+            <input type="button" id="startButton" value="Start"></input>
+        </div>
+        <div class="timerDisplay">
+            00 : 00 : 00 : 000
+         </div>
+
+        <div style="text-align: left;margin:16px">
+            <img id="imResult" width="100" height="100" src="">
+        </div>
+
+        <script>
+            const elCanvas = document.querySelector("#gamePad")
+            const elStartButton = document.querySelector("#startButton")
+            const elKaeseCounter = document.querySelector("#kaeseCounter")
+            const elInfoFeld = document.querySelector("#infoFeld")
+            const ctx = elCanvas.getContext("2d")
+            const elCurTime = document.querySelector(".timerDisplay");
+
+            const anzahlKaese = 5
+            const anzahlSteine = anzahlKaese * 3
+            const breiteSpielfeld = 600
+            const hoeheSpielfeld = 600
+
+            const breiteStein = 40
+            const hoeheStein = 40
+
+            const maus = 1
+            const stein = 3
+            const kaese = 2
+            const delta = 10
+
+            var colCount = 15
+            var rowCount = 15
+            var kaeseCounter = 0
+            var kraftCounter = 0
+
+            var spielFeld = null
+
+            var xPos = 5
+            var yPos = 5
+
+            const timerInterval = 10
+            let [milliseconds,seconds,minutes,hours] = [0,0,0,0]
+
+            // https://www.foolishdeveloper.com/2021/10/simple-stopwatch-using-javascript.html
+            const displayTimer = () => {
+                milliseconds += 10
+                if (milliseconds == 1000) {
+                    milliseconds = 0
+                    seconds++
+                    if (seconds == 60) {
+                        seconds = 0
+                        minutes++
+                        if (minutes == 60) {
+                            minutes = 0
+                            hours++
+                        }
+                    }
+                }
+
+                let h = hours < 10 ? "0" + hours : hours
+                let m = minutes < 10 ? "0" + minutes : minutes
+                let s = seconds < 10 ? "0" + seconds : seconds
+                let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds
+
+                elCurTime.innerHTML = `${h} : ${m} : ${s} : ${ms}`
+            }
+
+            // Legt ein 2D-Array für das Spielfeld an
+            const feldAnlegen = () => {
+                spielFeld = new Array(rowCount)
+                for(i=0;i<rowCount;i++) {
+                    spielFeld[i] = new Array(colCount)
+                    for(j=0;j<colCount;j++) {
+                        spielFeld[i][j] = -1
+                    }
+                }
+            }
+
+            // Belegt ein Feld mit einer Anzahl an Gegenstönden
+            const feldBelegen = (type, count) => {
+                for(var i=0;i<count;i++) {
+                    let x = 0
+                    let y = 0
+                    do {
+                        x = Math.floor(Math.random() * colCount)
+                        y = Math.floor(Math.random() * rowCount)
+                    } while (spielFeld[y][x] > 0)
+                    spielFeld[y][x] = type
+                }
+            }
+
+            // Zeigt die Belegung des Feldes an
+            const feldAnzeigen = () => {
+                ctx.clearRect(0, 0, breiteSpielfeld, hoeheSpielfeld)
+                for(i=0;i<rowCount;i++) {
+                    for(j=0;j<colCount;j++) {
+                        let x = 0
+                        let y = 0
+                        if (spielFeld[i][j] >= 0) {
+                            let img = new Image()
+                            x = j * breiteStein
+                            y = i * hoeheStein
+                            console.log(`i=${i} j=${j} `)
+                            img.onload = () => {
+                                ctx.drawImage(img, x, y, breiteStein, hoeheStein)
+                                // Wichtig: Wird zeitverzögert ausgeführt, i und j besitzen daher immer den Maximalwert!
+                                console.log(`*** Gegenstand ${z} bei x=${x}/y=${y} ***`)
+                            }
+                            let z = spielFeld[i][j]
+                            switch (z) {
+                                case 1:
+                                    img.src = "images/KleineMaus2.png"
+                                    break;
+                                case 2:
+                                    img.src = "images/Kaese1.png"
+                                    break;
+                                case 3:
+                                    img.src = "images/Stein1.png"
+                                    break;
+                            }
+                        }
+                    }
+                }
+            } 
+
+
+            window.addEventListener("load", (event) => {
+
+                // click-Handler für den Start-Button
+                elStartButton.addEventListener("click", (event) => {
+                    feldAnlegen()
+                    // Gegenstände verteilen
+                    feldBelegen(stein, anzahlSteine)
+                    feldBelegen(kaese, anzahlKaese)
+
+                    // Timer starten
+                    [milliseconds,seconds,minutes,hours] = [0,0,0,0]
+                    elCurTime.innerHTML = "00 : 00 : 00 : 000"
+
+                    // Maus in die Mitte setzen
+                    // Das nächste freie Feld finden
+                    xPos = 5
+                    yPos = 5
+                    while (spielFeld[yPos][xPos] != -1 && xPos < colCount) {
+                        xPos++
+                    }
+                    // Problem: Ganze Reihe könnte belegt sein
+                    // Gab es ein freies Feld?
+                    if (spielFeld[yPos][xPos] != -1) {
+                        xPos = 5
+                        while (spielFeld[yPos][xPos] != -1 && yPos < rowCount) {
+                            yPos++
+                        }
+                    }
+                    // Jetzt sollte die Maus einen Platz gefunden haben
+                    // Theoretisch könnte das Feld immer noch belegt sein
+                    if (spielFeld[yPos][xPos] != -1) {
+                        console.log(`!!! Kein freies Feld für die Maus - Feld x=${xPos}/y=${yPos} mit Inhalt=${spielFeld[yPos][xPos]} wurde überschrieben !!!`)
+                    } else {
+                        console.log(`*** Maus wird bei x=${xPos}/y=${xPos} platziert ***`)
+                    }
+
+                    spielFeld[yPos][xPos] = 1
+
+                    // Feld anzeigen
+                    feldAnzeigen()
+
+                    kaeseCounter = 0
+
+                    intervalId = setInterval(() => {
+                        displayTimer()
+                    }, timerInterval)
+                })
+
+                // key handler
+                window.addEventListener("keydown", (event) => {
+                    // Alte Mausposition im Feld löschen und Posiion merken
+                    let xAlt = xPos
+                    let yAlt = yPos
+                    let xNeu = xPos
+                    let yNeu = yPos
+                    let noMove = false
+
+                    switch (event.keyCode) {
+                        // Gehe nach links
+                        case 37:
+                            console.log("<<< nach links >>>")
+                            if (xPos > 0) {
+                                xNeu = xPos - 1
+                                yNeu = yPos
+                                // Ist an der neuen Position Käse?
+                                if (spielFeld[yPos][xNeu] == kaese) {
+                                    console.log(`*** Käse !!! ***`)
+                                    kaeseCounter++
+                                    kraftCounter += 3
+                                } else if (spielFeld[yNeu][xNeu] == stein) {
+                                    console.log(`*** Stein !!! ***`)
+                                    // Kann die Maus den Stein wegräumen?
+                                    if (kraftCounter > 0) {
+                                        kraftCounter--
+                                        console.log(`*** Die Maus hat den Stein weggräumt ***`)
+                                    } else {
+                                        console.log(`+++ Die Maus hat leider keine Kraft +++`)
+                                        noMove = true
+                                    }
+                                } else {
+                                    // xPos = xNeu
+                                }
+                            } else {
+                                noMove = true
+                            }
+                            break;
+                        // Gehe nach oben
+                        case 38:
+                            console.log("<<< nach oben >>>")
+                            if (yPos > 0) {
+                                xNeu = xPos
+                                yNeu = yPos - 1
+                                // Ist an der neuen Position Käse?
+                                if (spielFeld[yNeu][xNeu] == kaese) {
+                                    console.log(`*** Käse !!! ***`)
+                                    kaeseCounter++
+                                    kraftCounter += 3
+                                } else if (spielFeld[yNeu][xNeu] == stein) {
+                                    console.log(`*** Stein !!! ***`)
+                                    // Kann die Maus den Stein wegräumen?
+                                    if (kraftCounter > 0) {
+                                        kraftCounter--
+                                        console.log(`*** Die Maus hat den Stein weggräumt ***`)
+
+                                    } else {
+                                        console.log(`+++ Die Maus hat leider keine Kraft +++`)
+                                        noMove = true
+                                    }
+                                } else {
+                                    // yPos = yNeu
+                                }
+                            } else {
+                                noMove = true
+                            }
+                            break;
+                        // Gehe nach rechts
+                        case 39:
+                            console.log("<<< nach rechts >>>")
+                            if (xPos < colCount - 1) {
+                                xNeu = xPos + 1
+                                yNeu = yPos
+                                // Ist an der neuen Position Käse?
+                                if (spielFeld[yNeu][xNeu] == kaese) {
+                                    console.log(`*** Käse !!! ***`)
+                                    kaeseCounter++
+                                    kraftCounter += 3
+                                } else if (spielFeld[yNeu][xNeu] == stein) {
+                                    // Kann die Maus den Stein wegräumen?
+                                    if (kraftCounter > 0) {
+                                        kraftCounter--
+                                        console.log(`*** Die Maus hat den Stein weggräumt ***`)
+
+                                    } else {
+                                        console.log(`+++ Die Maus hat leider keine Kraft +++`)
+                                        noMove = true
+                                    }
+                                } else {
+                                    // xPos = xNeu
+                                }
+                            } else {
+                                noMove = true
+                            }
+                            break;
+                        // gehe nach unten
+                        case 40:
+                            console.log("<<< nach unten >>>")
+                            if (yPos < rowCount - 1) {
+                                xNeu = xPos
+                                yNeu = yPos + 1
+                                // Ist an der neuen Position Käse?
+                                if (spielFeld[yNeu][xPos] == kaese) {
+                                    console.log(`*** Käse !!! ***`)
+                                    kaeseCounter++
+                                    kraftCounter += 3
+                                } else if (spielFeld[yNeu][xNeu] == stein) {
+                                    console.log(`*** Stein !!! ***`)
+                                    // Kann die Maus den Stein wegräumen?
+                                    if (kraftCounter > 0) {
+                                        kraftCounter--
+                                        console.log(`*** Die Maus hat den Stein weggräumt ***`)
+                                    } else {
+                                        console.log(`+++ Die Maus hat leider keine Kraft  +++`)
+                                        noMove = true
+                                    }
+                                } else {
+                                    // xPos = xNeu
+                                    }
+                                } else {
+                                    noMove = true
+                                }
+                                break;
+                        }
+
+                    console.log(`*** KeyDown-Status: xPos=${xPos} yPos=${yPos} xNeu=${xNeu} yNeu=${yNeu} ***`)
+
+                    if (!noMove) {
+                        // Mausposition im Feld aktualisieren
+                        spielFeld[yPos][xPos] = -1
+                        xPos = xNeu
+                        yPos = yNeu
+                        spielFeld[yPos][xPos] = 1
+
+                        // Maus an alter Position löschen
+                        let x = xAlt * 40
+                        let y = yAlt * 40
+                        ctx.clearRect(x, y, 40, 40)
+
+                        let img = new Image()
+
+                        /// Maus neu zeichnen
+                        img.onload = () => {
+                            let x = xPos * 40
+                            let y = yPos * 40
+                            ctx.drawImage(img, x, y, 40, 40)
+                            console.log(`*** Maus bei x=${xPos}/y=${yPos} ***`)
+                        }
+
+                        img.src =  "images/KleineMaus2.png"
+
+                        elKaeseCounter.innerText = `${kaeseCounter}(${kraftCounter})`
+
+                    }
+
+                    // Ist der Aufruf erforderlich?
+                    event.preventDefault()
+                }, false)
+
+            });
+
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

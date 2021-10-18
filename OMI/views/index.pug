@@ -1,0 +1,50 @@
+extends layout
+
+block content
+ div(style="display:flex;margin-bottom:16px")
+ h1 Willkommen zu #{title}
+
+  if isAuthenticated
+   h3 Wir begrüßen #{user.username}
+  
+  if error
+   p Beim Abrufen der dynamischen Inhalte gab es ein oder mehrere Probleme
+   p error
+  else
+   h4 Der aktuelle Stand: 
+
+  ul
+   li #[strong Fakultäten:] !{data.faculty_count}
+   li #[strong Studiengänge:] !{data.syllabus_count}
+   li #[strong Kurse:] !{data.course_count}
+   li #[strong Lernhilfen:] !{data.helper_count}
+
+  hr
+  | Die beliebtesten Lernhilfen
+  // | !{JSON.stringify(data.helper_top3)}
+
+  ul
+   each helper in data.helper_top3
+    - var helperId = helper.url;
+    li
+     a(href="/catalog/helper/" + helperId) #{helper.title} (#{helper.rating})
+
+block extraSidebar
+ if isAuthenticated
+  hr
+  a(href="/catalog/useraccount") Benutzerkonto
+ if isAdmin
+  hr
+  a(href="/catalog/adminuser") Administrator
+
+ script.
+  var daten;
+  if (navigator.Online) {
+      // Abruf von Daten über per Fetch/XHR
+      daten = [];
+      daten.push({id:1,title:"test 1234"});
+      daten.push({id:1,title:"test 5678"});
+      localStorage.setItem("helfer", JSON.stringify(daten))
+  } else {
+      daten = JSON.parse(localStorage.getItem("helfer"));
+  }

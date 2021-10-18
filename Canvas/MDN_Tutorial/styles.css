@@ -1,0 +1,18 @@
+/* Die Standard-CSS */
+
+body {
+    font-family: verdana;
+    font-size: 11pt;
+}
+
+canvas {
+    margin: 10px;
+    border: 3px solid black;
+}
+
+
+input[type="button"] {
+    width:  160px;
+    height: 32px;
+    margin: 10px;
+}
