@@ -1,11 +1,13 @@
 <!--
-    V2 = mit Timer und Mauseloch, das durch einen Stein verdeckt wird
-    V3 = Schwierigkeitsgrade - viele Steine und weniger Käse, es können neue Steine dazu kommen
+    V2 = mit CountDown-Timer
+    V3 = Einem Mauseloch, das durch einen Stein verdeckt wird und Schwierigkeitsgrade - viele Steine und weniger Käse, es können Käse/Steine dazu kommen
     Die Maus braucht Kraft - pro Kösestück kann es mehrere Steine freiräumen 
     Die Anzahl ergibt sich aus dem Quotienten Steine/Käse, z.B. 15/3, also 5 Steine pro Käse
+
     Diese "Kraftzahl" wird aber nicht angezeigt, so dass der Spieler alleine darauf kommen muss
 
     Erweiterung: Erscheint ein neues Käsestück, läuft die Maus zum Köse und es kommen wieder nehr Steine dazu
+    Die Maus setzt sich von alleine in Bewegung und bleibt beim Käsestück stehen - eine Tastatureingabe beendet diesen Alleingang (vielleicht etwas zu viel "Programmierung")
 
 -->
 <!DOCTYPE html>
@@ -35,12 +37,11 @@
         <div>
             <input type="button" id="startButton" value="Start"></input>
         </div>
-        <div class="timerDisplay">
-            00 : 00 : 00 : 000
-         </div>
+        <!-- Minutes Seconds Milliseconds -->
+        <div class="timerDisplay">00 : 00 : 000</div>
 
         <div style="text-align: left;margin:16px">
-            <img id="imResult" width="100" height="100" src="">
+            <img id="imResult" width="100" height="100" src="" alt="Ein Smiley zeigt das Ergebnis des Spiels an">
         </div>
 
         <script>
@@ -48,6 +49,7 @@
             const elStartButton = document.querySelector("#startButton")
             const elKaeseCounter = document.querySelector("#kaeseCounter")
             const elInfoFeld = document.querySelector("#infoFeld")
+            const elResult = document.querySelector("#imResult") 
             const ctx = elCanvas.getContext("2d")
             const elCurTime = document.querySelector(".timerDisplay");
 
@@ -67,7 +69,10 @@
             var colCount = 15
             var rowCount = 15
             var kaeseCounter = 0
+            var steinCounter = 0
             var kraftCounter = 0
+            var countDownTime = null
+            const spieldauer = 60 // Sekunden
 
             var spielFeld = null
 
@@ -75,30 +80,25 @@
             var yPos = 5
 
             const timerInterval = 10
-            let [milliseconds,seconds,minutes,hours] = [0,0,0,0]
+
+            // nach let muss offiziell ein Semikolon
+            // Dank Automatic Semicolon Insertion (ASI) muss man diese aber nicht schreiben
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#automatic_semicolon_insertion
+            // der folgende Befehl wird problemlos ausgeführt
+            // let [milliseconds,seconds,minutes,hours] = [0,0,0,0]
 
             // https://www.foolishdeveloper.com/2021/10/simple-stopwatch-using-javascript.html
-            const displayTimer = () => {
-                milliseconds += 10
-                if (milliseconds == 1000) {
-                    milliseconds = 0
-                    seconds++
-                    if (seconds == 60) {
-                        seconds = 0
-                        minutes++
-                        if (minutes == 60) {
-                            minutes = 0
-                            hours++
-                        }
-                    }
-                }
+            const displayTime = (distance) => {
 
-                let h = hours < 10 ? "0" + hours : hours
+                let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+                let seconds = Math.floor((distance % (1000 * 60)) / 1000)
+                let milliseconds = distance
+
                 let m = minutes < 10 ? "0" + minutes : minutes
                 let s = seconds < 10 ? "0" + seconds : seconds
                 let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds
 
-                elCurTime.innerHTML = `${h} : ${m} : ${s} : ${ms}`
+                elCurTime.innerHTML = `${m} : ${s} : ${ms}`
             }
 
             // Legt ein 2D-Array für das Spielfeld an
@@ -164,13 +164,29 @@
 
                 // click-Handler für den Start-Button
                 elStartButton.addEventListener("click", (event) => {
+                    // Button deaktivieren
+                    elStartButton.disabled = true
+
+                    // Face unsichtbar machen
+                    elResult.style.display = "none"
+
                     feldAnlegen()
                     // Gegenstände verteilen
                     feldBelegen(stein, anzahlSteine)
                     feldBelegen(kaese, anzahlKaese)
 
                     // Timer starten
-                    [milliseconds,seconds,minutes,hours] = [0,0,0,0]
+
+                    countDownTime = new Date()
+                    countDownTime.setSeconds(countDownTime.getSeconds() + spieldauer)
+                    // Gibt aktuell einen Fehler TypeError: Cannot set properties of undefined (setting '0')
+                    // Das Thema ist "Destructuring assignment" die Werte eines Array werden auf Variablen verteilt
+                    // In der Konsole wird der Befehl problemlos ausgeführt
+                    // [milliseconds,seconds,minutes,hours] = [0,0,0,0]
+                    milliseconds = 0
+                    seconds = 0
+                    minutes = 0
+                    hours = 0
                     elCurTime.innerHTML = "00 : 00 : 00 : 000"
 
                     // Maus in die Mitte setzen
@@ -180,6 +196,7 @@
                     while (spielFeld[yPos][xPos] != -1 && xPos < colCount) {
                         xPos++
                     }
+
                     // Problem: Ganze Reihe könnte belegt sein
                     // Gab es ein freies Feld?
                     if (spielFeld[yPos][xPos] != -1) {
@@ -188,6 +205,7 @@
                             yPos++
                         }
                     }
+
                     // Jetzt sollte die Maus einen Platz gefunden haben
                     // Theoretisch könnte das Feld immer noch belegt sein
                     if (spielFeld[yPos][xPos] != -1) {
@@ -204,7 +222,16 @@
                     kaeseCounter = 0
 
                     intervalId = setInterval(() => {
-                        displayTimer()
+                        let nowTime = new Date().getTime()
+                        let distance = countDownTime - nowTime
+                        if (distance <= 0) {
+                            clearInterval(intervalId)
+                            elResult.style.display = "block"
+                            elResult.setAttribute("src","images/SadFace256.png")
+                            // Button wieder aktivieren
+                            elStartButton.disabled = false
+                        }
+                        displayTime(distance)
                     }, timerInterval)
                 })
 
@@ -227,14 +254,32 @@
                                 // Ist an der neuen Position Käse?
                                 if (spielFeld[yPos][xNeu] == kaese) {
                                     console.log(`*** Käse !!! ***`)
-                                    kaeseCounter++
-                                    kraftCounter += 3
+                                    // Käse kann nur gegessen werden, wenn der Kraftcounter = 0 ist
+                                    if (kraftCounter == 0) {
+                                        kaeseCounter++
+                                        kraftCounter += 3
+                                    } else {
+                                        console.log(`+++ Die Maus kann noch keinen neuen Käse essen  +++`)
+                                        noMove = true
+                                    }
                                 } else if (spielFeld[yNeu][xNeu] == stein) {
                                     console.log(`*** Stein !!! ***`)
                                     // Kann die Maus den Stein wegräumen?
                                     if (kraftCounter > 0) {
                                         kraftCounter--
                                         console.log(`*** Die Maus hat den Stein weggräumt ***`)
+                                        // Ist das Spiel beendet?
+                                        steinCounter++
+                                        if (steinCounter == anzahlSteine) {
+                                            console.log("!!! Die Maus hat alle Steine abgeräumt !!!")
+                                            // Timer anhalten
+                                            clearInterval(intervalId)
+                                            // Button wieder freigeben
+                                            elStartButton.disabled = false
+                                            // Happy face anzeigen
+                                            elResult.style.display = "block"
+                                            elResult.setAttribute("src","images/HappyFace256.png")
+                                        }
                                     } else {
                                         console.log(`+++ Die Maus hat leider keine Kraft +++`)
                                         noMove = true
@@ -255,14 +300,32 @@
                                 // Ist an der neuen Position Käse?
                                 if (spielFeld[yNeu][xNeu] == kaese) {
                                     console.log(`*** Käse !!! ***`)
-                                    kaeseCounter++
-                                    kraftCounter += 3
+                                    // Käse kann nur gegessen werden, wenn der Kraftcounter = 0 ist
+                                    if (kraftCounter == 0) {
+                                        kaeseCounter++
+                                        kraftCounter += 3
+                                    } else {
+                                        console.log(`+++ Die Maus kann noch keinen neuen Käse essen  +++`)
+                                        noMove = true
+                                    }
                                 } else if (spielFeld[yNeu][xNeu] == stein) {
                                     console.log(`*** Stein !!! ***`)
                                     // Kann die Maus den Stein wegräumen?
                                     if (kraftCounter > 0) {
                                         kraftCounter--
                                         console.log(`*** Die Maus hat den Stein weggräumt ***`)
+                                        // Ist das Spiel beendet?
+                                        steinCounter++
+                                        if (steinCounter == anzahlSteine) {
+                                            console.log("!!! Die Maus hat alle Steine abgeräumt !!!")
+                                            // Timer anhalten
+                                            clearInterval(intervalId)
+                                            // Button wieder freigeben
+                                            elStartButton.disabled = false
+                                            // Happy face anzeigen
+                                            elResult.style.display = "block"
+                                            elResult.setAttribute("src","images/HappyFace256.png")
+                                        }
 
                                     } else {
                                         console.log(`+++ Die Maus hat leider keine Kraft +++`)
@@ -284,13 +347,31 @@
                                 // Ist an der neuen Position Käse?
                                 if (spielFeld[yNeu][xNeu] == kaese) {
                                     console.log(`*** Käse !!! ***`)
-                                    kaeseCounter++
-                                    kraftCounter += 3
+                                    // Käse kann nur gegessen werden, wenn der Kraftcounter = 0 ist
+                                    if (kraftCounter == 0) {
+                                        kaeseCounter++
+                                        kraftCounter += 3
+                                    } else {
+                                        console.log(`+++ Die Maus kann noch keinen neuen Käse essen  +++`)
+                                        noMove = true
+                                    }
                                 } else if (spielFeld[yNeu][xNeu] == stein) {
                                     // Kann die Maus den Stein wegräumen?
                                     if (kraftCounter > 0) {
                                         kraftCounter--
                                         console.log(`*** Die Maus hat den Stein weggräumt ***`)
+                                        // Ist das Spiel beendet?
+                                        steinCounter++
+                                        if (steinCounter == anzahlSteine) {
+                                            console.log("!!! Die Maus hat alle Steine abgeräumt !!!")
+                                            // Timer anhalten
+                                            clearInterval(intervalId)
+                                            // Button wieder freigeben
+                                            elStartButton.disabled = false
+                                            // Happy face anzeigen
+                                            elResult.style.display = "block"
+                                            elResult.setAttribute("src","images/HappyFace256.png")
+                                        }
 
                                     } else {
                                         console.log(`+++ Die Maus hat leider keine Kraft +++`)
@@ -312,14 +393,33 @@
                                 // Ist an der neuen Position Käse?
                                 if (spielFeld[yNeu][xPos] == kaese) {
                                     console.log(`*** Käse !!! ***`)
-                                    kaeseCounter++
-                                    kraftCounter += 3
+                                    // Käse kann nur gegessen werden, wenn der Kraftcounter = 0 ist
+                                    if (kraftCounter == 0) {
+                                        kaeseCounter++
+                                        kraftCounter += 3
+                                    } else {
+                                        console.log(`+++ Die Maus kann noch keinen neuen Käse essen  +++`)
+                                        noMove = true
+                                    }
                                 } else if (spielFeld[yNeu][xNeu] == stein) {
                                     console.log(`*** Stein !!! ***`)
                                     // Kann die Maus den Stein wegräumen?
                                     if (kraftCounter > 0) {
                                         kraftCounter--
                                         console.log(`*** Die Maus hat den Stein weggräumt ***`)
+                                        // Ist das Spiel beendet?
+                                        steinCounter++
+                                        if (steinCounter == anzahlSteine) {
+                                            console.log("!!! Die Maus hat alle Steine abgeräumt !!!")
+                                            // Timer anhalten
+                                            clearInterval(intervalId)
+                                            // Button wieder freigeben
+                                            elStartButton.disabled = false
+                                            // Happy face anzeigen
+                                            elResult.style.display = "block"
+                                            elResult.setAttribute("src","images/HappyFace256.png")
+                                        }
+
                                     } else {
                                         console.log(`+++ Die Maus hat leider keine Kraft  +++`)
                                         noMove = true
@@ -367,6 +467,7 @@
                     event.preventDefault()
                 }, false)
 
+                elResult.style.display = "none"
             });
 
 
