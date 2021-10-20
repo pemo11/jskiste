@@ -1,5 +1,4 @@
 <!--
-    V2 = mit CountDown-Timer
     V3 = Einem Mauseloch, das durch einen Stein verdeckt wird und Schwierigkeitsgrade - viele Steine und weniger Käse, es können Käse/Steine dazu kommen
     Die Maus braucht Kraft - pro Kösestück kann es mehrere Steine freiräumen 
     Die Anzahl ergibt sich aus dem Quotienten Steine/Käse, z.B. 15/3, also 5 Steine pro Käse
@@ -14,14 +13,13 @@
 <html lang="de">
     <head>
         <meta charset="utf-8">
-        <title>Maus will nach Haus - Teil 2</title>
+        <title>Maus will nach Haus - Teil 3</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="styles.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <h3>Maus will nach Haus - Teil 2</h3>
+        <h3>Maus will nach Haus - Teil 3</h3>
         <div style="font-size: 20pt;margin:10pt;color:blue">
-            Lass die Maus alle Steine wegräumen bevor die Zeit abgelaufen ist
             Suche das Mauseloch hinter einem Stein, damit sich die Maus in ihr Haus verstecken kann
         </div>
         <canvas
@@ -42,7 +40,7 @@
         <div class="timerDisplay">00 : 00 : 000</div>
 
         <div style="text-align: left;margin:16px">
-            <img id="imResult" width="100" height="100" src="" alt="Ein Smiley zeigt das Ergebnis des Spiels an">
+            <img id="imResult" src="" alt="Ein Smiley zeigt das Ergebnis des Spiels an">
         </div>
 
         <script>
@@ -54,7 +52,7 @@
             const ctx = elCanvas.getContext("2d")
             const elCurTime = document.querySelector(".timerDisplay");
 
-            const anzahlKaese = 5
+            const anzahlKaese = 6
             const anzahlSteine = anzahlKaese * 3
             const breiteSpielfeld = 600
             const hoeheSpielfeld = 600
@@ -66,26 +64,25 @@
             const stein = 3
             const kaese = 2
 
+            // Ein größeres Feld?
             var colCount = 15
             var rowCount = 15
             var kaeseCounter = 0
             var steinCounter = 0
             var kraftCounter = 0
             var countDownTime = null
-            const spieldauer = 25 // Sekunden
+            const spieldauer = 60 // Sekunden
 
             var spielFeld = null
 
             var xPos = 5
             var yPos = 5
 
+            var mauselochX = 0
+            var mauselochY = 0
+
             const timerInterval = 10
 
-            // nach let muss offiziell ein Semikolon
-            // Dank Automatic Semicolon Insertion (ASI) muss man diese aber nicht schreiben
-            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#automatic_semicolon_insertion
-            // der folgende Befehl wird problemlos ausgeführt
-            // let [milliseconds,seconds,minutes,hours] = [0,0,0,0]
 
             // https://www.foolishdeveloper.com/2021/10/simple-stopwatch-using-javascript.html
             const displayTime = (distance) => {
@@ -164,6 +161,7 @@
 
                 // click-Handler für den Start-Button
                 elStartButton.addEventListener("click", (event) => {
+                    console.log(`*** SPIELSTART ***`)
                     // Button deaktivieren
                     elStartButton.disabled = true
 
@@ -171,9 +169,28 @@
                     elResult.style.display = "none"
 
                     feldAnlegen()
+
                     // Gegenstände verteilen
                     feldBelegen(stein, anzahlSteine)
                     feldBelegen(kaese, anzahlKaese)
+
+                    // Mauseloch unter einem der Steine platzieren
+
+                    // let alleSteine = spielFeld.map(col => row.map(row => z % 2 == 0))
+                    let alleSteine = []
+                    for(var i=0;i<rowCount;i++) {
+                        for(var j=0;j<colCount;j++) {
+                            if (spielFeld[i][j] == stein) {
+                                alleSteine.push([i,j])
+                            }
+                        }
+                    }
+
+                    // Einen Stein auswählen
+                    let z = Math.floor(Math.random() * alleSteine.length)
+                    mauselochX = alleSteine[z][1]
+                    mauselochY = alleSteine[z][0]
+                    console.log(`+++ Das Mauseloch befindet sich bei ${mauselochX}/${mauselochY} +++`)
 
                     // Timer starten
 
@@ -236,6 +253,7 @@
                 })
 
                 // key handler
+                // TODO: Durch Refaktor vereinfachen, so dass die Abfragelogik nicht für jede Bewegung wiederholt werden muss
                 window.addEventListener("keydown", (event) => {
                     // Alte Mausposition im Feld löschen und Posiion merken
                     let xAlt = xPos
@@ -268,10 +286,9 @@
                                     if (kraftCounter > 0) {
                                         kraftCounter--
                                         console.log(`*** Die Maus hat den Stein weggräumt ***`)
-                                        // Ist das Spiel beendet?
-                                        steinCounter++
-                                        if (steinCounter == anzahlSteine) {
-                                            console.log("!!! Die Maus hat alle Steine abgeräumt !!!")
+                                        // Ist es das Mausloch?
+                                        if (mauselochX == xNeu && mauselochY == yNeu) {
+                                            console.log("!!! Die Maus hat ihr Loch gefunden !!!")
                                             // Timer anhalten
                                             clearInterval(intervalId)
                                             // Button wieder freigeben
@@ -314,10 +331,9 @@
                                     if (kraftCounter > 0) {
                                         kraftCounter--
                                         console.log(`*** Die Maus hat den Stein weggräumt ***`)
-                                        // Ist das Spiel beendet?
-                                        steinCounter++
-                                        if (steinCounter == anzahlSteine) {
-                                            console.log("!!! Die Maus hat alle Steine abgeräumt !!!")
+                                        // Ist es das Mausloch?
+                                        if (mauselochX == xNeu && mauselochY == yNeu) {
+                                            console.log("!!! Die Maus hat ihr Loch gefunden !!!")
                                             // Timer anhalten
                                             clearInterval(intervalId)
                                             // Button wieder freigeben
@@ -360,10 +376,9 @@
                                     if (kraftCounter > 0) {
                                         kraftCounter--
                                         console.log(`*** Die Maus hat den Stein weggräumt ***`)
-                                        // Ist das Spiel beendet?
-                                        steinCounter++
-                                        if (steinCounter == anzahlSteine) {
-                                            console.log("!!! Die Maus hat alle Steine abgeräumt !!!")
+                                        // Ist es das Mausloch?
+                                        if (mauselochX == xNeu && mauselochY == yNeu) {
+                                            console.log("!!! Die Maus hat ihr Loch gefunden !!!")
                                             // Timer anhalten
                                             clearInterval(intervalId)
                                             // Button wieder freigeben
@@ -407,10 +422,9 @@
                                     if (kraftCounter > 0) {
                                         kraftCounter--
                                         console.log(`*** Die Maus hat den Stein weggräumt ***`)
-                                        // Ist das Spiel beendet?
-                                        steinCounter++
-                                        if (steinCounter == anzahlSteine) {
-                                            console.log("!!! Die Maus hat alle Steine abgeräumt !!!")
+                                        // Ist es das Mausloch?
+                                        if (mauselochX == xNeu && mauselochY == yNeu) {
+                                            console.log("!!! Die Maus hat ihr Loch gefunden !!!")
                                             // Timer anhalten
                                             clearInterval(intervalId)
                                             // Button wieder freigeben
