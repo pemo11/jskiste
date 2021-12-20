@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Würfelmerker V2</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Würfelmerker V2</h3>
+        <div style="background-color: greenyellow;width:200px;margin:10px">
+            <input type="radio" id="leicht" name="level" value="3" checked>Leicht</input><p>
+            <input type="radio" id="mittel" name="level" value="4">Mittel</input><p>
+            <input type="radio" id="schwer" name="level" value="5" data-interval="1500">Schwer</input><p>
+        </div>
+        <div id="divWuerfel" style="height:220px;width:800px;margin:20px;background-color: black">
+        </div>
+        <div style="text-align: left;margin:16px">
+            <img id="imgResult" width="100" height="100" src="images/NeutralFace256.png">
+        </div>
+        <button id="btnWuerfel">Würfeln</button>
+
+        <script src=""></script>
+
+        <script>
+            const imgListe= ["wuerfel_1.png", "wuerfel_2.png", "wuerfel_3.png", "wuerfel_4.png", "wuerfel_5.png", "wuerfel_6.png"]
+            const elWuerfelButton = document.querySelector("#btnWuerfel")
+            const elWuerfelDiv = document.querySelector("#divWuerfel")
+            const elResult = document.querySelector("#imgResult") 
+
+            const drawWuerfel = (wuerfelCount) => {
+
+                // Alle img-Elemente entfernen
+                for(let i=elWuerfelDiv.getElementsByTagName("img").length-1;i>=0;i--) {
+                    let elImg = elWuerfelDiv.getElementsByTagName("img")[i]
+                    elWuerfelDiv.removeChild(elImg)
+                }
+                
+                for(let i=0;i<wuerfelCount;i++) {
+                    let elImg = document.createElement("img")
+                    elImg.className = "wuerfel"
+                    elImg.style.borderColor = "white"
+                    // elImg.setAttribute("class", "wuerfel")
+                    elWuerfelDiv.appendChild(elImg)
+                }
+            }
+
+            var elLevels = document.getElementsByName("level")
+            elLevels.forEach(radio => {
+                radio.addEventListener("click", (event)=> {
+                    wuerfelCount = event.target.value
+                    drawWuerfel(wuerfelCount)
+                    // Soll auch der Interval geändert werden?
+                    interval = event.target.dataset.interval == undefined ? 1000 : parseInt(event.target.dataset.interval)
+                })
+            })
+
+            window.addEventListener("load", (event) => {
+
+                elWuerfelButton.addEventListener("click", () => {
+                    let wuerfelListe = elWuerfelDiv.getElementsByTagName("img")
+                    // Hole 4 Zufallszahlen im Bereich 1..6
+                    let wuerfelZahlen = []
+                    for(var i= 0;i<wuerfelListe.length;i++) {
+                        do {
+                            var z = Math.round(Math.random() * (imgListe.length - 1))
+                        } while(wuerfelZahlen.findIndex(j => j == z) >= 0)
+                        console.log("*** gezogen=" + z)
+                        // Diese Zeilen weglassen, um einen Fehler zu simulieren
+                        wuerfelZahlen.push(z)
+                        wuerfelListe[i].src = "images/" + imgListe[z]
+                    }
+                })
+        })
+
+        </script>
+        
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

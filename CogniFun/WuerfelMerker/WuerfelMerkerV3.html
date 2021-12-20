@@ -1,0 +1,153 @@
+<!--
+    Es geht, aber die Logik stimmt noch nicht ganz, da es bei 4 und 5 Würfeln sehr einfach wird
+    In diesem Modus wird dafür ie Anzeigezeit herabgesetzt
+    Besser wäre es, wenn die Augenzahlen mehrfach vorkommen könnten und es andere Fragen gäbe, etwa wie oft kam eine Zahl vor? -> V4
+
+-->
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Würfelmerker V3</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Würfelmerker V3</h3>
+        <div style="background-color: greenyellow;width:200px;margin:10px">
+            <input type="radio" id="leicht" name="level" value="3" data-interval="5000" checked>Leicht</input><p>
+            <input type="radio" id="mittel" name="level" value="4" data-interval="2500">Mittel</input><p>
+            <input type="radio" id="schwer" name="level" value="5" data-interval="1000">Schwer</input><p>
+        </div>
+        <div id="divWuerfel" style="height:220px;width:800px;margin:20px;background-color: black">
+        </div>
+        <div style="text-align: left;margin:16px">
+            <img id="imgResult" width="100" height="100" src="images/NeutralFace256.png">
+        </div>
+        <button id="btnWuerfel">Würfeln</button>
+        <div id="questionDiv">
+
+        </div>
+        <div style="background-color: goldenrod;width:200px;margin:10px">
+            <input type="radio" id="ja" name="answers" value="1">Ja</input><p>
+            <input type="radio" id="nein" name="answers" value="0">Nein</input><p>
+        </div>
+
+        <script src=""></script>
+
+        <script>
+            const imgListe= ["wuerfel_1.png", "wuerfel_2.png", "wuerfel_3.png", "wuerfel_4.png", "wuerfel_5.png", "wuerfel_6.png"]
+            const elWuerfelButton = document.querySelector("#btnWuerfel")
+            const elWuerfelDiv = document.querySelector("#divWuerfel")
+            const elResult = document.querySelector("#imgResult") 
+            const elQuestionDiv = document.querySelector("#questionDiv")
+            const elLevels = document.getElementsByName("level")
+            const elAnswers = document.getElementsByName("answers")
+
+            var timeoutValue = 0
+            var question = 0
+            var wuerfelZahlen = null
+
+            const sleep = (ms) => {
+                return new Promise(resolve => setTimeout(resolve, ms))
+            }
+
+            elResult.style.visibility = "hidden"
+
+            const drawWuerfel = (wuerfelCount) => {
+
+                console.log("*** Neuer Durchlauf mit " + wuerfelCount + " Würfeln")
+
+                // Alle img-Elemente entfernen
+                for(let i=elWuerfelDiv.getElementsByTagName("img").length-1;i>=0;i--) {
+                    let elImg = elWuerfelDiv.getElementsByTagName("img")[i]
+                    elWuerfelDiv.removeChild(elImg)
+                }
+                
+                for(let i=0;i<wuerfelCount;i++) {
+                    let elImg = document.createElement("img")
+                    elImg.className = "wuerfel"
+                    elImg.style.borderColor = "white"
+                    // elImg.setAttribute("class", "wuerfel")
+                    elWuerfelDiv.appendChild(elImg)
+                }
+            }
+
+            // Click-Event für die level-Radiobuttons
+            elLevels.forEach(radio => {
+                radio.addEventListener("click", (event)=> {
+                    wuerfelCount = event.target.value
+                    drawWuerfel(wuerfelCount)
+                    // Soll auch der Interval geändert werden?
+                    interval = event.target.dataset.interval == undefined ? 3000 : parseInt(event.target.dataset.interval)
+                    timeoutValue = interval
+                })
+            })
+
+            elAnswers.forEach(radio => {
+                radio.addEventListener("click", (event)=> {
+                    answer = event.target.value
+                    elResult.style.visibility = "visible"
+                    console.log("*** Antwort= " + answer + " Ist " + question + " in " + wuerfelZahlen + " enthalten?")
+                    if (answer == 1 &&  wuerfelZahlen.findIndex(j => j == question) > 0) {
+                        elResult.setAttribute("src","images/HappyFace256.png")
+                    } else if (answer == 0 &&  wuerfelZahlen.findIndex(j => j == question) == -1) {
+                        elResult.setAttribute("src","images/HappyFace256.png")
+                    } else {
+                        elResult.setAttribute("src","images/SadFace256.png")
+                    }
+                })
+            })
+
+            window.addEventListener("load", (event) => {
+
+                elWuerfelButton.addEventListener("click", () => {
+                    // Geht eventuell auch in einem Schritt?
+                    document.getElementsByName("answers")[0].checked = false
+                    document.getElementsByName("answers")[1].checked = false
+                    elResult.style.visibility = "hidden"
+                    let wuerfelListe = elWuerfelDiv.getElementsByTagName("img")
+                    // Hole 4 Zufallszahlen im Bereich 1..6
+                    wuerfelZahlen = []
+                    for(var i= 0;i<wuerfelListe.length;i++) {
+                        do {
+                            var z = Math.round(Math.random() * (imgListe.length - 1))
+                        } while(wuerfelZahlen.findIndex(j => j == z) >= 0)
+                        console.log("*** gezogen=" + z)
+                        // Diese Zeilen weglassen, um einen Fehler zu simulieren
+                        wuerfelZahlen.push(z)
+                        wuerfelListe[i].src = "images/" + imgListe[z]
+                    }
+
+                    // Nach Ablauf einer Zeitspanne alle Würfel unsichtbar machen
+                    setTimeout(async () => { 
+                        // elWuerfelDiv.style.visibility = "hidden"
+                        for(var i= 0;i<wuerfelListe.length;i++) {
+                            wuerfelListe[i].src = ""
+                            await sleep(1000)
+                        }
+                        question = Math.round(Math.random() * (imgListe.length - 1))
+                        elQuestionDiv.innerText = "War die Zahl " + (question + 1 ) + " dabei?"
+                        /*
+                            Hier muss eine Frage mit Antwortoptionen erstellt werden
+                            z.B. War eine Fünf dabei?
+                            oder wenn Doppelte erlaubt sind: Kam die Eins einmal oder zwei Mal vor
+                            Am Anfang war nur der einfache Typ
+                            Dann muss das Ja/Nein-Option-Feld eingeblendet werden
+
+                        */
+                    }, timeoutValue)
+                })
+
+            // click für elLevels-Radiobutton auslösen
+            elLevels[0].click()
+
+        })
+
+
+        </script>
+        
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

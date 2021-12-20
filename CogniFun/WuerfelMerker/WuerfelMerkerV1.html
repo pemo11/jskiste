@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Würfelmerker V1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Würfelmerker V1</h3>
+        <div id="wuerfelDiv">
+            <img class="wuerfel" src="" />
+            <img class="wuerfel" src="" />
+            <img class="wuerfel" src="" />
+            <!-- 
+            <img class="wuerfel" src="" />
+                Das schöne an dem Beispiel ist, dass einfach nur ein weiteres img hinzugefügt werden muss, ohne dass etwas an der Programmlogik geändert werden muss
+                 <img class="wuerfel" src="" />
+            -->
+        </div>
+        <button id="btnWuerfel">Würfeln</button>
+        <script src=""></script>
+
+        <script>
+            const imgListe= ["wuerfel_1.png", "wuerfel_2.png", "wuerfel_3.png", "wuerfel_4.png", "wuerfel_5.png", "wuerfel_6.png"]
+            const elWuerfel = document.querySelector("#btnWuerfel")
+
+            window.addEventListener("load", (event) => {
+
+                elWuerfel.addEventListener("click", () => {
+                    let wuerfelListe = document.getElementsByTagName("img")
+                    // Hole 4 Zufallszahlen im Bereich 1..6
+                    let wuerfelZahlen = []
+                    for(var i= 0;i<wuerfelListe.length;i++) {
+                        do {
+                            var z = Math.round(Math.random() * (imgListe.length - 1))
+                        } while(wuerfelZahlen.findIndex(j => j == z) >= 0)
+                        console.log("*** gezogen=" + z)
+                        // Diese Zeilen weglassen, um einen Fehler zu simulieren
+                        wuerfelZahlen.push(z)
+                        wuerfelListe[i].src = "images/" + imgListe[z]
+                    }
+                })
+        })
+
+        </script>
+        <div>
+            <br>
+            Es kann ein Würfel geworfen werden - ohne Extras, nur ein Würzel<br>
+            Als Besonderheit werden aber alle Würfelseiten nacheinander angezeigt bis der Würfel gefallen ist<br>
+    
+            in V2 sind es dann z.B. 5 Würfel, die nacheinander gewürfelt werden<br>
+    
+            In V3 kann man in drei Versuchen Würfel festhalten, um eine möglichst gute Augenzahl zu erzielen<br>
+    
+            In V4 gibt es eine Bewertung<br>
+    
+            In V5 hat der Spieler/User z.B. 30 Sekunden Zeit muss sich bis dahin die Augenzahl gemerkt haben<br>
+    
+    
+        </div>
+        
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

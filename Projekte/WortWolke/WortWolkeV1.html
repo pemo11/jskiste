@@ -1,0 +1,38 @@
+<!--
+    Erstellt: 09/12/21 - die Idee kam wieder einmal unter der Dusche
+
+    Die Idee ist ganz einfach, dass der User eine Pdf- oder Docx-Datei hochladen kann und die Anzahl der Wörter gezählt werden
+    Der erste Schritt besteht daher aus dem Einbinden einer JS-Bibliothek für Pdf und Docx-Dateien
+    Dann müssen die Wörter gezählt werden und Haufen gebildet werden
+    In V1 werden die Wort-Inseln nur als Table ausgegeben
+
+    Das Ziel ist eine kleine Webseite, über die man Dateien hochladen kann - der Service läuft dann natürlich als AWS Lambda
+-->
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Wortwolke V1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Wortwolke V1</h3>
+        <script id="pdf-js" src="libs/pdf_viewer.js"></script>
+        <script>PDFJS.workerSrc = document.getElementById("pdf-js").getAttribute("src")</script>
+        <script src="libs/app.js"></script>
+
+        <script>
+            window.addEventListener("load", (event) => {
+                let pdfPfad = "documents/Blockchain.pdf"
+                let toText = Pdf2TextObj()
+
+                toText.pdfToText(pdfPfad. onPageDone, onFinisj)
+
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 
