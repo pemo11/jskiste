@@ -1,6 +1,6 @@
 // File: Objects01.js
 
-// Leeres Objekt mit einer Function - etwas umständlich
+// Leeres Objekt mit einer Function - etwas umstÃ¤ndlich
 var dog = {}
 
 dog.saySomething = (line) => {

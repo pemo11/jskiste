@@ -1,0 +1,10 @@
+/* Die Standard-CSS */
+
+body {
+    font-family: verdana;
+    font-size: 11pt;
+}
+
+canvas {
+    margin: 10px;
+}

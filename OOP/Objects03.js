@@ -2,9 +2,9 @@
 
 // Objekt mit Konstruktor
 
-// Dog ist eine Konstruktor-Function (es gibt keinen Rückgabewert)
+// Dog ist eine Konstruktor-Function (es gibt keinen RÃ¼ckgabewert)
 // Eine Konstruktor-Function ist die JavaScript-Version einer Klasse
-// Der Name beginnt üblicherweise mit einem Großbuchstaben
+// Der Name beginnt Ã¼blicherweise mit einem GroÃŸbuchstaben
 function Dog(objectType) {
     this.objectType = objectType
     this.way = "bellt"

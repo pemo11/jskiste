@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Der Titel</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Mini-Taetris V1</h3>
+        <canvas id="spielfeld">
+
+        </canvas>
+
+        <script>
+            const cavFeld = document.querySelector("#spielfeld")
+            const ctx = cavFeld.getContext("2d")
+            var interval = 200
+            var xPos = 100
+            var yPos = 0
+            var delta = 5
+            const cavWidth = 250
+            const cavHeight = 600
+
+
+            function quader() {
+                this.height = 40
+                this.width = 40
+                this.color = 'red'
+            }
+
+            const drawQuader = (quader, delta, xPos, yPos) => {
+                ctx.beginPath()
+                ctx.clearRect(0, 0, cavWidth, cavHeight)
+                yPos += delta
+                yPos = Math.min(yPos, cavHeight - quader.height)
+                ctx.rect(xPos, yPos, quader.width, quader.height)
+                ctx.fillStyle = quader.color
+                ctx.fill()
+            }
+
+
+            window.addEventListener("load", (event) => {
+                cavFeld.width = cavWidth
+                cavFeld.height = cavHeight
+                cavFeld.style.background = "lightgreen"
+                
+                // Mit cavFeld geht es nicht?
+                window.addEventListener("keydown", e => {
+                    console.log("*** KeyDown ***")
+                    switch(e.keyCode) {
+                        // Pfeil links
+                        case 37:
+                            console.log("*** Left Arrow ***")
+                            xPos -= 10
+                            xPos = Math.max(0, xPos)
+                            break;
+                        // Pfeil rechts
+                        case 39:
+                            console.log("*** Right Arrow ***")
+                            xPos += 10
+                            xPos = Math.min(cavWidth, xPos)
+                            break;
+                    }
+                }, true)
+
+                // Wird nicht ausgelöst?
+                cavFeld.addEventListener("keyup", (e,state) => {
+                    console.log("*** KeyUp ***")
+
+                }, true)
+
+                var q1 = new quader();
+
+                // Window.requestAnimationFrame(drawQuader)
+
+                // Früher hat es man so gemacht
+                setInterval(() => {
+                    drawQuader(q1, delta, xPos, yPos)
+                    yPos += delta
+                }, interval);
+
+
+
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!-- funktioniert noch nicht
+>Beim Verschieben eines Blocks gibt es eine "Schleifspur" oberhalb des Blocks
+>Es wird nur ein Block am Boden gezeichnet bzw. mit nächsten Block bleibt nur ein Block am Boden übrig
+>Keine Abfrage vor dem Verschieben, ob ein Turm erreicht wurde
+Das alles soll noch in V2
+-->
+>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Der Titel</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Mini-Taetris V2</h3>
+        <canvas id="spielfeld">
+
+        </canvas>
+
+        <script>
+            const cavFeld = document.querySelector("#spielfeld")
+            const ctx = cavFeld.getContext("2d")
+            var interval = 200
+            var xPos = 100
+            var xPosOld = 100
+            var yPos = 0
+            var delta = 10
+            const cavWidth = 250
+            const cavHeight = 600
+            var quaderList = null
+            const colorList = ['red','green','blue','yellow']
+
+            const sleep = (ms) => {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            function quader(color, id) {
+                this.height = 40
+                this.width = 40
+                this.x = 0
+                this.y = 0
+                this.color = color
+                this.id = id
+            }
+
+            const drawQuader = async (quader) => {
+                console.log(`*** Zeichne Quader Nr. ${quader.id} ***`)
+                yPos = 0
+                while(yPos < cavHeight - quader.height) {
+                    ctx.beginPath()
+                    ctx.clearRect(xPosOld, yPos, quader.width, quader.height)
+                    yPos += delta
+                    // console.log(`Platziere Block bei x=${xPos}/y=${yPos}`)
+                    ctx.rect(xPos, yPos, quader.width, quader.height)
+                    ctx.fillStyle = quader.color
+                    ctx.fill()
+                    // redrawQuaderList()
+                    await sleep(interval)
+                }
+                quader.placed = true
+                quader.x = xPos
+                quader.y = yPos
+                quaderList.push(quader)
+            }
+
+            const redrawQuader = (quader) => {
+                console.log(`+++ Zeichne Quader Nr. ${quader.id} +++`)
+                ctx.beginPath()
+                ctx.clearRect(0, 0, cavWidth, cavHeight)
+                // console.log(`Platziere Block bei x=${xPos}/y=${yPos}`)
+                ctx.rect(quader.x, quader.y, quader.width, quader.height)
+                ctx.fillStyle = quader.color
+                ctx.fill()
+            }
+
+            const redrawQuaderList = () => {
+                console.log("*** redrawQuaderList ***")
+                quaderList.forEach(q => {
+                    redrawQuader(q)
+                });
+            }
+
+            window.addEventListener("load", async (event) => {
+                cavFeld.width = cavWidth
+                cavFeld.height = cavHeight
+                cavFeld.style.background = "lightgreen"
+
+                quaderList = []
+                
+                // Mit cavFeld geht es nicht?
+                window.addEventListener("keydown", e => {
+                    console.log("*** KeyDown ***")
+                    switch(e.keyCode) {
+                        // Pfeil links
+                        case 37:
+                            console.log("*** Left Arrow ***")
+                            xPosOld = xPos
+                            yPosOld = yPos
+                            xPos -= 10
+                            xPos = Math.max(0, xPos)
+                            break;
+                        // Pfeil rechts
+                        case 39:
+                            console.log("*** Right Arrow ***")
+                            xPosOld = xPos
+                            yPosOld = yPos
+                            xPos += 10
+                            xPos = Math.min(cavWidth, xPos)
+                            break;
+                    }
+                }, true)
+
+                // Wird nicht ausgelöst?
+                cavFeld.addEventListener("keyup", (e,state) => {
+                    console.log("*** KeyUp ***")
+
+                }, true)
+
+                for(i=0;i<10;i++) {
+                    console.log(`*** Durchlauf Nr. ${i} ***`)
+                    let z = Math.floor(Math.random() * colorList.length)
+                    let quaderColor = colorList[z]
+                    let q = new quader(quaderColor, quaderList.length + 1)
+                    await drawQuader(q)
+                    redrawQuaderList()
+                }
+
+                Window.requestAnimationFrame(redrawQuaderList)
+
+
+
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 
