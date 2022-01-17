@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>requestAnimationFrame-Beispiel Nr. 2</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3 style="margin:10px;">requestAnimationFrame-Beispiel Nr. 2</h3>
+        <canvas id="spielfeld">
+
+        </canvas>
+        <div id="info1" style="margin:10px;"></div>
+        <div id="info2" style="margin:10px;"></div>
+        <input type="button" id="btnStart" value="Start">
+
+        <script>
+            const cavFeld = document.querySelector("#spielfeld")
+            const elInfo1 = document.querySelector("#info1")
+            const elInfo2 = document.querySelector("#info2")
+            const btnStart = document.querySelector("#btnStart")
+            var interval = 200
+            var xPos = 0
+            var yPos = 0
+            var oldColor
+            var moveDelta = 10
+            const cavHeight = 600
+            const quaderWidth = 40
+            const quaderHeight = 40
+            const cavWidth = quaderWidth * 10
+            var prevTimestamp = 0
+            var callBackId
+            var q
+            const colorList = ['red','green','blue','yellow','magenta']
+
+            function quader(color, id, size=1, direction=1) {
+                this.height = quaderHeight
+                this.width = quaderWidth * size
+                this.direction = direction
+                this.x = 0
+                this.y = 0
+                this.color = color
+                this.id = id
+            }
+
+            // Zeichnet den Quader an der aktuellen Position
+            const drawQuader = (quader) => {
+                elInfo1.innerText = `*** drawQuader bei x=${quader.x}/y=${quader.y} `
+                // Canvas einmal komplett löschen
+                let ctx = cavFeld.getContext("2d")
+                ctx.clearRect(0, 0, cavWidth, cavHeight)
+                ctx.beginPath()
+                ctx.fillStyle = quader.color
+                ctx.rect(quader.x, quader.y, quader.width, quader.height)
+                ctx.fill()
+                // id schreiben
+                ctx.fillStyle = "white"
+                ctx.font = "Bold 16pt Arial"
+                ctx.fillText(quader.id, quader.x + quader.width / 2 - 6, quader.y + quader.height / 2 + 6)
+            }
+
+            window.addEventListener("load", (event) => {
+                cavFeld.width = cavWidth
+                cavFeld.height = cavHeight
+                cavFeld.style.background = "lightgreen"
+
+                window.addEventListener("keydown", e => {
+                    console.log(`*** KeyDown-Event mit KeyCode=${e.keyCode} ***`)
+                    switch(e.keyCode) {
+                        // Pfeil links
+                        case 37:
+                            xPos -= 10
+                            xPos = Math.min(xPos, cavWidth)
+                            break;
+                        // Pfeil rechts
+                        case 39:
+                            xPos += 10
+                            xPos = Math.min(xPos, cavWidth)
+                            break;
+                        }
+                }, true)
+
+                btnStart.addEventListener("click", e => {
+                    yPos = 0
+                    xPos = Math.floor((Math.random() * cavWidth)  / quaderWidth) * quaderWidth
+                    let z
+                    do {
+                        z = Math.floor(Math.random() * colorList.length)
+                    } while (z == oldColor)
+                    oldColor = z
+                    let quaderColor = colorList[z]
+                    q = new quader(quaderColor, z+1)
+                    q.x = xPos
+                    drawQuader(q)
+                    window.requestAnimationFrame(moveQuader)
+
+                }, true)
+
+
+
+            })
+
+            const moveQuader = (timestamp) => {
+                if (prevTimestamp === 0) {
+                    prevTimestamp = timestamp
+                }
+                let delta = timestamp - prevTimestamp
+                elInfo2.innerText = `*** draw-Aufruf mit timestamp=${timestamp} prevTimestamp=${prevTimestamp} delta=${delta}`
+                if (delta > interval) {
+                    prevTimestamp = timestamp
+                    if (yPos < cavHeight - quaderHeight) {
+                        yPos += moveDelta
+
+                        // Position aktualisieren
+                        q.x = xPos
+                        q.y = yPos
+                        
+                        // Quader zeichnen
+                        drawQuader(q)
+                    } else {
+                        // XPos anpassen
+                        q.x = Math.floor(xPos / quaderWidth) * quaderWidth
+                        q.y = yPos
+                        drawQuader(q)
+                    }
+                }
+                window.requestAnimationFrame(moveQuader)
+            }
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

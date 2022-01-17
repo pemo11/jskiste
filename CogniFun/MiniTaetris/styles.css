@@ -8,3 +8,16 @@ body {
 canvas {
     margin: 10px;
 }
+
+input[type='button'] {
+    margin: 10px;
+    width: 160px;
+    height: 40px;
+    background-color: violet;
+    border-radius: 1.1em;
+
+}
+
+div.info {
+    margin:10px;
+}

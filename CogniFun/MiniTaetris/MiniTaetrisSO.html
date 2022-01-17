@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Mini-Tetris V</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body {
+                font-family: verdana;
+                font-size: 11pt;
+            }
+
+            canvas {
+                margin: 10px;
+            }
+
+            input[type='button'] {
+                margin: 10px;
+                width: 160px;
+                height: 40px;
+                background-color: violet;
+                border-radius: 1.1em;
+
+            }
+
+            div.info {
+                margin:10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h3 style="margin: 10px;">Mini-Tetris</h3>
+        <canvas id="gameArea">
+
+        </canvas>
+        <div>
+            <input type="button" id="btnStart" value="Start"/>
+        </div>
+        <div id="info1" class="info">info1</div>
+        <div id="info2" class="info">info2</div>
+        <div id="info3" class="info">info3</div>
+
+        <script>
+            const cavArea = document.querySelector("#gameArea")
+            const ctx = cavArea.getContext("2d")
+            const btnStart = document.querySelector("#btnStart")
+            const elInfo1 = document.querySelector("#info1")
+            const elInfo2 = document.querySelector("#info2")
+            const elInfo3 = document.querySelector("#info3")
+            var interval = 500
+            var xPos = 0
+            var yPos = 0
+            var moveDelta = 10
+            const cavHeight = 600
+            const quaderWidth = 40
+            const quaderHeight = 40
+            const cavWidth = quaderWidth * 10
+            var quaderCount = 20
+            var quaderList = null
+            var currentQuader = null
+            const colorList = ['red','green','blue','yellow','magenta','orange']
+            var prevTimestamp = 0
+            var gameOver = false
+
+            function quader(color, id, size=1, direction=1) {
+                this.height = quaderHeight
+                this.width = quaderWidth * size
+                this.direction = direction
+                this.x = 0
+                this.y = 0
+                this.color = color
+                this.id = id
+            }
+
+            // Register event handler
+            window.addEventListener("load", (event) => {
+                cavArea.width = cavWidth
+                cavArea.height = cavHeight
+                cavArea.style.background = "lightgreen"
+
+                window.addEventListener("keydown", e => {
+                    console.log(`*** keydown event with keyCode=${e.keyCode} ***`)
+                    switch(e.keyCode) {
+                        // Left arrow
+                        case 37:
+                            xPos -= 10
+                            xPos = Math.min(xPos, cavWidth)
+                            break;
+                        // Right arrow
+                        case 39:
+                            xPos += 10
+                            xPos = Math.min(xPos, cavWidth)
+                            break;
+                        }
+                }, true)
+
+
+                // Event handler for the button
+                btnStart.addEventListener("click", e => {
+                    quaderList = []
+                    for(i=1;i<=quaderCount;i++) {
+                        elInfo1.innerText = `*** Loop Nr. ${i} ***`
+                        xPos = Math.floor((Math.random() * cavWidth)  / quaderWidth) * quaderWidth
+                        let z = Math.floor(Math.random() * colorList.length)
+                        let quaderColor = colorList[z]
+                        currentQuader= new quader(quaderColor, quaderList.length + 1)
+                        currentQuader.y = 0
+                        currentQuader.x = xPos
+                        prevTimestamp = 0
+                        moveQuader()
+                    }
+                    gameOver = true
+                })
+            });
+
+            // Checks if the current quader reached the bottom
+            const checkBottom = () => {
+                // bottom?
+                var result = currentQuader.y >= cavHeight - currentQuader.height
+                // Are there any quaders below the current quader?
+                quaderList.forEach(q => {
+                     result ||= currentQuader.y >= q.y - quaderHeight && (currentQuader.x >= q.x - quaderWidth && currentQuader.x < q.x + quaderWidth)
+                });
+                elInfo2.innerText = `+++ checkBottom = ${result} +++`
+                return result
+            }
+
+            // move the quader to the bottom
+            const moveQuader = () => {
+                window.requestAnimationFrame(updateQuader)
+                while(!checkBottom()) {
+                    currentQuader.y += moveDelta
+                    window.requestAnimationFrame(updateQuader)
+                }
+            }
+
+            // updating the current quader and the quaders at the bottom
+            const updateQuader = (timestamp) => {
+                if (prevTimestamp === 0) {
+                    prevTimestamp = timestamp
+                }
+                let delta = timestamp - prevTimestamp
+                elInfo3.innerText = `*** updateQuader call with timestamp=${timestamp} prevTimestamp=${prevTimestamp} delta=${delta}`
+                if (delta > interval) {
+                    prevTimestamp = timestamp
+                    if (!gameOver) {
+                        // currentQuader.y += moveDelta
+                        drawQuaderList()
+                    }
+                }
+                window.requestAnimationFrame(updateQuader)
+            }
+
+            // draws the current quader and the quaders at the bottom
+            const drawQuaderList = () => {
+                drawQuader(currentQuader, true)
+                 // draws the quaders at the bottom
+                 quaderList.forEach(q => {
+                    drawQuader(q, false)
+                });
+            }
+
+            // draws the current quader
+            const drawQuader = (quader, clearCanvas) => {
+                // clear the canvas?
+                if (clearCanvas) {
+                    ctx.clearRect(0, 0, cavWidth, cavHeight)
+                }
+                // draw the current quader
+                elInfo2.innerText = `+++ drawing quader Nr. ${quader.id} at x=${quader.x}/y=${quader.y} +++`
+                ctx.beginPath()
+                ctx.rect(quader.x, quader.y, quader.width, quader.height)
+                ctx.fillStyle = quader.color
+                ctx.fill()
+                // id schreiben
+                ctx.fillStyle = "white"
+                ctx.font = "Bold 16pt Arial"
+                ctx.fillText(quader.id, quader.x + quader.width / 2 - 6, quader.y + quader.height / 2 + 6)
+            }
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

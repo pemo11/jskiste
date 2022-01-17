@@ -1,0 +1,47 @@
+<!--
+    http://www.javascriptkit.com/javatutors/requestanimationframe.shtml
+-->
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>requestAnimationFrame-Beispiel Nr. 1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>requestAnimationFrame-Beispiel Nr. 1</h3>
+        <div id="dasDiv" style="height:40px;width:40px;background:greenyellow">
+        </div>
+
+        <script>
+            let start
+            let prevTimestamp
+            let elDiv = document.querySelector("#dasDiv")
+
+            const step = (timestamp) => {
+                if (start === undefined) {
+                    start = timestamp
+                }
+                const elapsed = timestamp - start
+                if (prevTimestamp != timestamp) {
+                    const count = Math.min(0.1 * elapsed, 200)
+                    elDiv.style.transform = "translateX(" + count + "px)"
+                }
+                if (elapsed < 2000) {
+                    prevTimestamp = timestamp
+                } else {
+                    start = timestamp
+                }
+                window.requestAnimationFrame(step)
+            }
+
+            window.addEventListener("load", (event) => {
+                window.requestAnimationFrame(step)
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<!-- funktioniert noch nicht
->Beim Verschieben eines Blocks gibt es eine "Schleifspur" oberhalb des Blocks
->Es wird nur ein Block am Boden gezeichnet bzw. mit nächsten Block bleibt nur ein Block am Boden übrig
->Keine Abfrage vor dem Verschieben, ob ein Turm erreicht wurde
-Das alles soll noch in V2
+<!-- 
+    Stand: 29/12721 . funktioniert grundsätzlich, aber
+    > beim Verschieben eines Blocks nach links gibt es ab und zu "Schleifspur" rechts des Blocks
+    Das bedeutet, das nicht der ganze Block gelöscht wird
+    > Blöcke schleifen die Blöcke am Boden, da etwas zu viel gelöscht wird
+    Es bleibt aber so als Beispiel für eine nicht perfekte Umsetzung und Lernbeispiel für eine "Sackgasse"
+    Umstellen auf requestAnimationFrame und den ganzen Canvas löschen in V3 - hier gibt es auch 2-er und 3-Blöcke, die um 90% Grad gedreht werden können
 -->
->
 <html lang="de">
     <head>
         <meta charset="utf-8">
@@ -14,7 +15,7 @@ Das alles soll noch in V2
         <link href="styles.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <h3>Mini-Taetris V2</h3>
+        <h3 style="margin: 10px;">Mini-Taetris V2</h3>
         <canvas id="spielfeld">
 
         </canvas>
@@ -22,23 +23,27 @@ Das alles soll noch in V2
         <script>
             const cavFeld = document.querySelector("#spielfeld")
             const ctx = cavFeld.getContext("2d")
-            var interval = 200
-            var xPos = 100
-            var xPosOld = 100
+            var interval = 150
+            var xPos = 0
             var yPos = 0
             var delta = 10
-            const cavWidth = 250
             const cavHeight = 600
+            const quaderWidth = 40
+            const quaderHeight = 40
+            const cavWidth = quaderWidth * 10
+            var quaderCount = 20
             var quaderList = null
-            const colorList = ['red','green','blue','yellow']
+            // bringt vermutlich nichts
+            var noMove = false
+            const colorList = ['red','green','blue','yellow','magenta']
 
             const sleep = (ms) => {
                 return new Promise(resolve => setTimeout(resolve, ms));
             }
 
             function quader(color, id) {
-                this.height = 40
-                this.width = 40
+                this.height = quaderHeight
+                this.width = quaderWidth
                 this.x = 0
                 this.y = 0
                 this.color = color
@@ -48,38 +53,71 @@ Das alles soll noch in V2
             const drawQuader = async (quader) => {
                 console.log(`*** Zeichne Quader Nr. ${quader.id} ***`)
                 yPos = 0
-                while(yPos < cavHeight - quader.height) {
+                moveDirection = 1
+                while(!checkBottom(quader)) {
                     ctx.beginPath()
-                    ctx.clearRect(xPosOld, yPos, quader.width, quader.height)
+                    // Alten Block löschen
+                    // console.log(`Lösche Block bei x=${xPosOld}/y=${yPos}`)
+                    // durch + 2 x delta erscheint keine "Schleifspur" - wenngleich es bei schneller Pfeilbewegung doch noch passiert
+                    ctx.clearRect(xPos - delta, yPos, quader.width + 2*delta, quader.height)
                     yPos += delta
                     // console.log(`Platziere Block bei x=${xPos}/y=${yPos}`)
+                    // Neuen Block zeichnen
                     ctx.rect(xPos, yPos, quader.width, quader.height)
                     ctx.fillStyle = quader.color
                     ctx.fill()
-                    // redrawQuaderList()
+                    // Nummer schreiben
+                    ctx.fillStyle = "black"
+                    ctx.font = "Bold 16pt Arial"
+                    ctx.fillText(quader.id, xPos + quader.width / 2 - 8, yPos + quader.height / 2 + 6)
+                    // Position aktualisieren
+                    quader.x = xPos
+                    quader.y = yPos
                     await sleep(interval)
                 }
                 quader.placed = true
-                quader.x = xPos
+                // Alten Block löschen
+                ctx.clearRect(xPos, yPos, quader.width, quader.height)
+                // XPos anpassen
+                quader.x = Math.floor(xPos / quaderWidth) * quaderWidth
                 quader.y = yPos
+                // Block erneut zeichnen
+                redrawQuader(quader)
                 quaderList.push(quader)
             }
 
             const redrawQuader = (quader) => {
                 console.log(`+++ Zeichne Quader Nr. ${quader.id} +++`)
                 ctx.beginPath()
-                ctx.clearRect(0, 0, cavWidth, cavHeight)
+                // ctx.clearRect(0, 0, cavWidth, cavHeight)
                 // console.log(`Platziere Block bei x=${xPos}/y=${yPos}`)
                 ctx.rect(quader.x, quader.y, quader.width, quader.height)
                 ctx.fillStyle = quader.color
                 ctx.fill()
+                // Nummer schreiben
+                ctx.fillStyle = "white"
+                ctx.font = "Bold 16pt Arial"
+                ctx.fillText(quader.id, quader.x + quader.width / 2 - 6, quader.y + quader.height / 2 + 6)
             }
 
             const redrawQuaderList = () => {
                 console.log("*** redrawQuaderList ***")
+                ctx.clearRect(0, 0, cavWidth, cavHeight)
                 quaderList.forEach(q => {
                     redrawQuader(q)
                 });
+            }
+
+            // Prüft, ob der quader den Boden erreicht hat
+            const checkBottom = (quader) => {
+                // Wurde der Boden erreicht?
+                var result = quader.y >= cavHeight - quader.height
+                // Gibt es unterhalb einen Quader?
+                quaderList.forEach(q => {
+                     result ||= quader.y >= q.y - quaderHeight && (quader.x >= q.x - quaderWidth && quader.x < q.x + quaderWidth)
+                });
+                console.log(`+++ checkBottom = ${result} +++`)
+                return result
             }
 
             window.addEventListener("load", async (event) => {
@@ -96,30 +134,30 @@ Das alles soll noch in V2
                         // Pfeil links
                         case 37:
                             console.log("*** Left Arrow ***")
-                            xPosOld = xPos
-                            yPosOld = yPos
                             xPos -= 10
-                            xPos = Math.max(0, xPos)
+                            xPos = Math.min(xPos, cavWidth)
                             break;
                         // Pfeil rechts
                         case 39:
                             console.log("*** Right Arrow ***")
-                            xPosOld = xPos
-                            yPosOld = yPos
                             xPos += 10
-                            xPos = Math.min(cavWidth, xPos)
+                            xPos = Math.min(xPos, cavWidth)
                             break;
-                    }
+                        }
                 }, true)
 
+                // der dritte Pararmeter true/false gibt ab, ob das Event abgearbeitet (true) oder weitergereicht (false, event bubbling) werden soll
+
                 // Wird nicht ausgelöst?
-                cavFeld.addEventListener("keyup", (e,state) => {
+                cavFeld.addEventListener("keyup", e => {
                     console.log("*** KeyUp ***")
 
                 }, true)
 
-                for(i=0;i<10;i++) {
+                for(i=0;i<quaderCount;i++) {
                     console.log(`*** Durchlauf Nr. ${i} ***`)
+                    xPos = Math.floor((Math.random() * cavWidth)  / quaderWidth) * quaderWidth
+                    xPosOld = xPos
                     let z = Math.floor(Math.random() * colorList.length)
                     let quaderColor = colorList[z]
                     let q = new quader(quaderColor, quaderList.length + 1)
@@ -127,9 +165,7 @@ Das alles soll noch in V2
                     redrawQuaderList()
                 }
 
-                Window.requestAnimationFrame(redrawQuaderList)
-
-
+                // Window.requestAnimationFrame(redrawQuaderList)
 
             });
 

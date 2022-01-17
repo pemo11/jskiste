@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>requestAnimationFrame-Beispiel Nr. 3</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3 style="margin:10px;">requestAnimationFrame-Beispiel Nr. 3</h3>
+        <canvas id="spielfeld">
+
+        </canvas>
+        <div id="info" style="margin:10px;">
+
+        </div>
+
+        <script>
+            const cavFeld = document.querySelector("#spielfeld")
+            const elInfo = document.querySelector("#info")
+            var ctx = cavFeld.getContext("2d");
+            var x = 50,
+                y = 50,
+                radius = 15,
+                speed = 3;
+
+            function circle() {
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, Math.PI * 2, true);
+                ctx.fillStyle = "#07C";
+                ctx.fill();
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, cavFeld.width, cavFeld.height);
+                circle();
+                requestAnimationFrame(draw);
+            }
+
+            draw();
+
+        window.addEventListener("keydown", function(e) {
+            switch (e.key) {
+                case 'ArrowUp':
+                    if (y > radius) y -= speed;
+                    break;
+                case 'ArrowDown':
+                    if (y < cavFeld.height - radius) y += speed;
+                    break;
+                case 'ArrowLeft':
+                    if (x > radius) x -= speed;
+                    break;
+                case 'ArrowRight':
+                    if (x < cavFeld.width - radius) x += speed;
+                    break;
+            }
+        });
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 
