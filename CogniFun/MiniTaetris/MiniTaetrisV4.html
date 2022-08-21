@@ -10,8 +10,11 @@
         <h3 style="margin:10px;">Mini-Taetris V4</h3>
         <div>
             In dieser Version fallen auch 2er- und 3er-Blöcke, die gedreht werden können
-            Grundsätzlich geht es (jippie), aber checkBottom stimmt noch nicht bei horizontalen 2er/3er-Blöcken
-            MiniTaetrisV5 ist dann mit Punkten und Schwierigkeitsgraden
+            Es geht, wenn weder gedreht noch verschoben wird (jippie) - aber die Umsetzung ist etwas schwach:(
+            20/1/22 - 2er-Blöcke fallen manchmal durch, 1er-Blöcke können in der Luft hängenbleiben oder, wenn ich zu schnell die Pfeiltasten drücke
+            MiniTaetrisV5  mit den richtigen Blöcken
+            https://codeincomplete.com/articles/javascript-tetris/
+            MiniTaetrisV6 ist dann mit Punkten und Schwierigkeitsgraden - Zusammenhänge Bereich erhalten Punkte für die Anzahl der Blöcke
         </div>
         <canvas id="spielfeld">
 
@@ -27,9 +30,7 @@
             const elInfo2 = document.querySelector("#info2")
             const elInfo3 = document.querySelector("#info3")
             const btnStart = document.querySelector("#btnStart")
-            var interval = 50
-            var xPos = 0
-            var yPos = 0
+            var interval = 100
             var oldColor
             var moveDelta = 10
             const cavHeight = 600
@@ -37,9 +38,9 @@
             const quaderWidth = 40
             const quaderHeight = 40
             const cavWidth = quaderWidth * 10
+            const quaderMaxsize = 3
             var prevTimestamp = 0
-            var callBackId
-            var currentQuader
+            var currentQuader = null
             const colorList = ['red','green','blue','orange','magenta']
 
             const sleep = (ms) => {
@@ -50,7 +51,7 @@
                 this.height = quaderHeight
                 this.width = quaderWidth
                 this.size = 1
-                this.direction =1
+                this.direction = 1
                 this.x = 0
                 this.y = 0
                 this.color = color
@@ -66,7 +67,9 @@
                 quaderList.forEach(q => {
                     // den aktuellen Quader auslassen
                      if (q.id !== quader.id) {
-                        result ||= quader.y >= q.y - q.height  && (quader.x >= q.x && quader.x < q.x + q.width)
+                         // Abfrage gegenüber V3 geändert
+                        // result ||= quader.y + quader.height >= q.y  && (quader.x >= q.x && quader.x < q.x + q.width)
+                        result ||= (quader.y  + quader.height >= q.y)  && (quader.x >= q.x && (quader.x < q.x + q.width))
                      }
                 });
                 // elInfo3.innerText = `+++ checkBottom = ${result} +++`
@@ -87,7 +90,7 @@
                     ctx.clearRect(0, 0, cavWidth, cavHeight)
                     // Alle Quader der Reihe nach
                     quaderList.forEach(quader => {
-                        elInfo1.innerText = `*** drawQuader - Zeichne Quader mit id=${quader.id} bei x=${quader.x}/y=${quader.y} `
+                        elInfo1.innerText = `*** drawQuader - Zeichne Quader mit id=${quader.id} size=${quader.size} bei x=${quader.x}/y=${quader.y} `
                         ctx.beginPath()
                         ctx.fillStyle = quader.color
                         ctx.rect(quader.x, quader.y, quader.width, quader.height)
@@ -124,19 +127,24 @@
                 cavFeld.height = cavHeight
                 cavFeld.style.background = "lightgreen"
                 let tmp = 0
+                let xPos = 0
 
                 window.addEventListener("keydown", e => {
                     console.log(`*** KeyDown-Event mit KeyCode=${e.keyCode} ***`)
                     switch(e.keyCode) {
                         // Pfeil links
                         case 37:
-                            xPos -= 10
+                            // Mit Zwischenvariable für das Debuggen
+                            xPos = currentQuader.x - 10
                             xPos = Math.max(xPos, 0)
+                            currentQuader.x = xPos
                             break;
                         // Pfeil rechts
                         case 39:
-                            xPos += 10
+                            // Mit Zwischenvariable für das Debuggen
+                            xPos = currentQuader.x + 10
                             xPos = Math.min(xPos, cavWidth - quaderWidth)
+                            currentQuader.x = xPos
                             break;
                         // Pfeil oben
                         case 38:
@@ -158,42 +166,52 @@
                 btnStart.addEventListener("click", async e => {
                     quaderList = []
                     for(i=1;i<=quaderCount;i++) {
-                        yPos = 0
-                        xPos = Math.floor((Math.random() * cavWidth)  / quaderWidth) * quaderWidth
-                        let z
+                        // Festlegen der Farbe
+                        let z = 0
                         do {
                             z = Math.floor(Math.random() * colorList.length)
                         } while (z == oldColor)
                         oldColor = z
                         let quaderColor = colorList[z]
+                        // Neuen Quader mit id = i anlegen
                         currentQuader = new quader(quaderColor, i)
+                        // Größe festlegen
+                        let size = Math.floor(Math.random() * quaderMaxsize) + 1
+                        currentQuader.size = size
+                        // Nur provisorisch, damit ein Quader in der Breite nicht über rechten Rand hinausgeht - müsste besser integriert werden
+                        let xPos = Math.floor((Math.random() * cavWidth)  / quaderWidth) * quaderWidth
+                        xPos = Math.min(xPos, cavWidth - size * quaderWidth)
                         currentQuader.x = xPos
+                        // Die Höhe ist am Anfang 0
+                        currentQuader.y = 0
+                        // Ausrichtung festglegen
                         let direction = Math.floor(Math.random() * 2) ? 1 : 0
                         currentQuader.direction = direction
-                        z = Math.floor(Math.random() * 3) + 1
+                        // Breite und Höhe in Abhängigkeit der Ausrichtung festlegen
                         if (direction == 1) {
-                            quader.height = quaderHeight
-                            currentQuader.width = quaderWidth * z
+                            currentQuader.height = quaderHeight
+                            currentQuader.width = quaderWidth * size
                         } else {
+                            currentQuader.height = quaderHeight * size
                             currentQuader.width = quaderWidth
-                            currentQuader.height = quaderHeight * z
                         }
+                        // Neuen Quader in die Liste
                         quaderList.push(currentQuader)
-                        elInfo2.innerText = `*** Neuer Quader mit id=${currentQuader.id}`
+                        elInfo2.innerText = `*** Neuer Quader mit id=${currentQuader.id} size=${currentQuader.size} height/width=${currentQuader.height}/${currentQuader.width}`
+                        // Quader nach unten bewegen
                         while (!checkBottom(currentQuader)) {
-                            yPos += moveDelta
                             // Position aktualisieren
-                            currentQuader.x = xPos
-                            currentQuader.y = yPos
+                            currentQuader.y += moveDelta
                             // Alle Quader zeichnen
                             window.requestAnimationFrame(drawQuader)
                             // Ohne sleep() scheint es nicht zu gehen
                             // Wartezeit einlegen
                             await sleep(interval)
                         }
-                        // XPos anpassen?
-                        currentQuader.x = Math.floor(xPos / quaderWidth) * quaderWidth
-                        currentQuader.y = yPos
+                        // XPos anpassen, so dass jeder Block in einer Spalte abgelegt wird
+                        currentQuader.x = Math.floor(currentQuader.x / quaderWidth) * quaderWidth
+                        // currentQuader.y = yPos
+                        // Dem Browser die Gelegenheit zum Neuzeichnen geben
                         window.requestAnimationFrame(drawQuader)
                     }
 

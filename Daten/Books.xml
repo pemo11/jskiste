@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<books>
+    <book id="1000">
+        <author>Pemo</author>
+        <title>So happy with .NET</title>
+        <pubDate>1.1.2010</pubDate>
+    </book>
+    <book id="1001">
+        <author>Susi</author>
+        <title>Forget .NET, use Java!</title>
+        <pubDate>1.1.2010</pubDate>
+    </book>
+    <book id="1002">
+        <author>Pemo</author>
+        <title>Be .NET and nothing else matters</title>
+        <pubDate>1.12.2011</pubDate>
+    </book>
+</books>

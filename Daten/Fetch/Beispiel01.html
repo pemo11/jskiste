@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>Json-Daten abrufen mit fetch - Beispiel Nr. 1</title>
+        <style>
+            body {
+                font-family: verdana;
+            }
+        </style>
+    </head>
+    <body>
+        <h3>Json-Daten abrufen mit fetch - Beispiel Nr. 1</h3>
+        <div id="info">
+            Info...
+        </div>
+        <script>
+            const elInfo = document.getElementById("info")
+
+            window.addEventListener("load", e => {
+                console.log("*** load-event")
+                elInfo.innerHTML = ""
+                fetch("../Books.json")
+                    .then(r => r.json())
+                    .then(jsonData => {
+                        jsonData.forEach(e => {
+                            console.log(e)
+                            elInfo.innerHTML += `<p>>> ${e.title}</p>`
+                        })
+                    })
+            })
+        </script>
+    </body>
+</html>

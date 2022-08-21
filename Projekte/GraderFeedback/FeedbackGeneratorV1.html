@@ -1,0 +1,77 @@
+<!doctype html>
+<!--
+Die Idee ist, dass am rechten Rand Textblocks mit Feedbacktexten angezeigt werden, die per Drag and Drop in das Hauptfeld gezogen werden können.
+Die finale Projektidee ist, dass für jeden Studierenden eine Seite generiert wird und in Abhängigkeit der Testergebnisse das Feedback inviduell zusammengestellt wird
+-->
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <title>Grader-Comments V1</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <h3>Grader-Feedbackgenerator</h3>
+    <div class="row">
+        <div class="column">
+            <textarea
+                id="taFeedback"
+                rows="10"
+                class="feedbackArea"
+            /></textarea>
+        </div>
+        <div class="column">
+            <div class="feedbackItem" id="feedback1" draggable="true">Sehr gute Umsetzung</div>
+            <div class="feedbackItem" id="feedback2" draggable="true">Es sind zu viele Checktyle-Meldungen</div>
+            <div class="feedbackItem" id="feedback3" draggable="true">Mache Dich mit dem Prinzip von Checkstyle vertraut und finde heraus, wie sich die Zahl der Meldungen verringern lässt.</div>
+            <div class="feedbackItem" id="feedback4" draggable="true">Achte auf die Schreibweise bei Variablen.</div>
+        </div>
+    </div>
+    <script>
+        const elFeedback = document.getElementById("taFeedback")
+
+        function dragStart(e) {
+          console.log("drag starts...");
+          e.dataTransfer.setData("text/plain", e.target.id)
+          setTimeout(() => {
+            e.target.classList.add("hide")
+          }, 0);
+        }
+
+        function dragOver(e) {
+            e.preventDefault()
+        }
+
+        function drop(e) {
+            console.log("drop ...")
+            const id = e.dataTransfer.getData("text/plain")
+            const draggable = document.getElementById(id)
+            elFeedback.value += draggable.innerText + "\n"
+        }
+
+        function dragEnter(e) {
+            console.log("dragEnter ...")
+            e.preventDefault()
+        }
+
+        function dragLeave(e) {
+            console.log("dragLeave ...")
+
+        }
+
+
+        window.addEventListener("load", (event) => {
+            // attach the dragstart event
+            var feedbackItems = document.querySelectorAll(".feedbackItem")
+            for (var i = 0; i < feedbackItems.length; i++) {
+                feedbackItems[i].addEventListener("dragstart", dragStart)
+            }           
+            // add drag events to text area
+            elFeedback.addEventListener("dragover", dragOver)
+            elFeedback.addEventListener("drop", drop)
+            elFeedback.addEventListener("dragenter", dragEnter)
+            elFeedback.addEventListener("dragleave", dragLeave)
+        })
+
+    </script>
+  </body>
+</html>

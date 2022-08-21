@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>Xml-Daten abrufen mit fetch - Beispiel Nr. 1</title>
+        <style>
+            body {
+                font-family: verdana;
+            }
+            table {
+                border-width: 1px;
+                border-style: solid;
+                width: 50%;
+            }
+            th {
+                background-color: orangered;
+                text-align: center;
+            }
+            td {
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h3>Xml-Daten abrufen mit fetch - Beispiel Nr. 1</h3>
+        <pre id="output"></pre>
+        <div id="info">
+            <table id="books">
+                <tr><th>Id</th><th>Title</th><th>Author</th><th>Veröffentlichung am</th></tr>
+            </table>
+        </div>
+        <script>
+            const elTable = document.getElementById("books")
+            const elOutput = document.getElementById("output")
+
+            window.addEventListener("load", e => {
+                console.log("*** load-event")
+                let url = "../Books.xml"
+                fetch(url)
+                    .then(r => r.text())
+                    .then(textData => {
+                        let parser = new DOMParser()
+                        let xmlData = parser.parseFromString(textData, "text/xml")
+                        elOutput.textContent = textData
+                        let books = xmlData.querySelectorAll("book")
+                        for (let i=0;i<books.length;i++) {
+                            const tr = document.createElement("tr")
+                            tr.innerHTML = `<td>${books[i].getAttribute("id")}</td><td style="text-align: left;">${books[i].children[1].textContent}</td><td style="text-align: left;">${books[i].children[0].textContent}</td><td>${books[i].children[2].textContent}</td>`
+                            elTable.appendChild(tr)
+                        }
+                    })
+            })
+        </script>
+    </body>
+</html>

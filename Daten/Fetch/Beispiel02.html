@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>Json-Daten abrufen mit fetch - Beispiel Nr. 2</title>
+        <style>
+            body {
+                font-family: verdana;
+            }
+            table {
+                border-width: 1px;
+                border-style: solid;
+                width: 50%;
+            }
+            th {
+                background-color: aliceblue;
+                text-align: center;
+            }
+            td {
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h3>Json-Daten abrufen mit fetch - Beispiel Nr. 2</h3>
+        <div id="info">
+            <table id="books">
+                <tr><th>Id</th><th>Title</th><th>Author</th><th>Veröffentlichung am</th></tr>
+            </table>
+        </div>
+        <script>
+            const elTable = document.getElementById("books")
+
+            window.addEventListener("load", e => {
+                console.log("*** load-event")
+                fetch("../Books.json")
+                    .then(r => r.json())
+                    .then(jsonData => {
+                        jsonData.forEach(e => {
+                            const tr = document.createElement("tr")
+                            tr.innerHTML = `<td>${e.id}</td><td style="text-align: left;">${e.title}</td><td style="text-align: left;">${e.author}</td><td>${e.pubDate}</td>`
+                            elTable.appendChild(tr)
+                        })
+                    })
+            })
+        </script>
+    </body>
+</html>

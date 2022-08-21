@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <title>Xml-Daten abrufen mit fetch - Beispiel Nr. 3</title>
+        <style>
+            body {
+                font-family: verdana;
+            }
+            table {
+                border-width: 1px;
+                border-style: solid;
+                width: 50%;
+            }
+            th {
+                background-color: magenta;
+                text-align: center;
+            }
+            td {
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h3>Xml-Daten abrufen mit fetch - Beispiel Nr. 3</h3>
+        <pre id="output"></pre>
+        <div id="info">
+            <div>
+                <label for="bookId">Id:</label>
+                <input type="text" id="bookId" value="1000"/>
+                <input type="button" id="btnGetBook" value="Get Book"/>
+            </div>
+            <table id="books">
+                <thead>
+                    <tr><th>Id</th><th>Title</th><th>Author</th><th>Veröffentlichung am</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <script>
+            const elTable = document.getElementById("books")
+            const elOutput = document.getElementById("output")
+            const elBookButton = document.getElementById("btnGetBook")
+
+            window.addEventListener("load", e => {
+                console.log("*** load-event")
+                elBookButton.addEventListener("click", getBookData)
+            })
+
+            async function fetchData(url, bookId) {
+                const response = await fetch(url)
+                const xmlText = await response.text()
+                let parser = new DOMParser()
+                let xmlData = parser.parseFromString(xmlText, "text/xml")
+                elOutput.textContent = xmlText
+                let book = xmlData.querySelector(`book[id='${bookId}']`)
+                return book
+            }
+
+            async function getBookData(e) {
+                // So gehts! - dank getCountries.js - sonst hätte ich es so schnell nicht herausgefunden!
+                let url = "../Books.xml"
+                let bookId = document.getElementById("bookId").value
+                let book = await fetchData(url, bookId)
+                // Damit ein Löschen der Table einfach möglich ist
+                let elTBody = elTable.getElementsByTagName("tbody")[0]
+                elTBody.innerHTML = ""
+                
+                if (book != null) {
+                    const tr = document.createElement("tr")
+                    tr.innerHTML = `<td>${book.getAttribute("id")}</td><td style="text-align: left;">${book.children[1].textContent}</td><td style="text-align: left;">${book.children[0].textContent}</td><td>${book.children[2].textContent}</td>`
+                    // Neue Tr wird an TBody angehängt
+                    elTBody.appendChild(tr)
+                }
+            }
+        </script>
+    </body>
+</html>

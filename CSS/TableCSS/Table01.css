@@ -1,0 +1,41 @@
+/* CSS für eine einfache Tabellenformatierung */
+
+body {
+    font-family: verdana;
+}
+
+table {
+    border: 1px;
+    border-style: solid;
+    width: 50%;
+}
+
+#cities {
+    background-color: lightyellow;
+
+}
+
+#cities tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+#cities td,  #cities th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#cities th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+}
+
+#cities tr:hover {
+    background-color: coral;
+}
+
+#cities th:hover {
+    background-color: lawngreen;
+}

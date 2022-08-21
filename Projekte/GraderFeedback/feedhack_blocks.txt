@@ -1,0 +1,9 @@
+--
+Sehr gute Umsetzung
+--
+Es sind zu viele Checktyle-Meldungen
+
+Mache Dich mit dem Prinzip von Checkstyle vertraut und finde heraus, wie sich die Zahl der Meldungen verringern lässt.
+
+--
+Achte auf die Schreibweise bei Variablen.

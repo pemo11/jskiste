@@ -1,0 +1,39 @@
+body {
+    width: 80%;
+    font-family: verdana;
+    font-size:11pt;
+}
+
+.column {
+    float: left;
+    width: 40%;
+  }
+  
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+.feedbackArea {
+    background-color: lightyellow;
+    width: 640px;
+    border: 1px solid black;
+    overflow: auto;
+}
+
+.feedbackItem {
+    background-color: lightgreen;
+    width: 360px;
+    height: 64px;
+    margin-left:10px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    padding: 4px;
+    border-style: solid;
+}
+
+.drag-over {
+    border: dashed 3px red;
+}

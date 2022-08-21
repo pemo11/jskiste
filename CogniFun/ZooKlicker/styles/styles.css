@@ -1,0 +1,54 @@
+/* Standard-Style */
+
+body {
+    font-family: verdana;
+    font-size: 11pt;
+}
+
+input[type="submit"] {
+    height: 32px;
+    width: 120px;
+    background-color:greenyellow;
+}
+
+div.zoo {
+    width: 600px;
+    height: 400px;
+    background-color: greenyellow;
+    margin: 20px;
+}
+
+div.clickPad {
+    font-size: 24pt;
+    font-weight: bold;
+    width: 400px;
+    height: 40px;
+    background-color:skyblue;
+    margin: 20px;
+}
+
+div.info1 {
+    width: 400px;
+    height: 40px;
+    background-color: gray;
+    font-size: 24pt;
+    font-weight: bold;
+    margin: 20px;
+    text-align: left;
+}
+
+img.zoo {
+    position: relative;
+    animation-name: FadeIn;
+    animation-duration: 3s;
+    transition-timing-function: linear;
+}
+
+@keyframes FadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }

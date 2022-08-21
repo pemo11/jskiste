@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+Die Spielidee ist, dass nach dem Klick auf Start eine Zeitspanne von z.B. 3-60s vorgegeben wird und der User nach Ablauf dieser Spanne auf Stop klicken soll
+Dann wird ausgegeben wie gut der User die Zeitspanne eingeschätzt hat
+
+-->
+
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Zeitgefühl V1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Zeitgefühl V1</h3>
+        <script src=""></script>
+        <div>Klicke nach <span id="timeSpan">0</span> Sekunden auf den Stop-Button</div>
+        <div>
+            <button id="btnStart">Start</button>
+            <button id="btnStop">Stop</button>
+        </div>
+        <div id="divResult"></div>
+
+        <script>
+            const elStartBtn = document.querySelector("#btnStart")
+            const elStopBtn = document.querySelector("#btnStop")
+            const elTimeSpan = document.querySelector("#timeSpan")
+            const elResultDiv = document.querySelector("#divResult")
+            var startTime = 0
+            var timeSpan = 0
+            const timeSpanLimit = 5
+
+            window.addEventListener("load", (event) => {
+                elStartBtn.addEventListener("click", (event) => {
+                    timeSpan = (Math.floor(Math.random() * timeSpanLimit)) * 10 + 10
+                    elTimeSpan.innerHTML = "<b>" + timeSpan.toFixed(0) + "</b>"
+                    startTime = new Date().getTime()
+                    // startTimer()
+                    elResultDiv.innerHTML = ""
+                })
+
+                elStopBtn.addEventListener("click", (event) => {
+                    var stopTime = new Date().getTime()
+                    var timeDiff = stopTime - startTime
+                    var timeDiffSec = timeDiff / 1000
+                    var timeDiffSecRounded = Math.round(timeDiffSec)
+                    if (timeDiffSecRounded < timeSpan) {
+                        let secondsLeft = timeSpan - timeDiffSecRounded
+                        let secOutput1 = timeDiffSecRounded == 1 ? "Sekunde" : "Sekunden"
+                        let secOutput2 = secondsLeft == 1 ? "Sekunde" : "Sekunden"
+                        elResultDiv.innerHTML = `Das waren nur <B>${timeDiffSecRounded}</B> ${secOutput1} und damit ${secondsLeft} ${secOutput2} zu wenig.`
+                    } else if (timeDiffSecRounded > timeSpan) {
+                        let secondsOver = timeDiffSecRounded - timeSpan
+                        let secOutput1 = timeDiffSecRounded == 1 ? "Sekunde" : "Sekunden"
+                        let sekOutput2 = secondsOver == 1 ? "Sekunde" : "Sekunden"
+                        elResultDiv.innerHTML = `Das waren <B>${timeDiffSecRounded}</B> ${secOutput1} und damit ${secondsOver} ${secOutput2} zu viel.`
+                    } else {
+                        elResultDiv.innerHTML = `Das waren genau <B>${timeDiffSecRounded}</B> Sekunden!.`
+                    }
+                })
+            });
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<!--
+Die Idee ist, dass mit je mehr Klicks gemacht werden, auch mehr Tiere im Zoo erscheinen, z.B. eine Giraffe
+Wird länger nicht geklickt, verschwinden die Tiere wieder - nach 5s kommt es darauf an, wie viele Tiere im Zoo sind
+Verbesserungen für V2
+>Timer wird angezeigt - nach z.B. 10s ist Schluss - Smiley-Bewertung
+>Kleines Geräusch beim Hinzufügen/Entfernen
+>Tiere werden besser positioniert und können sich nicht überdecken, sondern halten Abstand
+>Größere Tierauswahl
+>Name wird bei Hover eingeblendet
+-->
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Zoo-Klicker V1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="../styles/styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Zoo-Klicker V1</h3>
+        <div class="zoo"></div>
+        <div class="clickPad">Klick hier...</div>
+        <div id="clickCounter" class="info1"></div>
+        <div id="clickLevel" class="info1"></div>
+        <div id="animalCount" class="info1"></div>
+
+        <script>
+            const elCounterDisplay= document.querySelector("#clickCounter")
+            const elLevelDisplay= document.querySelector("#clickLevel")
+            const elAnimalCountDisplay = document.querySelector("#animalCount")
+            const elClickPad = document.querySelector(".clickPad")
+            const elZoo = document.querySelector(".zoo")
+            var clickCounter = 0
+            const animalImgList = []
+            const animalZooList = []
+            var animalCounter = 0
+            var clickLevel = 0
+            var lastClickLevel = 0
+            const clickTreshhold = 10
+            var lastClickTime = 0;
+            var ctx = null;
+
+            window.addEventListener("load", (event) => {
+
+                // Alle Tierbilder einlesen
+                animalImgList.push("Elefant.png")
+                animalImgList.push("Giraffe.png")
+                animalImgList.push("Kakadoo.png")
+                animalImgList.push("Loewe.png")
+
+                // Interval für die Click-Überprüfung setzen
+                setInterval(() => {
+                    let d1 = new Date()
+                    let imgListe = elZoo.getElementsByTagName("img")
+                    if (d1 - lastClickTime > 5000) {
+                        if (imgListe.length > 0) {
+                            let z = Math.floor(Math.random() * imgListe.length)
+                            let img = imgListe[z]
+                            elZoo.removeChild(img)
+                            console.log("*** Ein Tier ist auf dem Zoo verschwunden ***")
+                            animalCounter--
+                            elAnimalCountDisplay.innerText = animalCounter
+                        }
+                    }
+                }, 3000)
+
+                elClickPad.addEventListener("click", (event) => {
+                    // Die Zeit des Clicks merken
+                    lastClickTime = new Date()
+                    // Click zählen
+                    clickCounter++
+                    // Den Clicklevel berechnen
+                    clickLevel = Math.floor(clickCounter / clickTreshhold)
+                    // ClickCounter und ClickLevel ausgeben
+                    elCounterDisplay.innerText = clickCounter
+                    elLevelDisplay.innerText = clickLevel
+                    // Ist der nächste ClickLevel erreicht?
+                    if (clickLevel > lastClickLevel) {
+                        lastClickLevel = clickLevel
+                        // Das nächste Tier kommt in den Zoo
+                        let z = Math.floor(Math.random() * animalImgList.length)
+                        // Ein Tier auswählen
+                        let imgFileName = animalImgList[z]
+                        let xPos = Math.floor(Math.random() * (600-64))
+                        let yPos = Math.floor(Math.random() * (400-80))
+                        // Neues img-Element anlegen
+                        var elImg = document.createElement("img")
+                        // Attribute für das neue img-Element festlegen
+                        elImg.setAttribute("src", "../images/" + imgFileName)
+                        elImg.setAttribute("class", "zoo")
+                        elImg.setAttribute("height", 80)
+                        elImg.setAttribute("width", 64)
+                        elImg.style.left = xPos + "px"
+                        elImg.style.top = yPos + "px"
+                        // img-Element im div-Platzieren
+                        elZoo.appendChild(elImg)
+                        let animal = {name: (imgFileName.split(".")[0]), index:z, img:elImg}
+                        animalZooList.push(animal)
+                        console.log(`*** Neues Tier im Zoo ${animal.name} an Position ${xPos}/${yPos} ***`)
+                        animalCounter++
+                        elAnimalCountDisplay.innerText = animalCounter
+                    }
+                })
+            })
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 
