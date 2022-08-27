@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Würfelaugen zuordnen - V1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Würfelaugen zuordnen - V1</h3>
+        <div class="wuerfelArea" id="WuerfelArea">
+        </div>
+        <button id="btnStart" class="startButton">Start</button>
+
+        <script src=""></script>
+
+        <script>
+            const imgListe= ["Wuerfel_1.png", "Wuerfel_2.png", "Wuerfel_3.png", "Wuerfel_4.png", "Wuerfel_5.png", "Wuerfel_6.png"]
+            const elStartButton = document.querySelector("#btnStart")
+            const elWuerfelArea = document.querySelector("#WuerfelArea")
+
+            const rowWuerfelCount = 6
+            const colWuerfelCount = 6
+
+            const drawWuerfel = () => {
+
+                // Alle eventuell bereits vorhandenen img-Elemente entfernen
+                for(let i=elWuerfelArea.getElementsByTagName("img").length-1;i>=0;i--) {
+                    let elImg = elWuerfelArea.getElementsByTagName("img")[i]
+                    elWuerfelArea.removeChild(elImg)
+                }
+                
+                let wuerfelCount = rowWuerfelCount * colWuerfelCount
+                for(let i=0;i<wuerfelCount;i++) {
+                    let elImg = document.createElement("img")
+                    elImg.className = "wuerfel"
+                    // elImg.setAttribute("class", "wuerfel")
+                    elWuerfelArea.appendChild(elImg)
+                }
+            }
+
+            window.addEventListener("load", (event) => {
+
+                elStartButton.addEventListener("click", () => {
+                    let wuerfelListe = elWuerfelArea.getElementsByTagName("img")
+                    for(var i= 0;i<rowWuerfelCount;i++) {
+                        lastZ = 0
+                        for(var j= 0;j<colWuerfelCount;j++) {
+                            do {
+                                var z = Math.round(Math.random() * (imgListe.length - 1))
+                            } while (z == lastZ)
+                            lastZ = z
+                            wuerfelListe[i*rowWuerfelCount + j].src = "images/" + imgListe[z]
+                        }
+                    }
+                })
+
+                drawWuerfel()
+
+        })
+
+
+        </script>
+        
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

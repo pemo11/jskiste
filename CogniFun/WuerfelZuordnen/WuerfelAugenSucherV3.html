@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Würfelaugen zuordnen - V3</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <h3>Würfelaugen zuordnen - V3</h3>
+        <div class="wuerfelArea" id="WuerfelArea">
+        </div>
+        <button id="btnStart" class="startButton">Start</button>
+        <button id="btnFertig" class="fertigButton">Fertig</button>
+        <button id="btnClear" class="clearButton">Clear</button>
+        <div class="infoFeld" id="infoFeld">Es müssen alle gleiche Würfelaugen innerhalb der vorgegebenen Zeit hervorgehoben werden.</div>
+        <div class="counterFeld" id="counterFeld">0</div>
+        <div style="text-align: left;margin:16px">
+            <img id="imgResult" width="100" height="100" src="" alt="Ergebnis-Smiley">
+        </div>
+
+        <script>
+            const imgListe= ["Wuerfel_1.png", "Wuerfel_2.png", "Wuerfel_3.png", "Wuerfel_4.png", "Wuerfel_5.png", "Wuerfel_6.png"]
+            const elWuerfelArea = document.querySelector("#WuerfelArea")
+            const elStartButton = document.querySelector("#btnStart")
+            const elFertigButton = document.querySelector("#btnFertig")
+            const elClearButton = document.querySelector("#btnClear")
+            const elInfo = document.querySelector("#infoFeld")
+            const elResult = document.querySelector("#imgResult")
+            const elCounter = document.querySelector("#counterFeld")
+
+            const rowWuerfelCount = 6
+            const colWuerfelCount = 6
+            const timeSpan = 30
+            var currentAuge = 0
+            var counter = 0
+            var intervalId = 0
+
+            const drawWuerfel = () => {
+
+                elResult.style.visibility = "hidden"
+
+                // Alle eventuell bereits vorhandenen img-Elemente entfernen
+                for(let i=elWuerfelArea.getElementsByTagName("img").length-1;i>=0;i--) {
+                    let elImg = elWuerfelArea.getElementsByTagName("img")[i]
+                    elWuerfelArea.removeChild(elImg)
+                }
+                
+                let wuerfelCount = rowWuerfelCount * colWuerfelCount
+                for(let i=0;i<wuerfelCount;i++) {
+                    let elImg = document.createElement("img")
+                    elImg.className = "wuerfel"
+                    elImg.dataset.augenZahl = 0
+                    elWuerfelArea.appendChild(elImg)
+                    elImg.addEventListener("click", (e) => {
+                        if (currentAuge == 0) {
+                            currentAuge = parseInt(e.target.dataset.augenZahl)
+                        }
+                        augen = parseInt(e.target.dataset.augenZahl)
+                        if (augen == currentAuge) {
+                            if (elImg.className != "wuerfelSelektiert") {
+                                elImg.className = "wuerfelSelektiert"
+                            } else {
+                                elImg.className = "wuerfel"
+                            }
+                            // alert(currentAuge)
+                        }
+                    })
+                }
+            }
+
+            window.addEventListener("load", (event) => {
+
+                elStartButton.addEventListener("click", () => {
+                    elResult.style.visibility = "hidden"
+                    // Counter wieder auf 0 setzen
+                    counter = 0
+                    let wuerfelListe = elWuerfelArea.getElementsByTagName("img")
+                    for(var i= 0;i<rowWuerfelCount;i++) {
+                        lastZ = 0
+                        for(var j= 0;j<colWuerfelCount;j++) {
+                            do {
+                                var z = Math.round(Math.random() * (imgListe.length - 1))
+                            } while (z == lastZ)
+                            lastZ = z
+                            wuerfelListe[i*rowWuerfelCount + j].src = "images/" + imgListe[z]
+                            wuerfelListe[i*rowWuerfelCount + j].className = "wuerfel"
+                            wuerfelListe[i*rowWuerfelCount + j].dataset.augenZahl = z + 1
+                        }
+                    }
+                    // Aktuelle Augenzahl festlegen
+                    currentAuge = Math.round(Math.random() * (imgListe.length - 1)) + 1
+                    elInfo.textContent = `Sammele alle Würfel mit der Augenzahl ${currentAuge} - Du hast dafür ${timeSpan}s Zeit.`
+
+                    // Timer starten
+                    window.setTimeout(() => {
+                        elInfo.textContent = "Die Zeit ist leider abgelaufen - probiere es noch einmal."
+                        elResult.src = "images/SadFace256.png"
+                        elResult.style.visibility = "visible"
+                        window.clearInterval(intervalId)
+                    }, timeSpan * 1000)
+
+                    // Intervall-Timer starten
+                    intervalId = window.setInterval(() => {
+                        counter++
+                        elCounter.textContent = `${timeSpan - counter}`
+                    }, 1000)
+                })
+
+                elClearButton.addEventListener("click", () => {
+                    currentAuge = 0
+                    // Auswahl aufheben
+                    for(let i=elWuerfelArea.getElementsByTagName("img").length-1;i>=0;i--) {
+                        let elImg = elWuerfelArea.getElementsByTagName("img")[i]
+                        elImg.className = "wuerfel"
+                    }
+                    elInfo.textContent = "Es müssen gleiche Würfelaugen hervorgehoben werden."
+                    elResult.style.visibility = "hidden"
+                })
+
+                elFertigButton.addEventListener("click", () => {
+                    // Anzahl der Würfel mit der aktuellen Augenzahl bestimmen
+                    let anzahlAuge = 0
+                    document.querySelectorAll("img").forEach(el => {
+                        if (parseInt(el.dataset.augenZahl) == currentAuge) {
+                            anzahlAuge++
+                        }
+                    })
+                    // Anzahl der hervorhobenen Würfel bestimmen
+                    let anzahlSelektiert = document.querySelectorAll(".wuerfelSelektiert").length
+                    // Alles gut?
+                    if (anzahlAuge === anzahlSelektiert) {
+                        elResult.src = "images/HappyFace256.png"
+                        elInfo.textContent = "Du hast alle Würfel innerhalb der Zeitspanne gefunden!"
+                    } else {
+                        elResult.src = "images/SadFace256.png"
+                        elInfo.textContent = `Du hast leider nur ${anzahlSelektiert} von ${anzahlAuge} Würfeln gefunden!`
+                    }
+                    elResult.style.visibility = "visible"
+                    // Intervall deaktivieren
+                    window.clearInterval(intervalId)
+                })
+
+                elResult.style.visibility = "hidden"
+                drawWuerfel()
+
+        })
+
+
+        </script>
+        
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 

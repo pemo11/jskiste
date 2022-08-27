@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<!--
-Die Spielidee ist, dass nach dem Klick auf Start eine Zeitspanne von z.B. 3-60s vorgegeben wird und der User nach Ablauf dieser Spanne auf Stop klicken soll
-Dann wird ausgegeben wie gut der User die Zeitspanne eingeschätzt hat
-
--->
-
 <html lang="de">
     <head>
         <meta charset="utf-8">
-        <title>Zeitgefühl V1</title>
+        <title>Zeitgefühl V2</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="styles.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <h3>Zeitgefühl V1</h3>
+        <h3>Zeitgefühl V2</h3>
         <script src=""></script>
-        <div>Klicke nach <span id="timeSpan">0</span> Sekunden auf den Stop-Button</div>
+        <div>
+            <input type="radio" name="timespan" value="10" id="rdbTimespan10">10s</input></br>
+            <input type="radio" name="timespan" value="20" id="rdbTimespan20">20s</input></br>
+            <input type="radio" name="timespan" value="30" id="rdbTimespan30" checked>30s</input></br>
+            <input type="radio" name="timespan" value="60" id="rdbTimespan60">60s</input></br>
+            <input type="radio" name="timespan" value="-1" id="rdbTimespanRandom">Random</input></br>
+        </div>
+        <div>Klicke nach <span id="timeSpanVal">0</span> Sekunden auf den Stop-Button</div>
         <div>
             <button id="btnStart">Start</button>
             <button id="btnStop">Stop</button>
@@ -25,7 +26,7 @@ Dann wird ausgegeben wie gut der User die Zeitspanne eingeschätzt hat
         <script>
             const elStartBtn = document.querySelector("#btnStart")
             const elStopBtn = document.querySelector("#btnStop")
-            const elTimeSpan = document.querySelector("#timeSpan")
+            const elTimeSpan = document.querySelector("#timeSpanVal")
             const elResultDiv = document.querySelector("#divResult")
             var startTime = 0
             var timeSpan = 0
@@ -33,10 +34,13 @@ Dann wird ausgegeben wie gut der User die Zeitspanne eingeschätzt hat
 
             window.addEventListener("load", (event) => {
                 elStartBtn.addEventListener("click", (event) => {
-                    timeSpan = (Math.floor(Math.random() * timeSpanLimit)) * 10 + 10
-                    elTimeSpan.innerHTML = "<b>" + timeSpan.toFixed(0) + "</b>"
+                    // Random -Modus
+                    if (timeSpan == -1) {
+                        timeSpan = (Math.floor(Math.random() * timeSpanLimit)) * 10 + 10
+                    }
+                    // Warum ist jetzt Number() erforderlich
+                    elTimeSpan.innerHTML = "<b>" + Number(timeSpan).toFixed(0) + "</b>"
                     startTime = new Date().getTime()
-                    // startTimer()
                     elResultDiv.innerHTML = ""
                 })
 
@@ -59,6 +63,16 @@ Dann wird ausgegeben wie gut der User die Zeitspanne eingeschätzt hat
                         elResultDiv.innerHTML = `Das waren genau <B>${timeDiffSecRounded}</B> Sekunden!`
                     }
                 })
+
+                var elTimespans = document.getElementsByName("timespan")
+                elTimespans.forEach(radio => {
+                    radio.addEventListener("click", (event)=> {
+                        timeSpan = event.target.value
+                    })
+                })
+
+                timeSpan = document.querySelector("input[name='timespan']:checked").value
+
             });
 
         </script>
