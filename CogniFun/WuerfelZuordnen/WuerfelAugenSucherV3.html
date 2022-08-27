@@ -31,10 +31,11 @@
 
             const rowWuerfelCount = 6
             const colWuerfelCount = 6
-            const timeSpan = 30
+            var timeSpan = 30
             var currentAuge = 0
             var counter = 0
             var intervalId = 0
+            var timeoutId = 0
 
             const drawWuerfel = () => {
 
@@ -75,6 +76,12 @@
                     elResult.style.visibility = "hidden"
                     // Counter wieder auf 0 setzen
                     counter = 0
+                    // Spielzeit in 5s Intervallen festlegen
+                    timeSpan = Math.round(Math.random() * 4) * 5 + 10
+                    // Interval deaktivieren
+                    if (intervalId != 0) {
+                        clearInterval(intervalId)
+                    }
                     let wuerfelListe = elWuerfelArea.getElementsByTagName("img")
                     for(var i= 0;i<rowWuerfelCount;i++) {
                         lastZ = 0
@@ -93,8 +100,9 @@
                     elInfo.textContent = `Sammele alle Würfel mit der Augenzahl ${currentAuge} - Du hast dafür ${timeSpan}s Zeit.`
 
                     // Timer starten
-                    window.setTimeout(() => {
+                    timeoutId = window.setTimeout(() => {
                         elInfo.textContent = "Die Zeit ist leider abgelaufen - probiere es noch einmal."
+                        elCounter.textContent = ""
                         elResult.src = "images/SadFace256.png"
                         elResult.style.visibility = "visible"
                         window.clearInterval(intervalId)
@@ -109,6 +117,10 @@
 
                 elClearButton.addEventListener("click", () => {
                     currentAuge = 0
+                    // Timer anhalten
+                    window.clearTimeout(timeoutId)
+                    window.clearInterval(intervalId)
+                    elCounter.textContent = "0"
                     // Auswahl aufheben
                     for(let i=elWuerfelArea.getElementsByTagName("img").length-1;i>=0;i--) {
                         let elImg = elWuerfelArea.getElementsByTagName("img")[i]
@@ -121,6 +133,9 @@
                 elFertigButton.addEventListener("click", () => {
                     // Anzahl der Würfel mit der aktuellen Augenzahl bestimmen
                     let anzahlAuge = 0
+                    // Timer anhalten
+                    window.clearTimeout(timeoutId)
+                    window.clearInterval(intervalId)
                     document.querySelectorAll("img").forEach(el => {
                         if (parseInt(el.dataset.augenZahl) == currentAuge) {
                             anzahlAuge++
@@ -137,8 +152,6 @@
                         elInfo.textContent = `Du hast leider nur ${anzahlSelektiert} von ${anzahlAuge} Würfeln gefunden!`
                     }
                     elResult.style.visibility = "visible"
-                    // Intervall deaktivieren
-                    window.clearInterval(intervalId)
                 })
 
                 elResult.style.visibility = "hidden"
