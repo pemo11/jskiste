@@ -1,0 +1,62 @@
+<!--
+ Es werden vier Zeichen mit z.B. 6 Symbolen angezeigt, von denen pro Reihe eines sich von den anderen unterscheidet
+
+ Das muss in jeder Reihe angeklickt (hervorhebung) werden, bevor der nächste Set angezeigt wird
+
+ Am Ende wird eine Bilanz angezeigt
+
+ Am Anfang sind es nur einfache geometrische Figuren, z.B. Rechtecke, aber auch mit einer Schraffur oder einem Balken
+ -->
+ <!DOCTYPE html>
+ <html lang="de">
+     <head>
+         <meta charset="utf-8">
+         <title>Finde den Unterschied - V2</title>
+         <meta name="viewport" content="width=device-width, initial-scale=1">
+         <link href="styles.css" rel="stylesheet" type="text/css">
+         <script src="FigureHelpers.js"></script>
+     </head>
+     <body>
+         <h3>Finde den Unterschied - V2</h3>
+         <div class="container">
+            <div class="canvas">
+                <canvas id="canvas1" width="48" height="48"></canvas>
+            </div>
+            <div class="canvas">
+                <canvas id="canvas2" width="48" height="48"></canvas>
+            </div>
+            <div class="canvas">
+                <canvas id="canvas3" width="48" height="48"></canvas>
+            </div>
+            <div class="canvas">
+                <canvas id="canvas4" width="48" height="48"></canvas>
+            </div>
+        </div> 
+        <h6>Remembering an important person</h6>
+        <script>
+            var canvas1 = document.querySelector("#canvas1")
+            var canvas2 = document.querySelector("#canvas2")
+            var canvas3 = document.querySelector("#canvas3")
+            var canvas4 = document.querySelector("#canvas4")
+            var divList = document.querySelectorAll("div")
+
+             window.addEventListener("load", (event) => {
+                 drawCircle(canvas1, 22, 24, 20,"red")
+                 drawRect(canvas2, 0, 4, 40, 40, "green")
+                 drawRect(canvas3, 0, 4, 40, 40, "yellow")
+                 drawCircle(canvas4, 22, 24, 20, "magenta")
+
+                 divList.forEach(div => {
+                     div.addEventListener("click", (event) => {
+                        console.log("*** div clicked ***")
+                        div.className = div.className == "canvas highlight" ? "canvas" : "canvas highlight"
+                     })
+                 })
+ 
+             })
+ 
+        </script>
+     </body>
+ </html> 
+ 
+ 

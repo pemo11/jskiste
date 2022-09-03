@@ -1,0 +1,62 @@
+<!--
+ Es werden vier Zeichen mit z.B. 6 Symbolen angezeigt, von denen pro Reihe eines sich von den anderen unterscheidet
+
+ Das muss in jeder Reihe angeklickt (hervorhebung) werden, bevor der nächste Set angezeigt wird
+
+ Am Ende wird eine Bilanz angezeigt
+
+ Am Anfang sind es nur einfache geometrische Figuren, z.B. Rechtecke, aber auch mit einer Schraffur oder einem Balken
+ -->
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Finde den Unterschied - V1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+        <script src="FigureHelpers.js"></script>
+    </head>
+    <body>
+        <h3>Finde den Unterschied - V1</h3>
+        <canvas id="mainCanvas" width="480" height="400"></canvas>
+
+        <script>
+            var canvas = document.querySelector("#mainCanvas");
+
+            window.addEventListener("load", (event) => {
+                drawCircle(canvas, 60, 40, 20,"red")
+                drawRect(canvas, 100, 20, 40, 40, "green")
+                drawRect(canvas, 160, 20, 40, 40, "yellow")
+                drawCircle(canvas, 240, 40, 20, "magenta")
+                drawTriangle(canvas, 300, 20, 40, 40, "blue")
+                drawRect(canvas, 350, 20, 40, 40, "red")
+
+                drawCircle(canvas, 60, 140, 20,"red")
+                drawRect(canvas, 100, 120, 40, 40, "green")
+                drawRect(canvas, 160, 120, 40, 40, "yellow")
+                drawCircle(canvas, 240, 140, 20, "magenta")
+                drawTriangle(canvas, 300, 120, 40, 40, "blue")
+                drawRect(canvas, 350, 120, 40, 40, "white")
+
+                drawCircle(canvas, 60, 240, 20,"red")
+                drawRect(canvas, 100, 220, 40, 40, "green")
+                drawRect(canvas, 160, 220, 40, 40, "yellow")
+                drawCircle(canvas, 240, 240, 20, "magenta")
+                drawTriangle(canvas, 300, 220, 40, 40, "blue")
+                drawCircle(canvas, 370, 240, 20, "orange")
+
+                drawCircle(canvas, 60, 340, 20, "blue")
+                drawRect(canvas, 100, 320, 40, 40, "green")
+                drawRect(canvas, 160, 320, 40, 40, "yellow")
+                drawCircle(canvas, 240, 340, 20, "magenta")
+                drawTriangle(canvas, 300, 320, 40, 40, "blue")
+                drawCircle(canvas, 370, 340, 20, "green")
+
+            })
+
+        </script>
+
+        <h6>Remembering an important person</h6>
+    </body>
+</html> 
+

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Finde den Unterschied - V3</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+        <script src="FigureHelpers.js"></script>
+    </head>
+    <body>
+        <h3>Finde den Unterschied - V3</h3>
+        <div class="container">
+        </div>
+        <div class="controller">
+            <button id="btnStart">Start</button>
+            <button id="btnStop">Stop</button>
+        </div>
+
+       <h6>Remembering an important person</h6>
+       <script>
+            const elController = document.querySelector(".controller")
+            const elContainer = document.querySelector(".container")
+            const elStart = document.querySelector("#btnStart")
+            const elStop = document.querySelector("#btnStop")
+
+            const canvasCount = 16
+            const divListe = []
+
+            window.addEventListener("load", (event) => {
+
+                elStart.addEventListener("click", (event) => {
+                    console.log("*** Start clicked ***")
+                    // Alle Kindelemente löschen
+                    while(elContainer.hasChildNodes()) {
+                        elContainer.removeChild(elContainer.firstChild)
+                    }
+
+                    // Tabelle neu aufbauen
+                    let taCanvas = document.createElement("table")
+                    taCanvas.setAttribute("id", "taCanvas")
+                    // Zeilen und Spalten festlegen
+                    let rowCount = colCount = Math.floor(Math.sqrt(canvasCount))
+                    let tHead = document.createElement("thead")
+                    taCanvas.appendChild(tHead)
+                    let tBody = document.createElement("tbody")
+                    taCanvas.appendChild(tBody)
+                    // Zeilen und Spalten erzeugen
+                    for (let i = 0; i < rowCount; i++) {
+                        let elTr = document.createElement("tr")
+                        for (let j = 0; j < colCount; j++) {
+                            let elTd = document.createElement("td")
+                            let elDiv = document.createElement("div")
+                            elDiv.setAttribute("id", "div" + i + j)
+                            elDiv.className = "canvas"
+                            const elCanvas = document.createElement("canvas")
+                            elCanvas.id = "canvas" + i
+                            elCanvas.width = 48
+                            elCanvas.height = 48
+                            elDiv.appendChild(elCanvas)
+                            let z = Math.floor(Math.random() * 4)
+                            switch(z) {
+                                case 0:
+                                    drawCircle(elCanvas, 22, 24, 20,"red")
+                                    break
+                                case 1:
+                                    drawRect(elCanvas, 0, 4, 40, 40, "green")
+                                    break
+                                case 2:
+                                    drawRect(elCanvas, 0, 4, 40, 40, "yellow")
+                                    break
+                                case 3:
+                                    drawCircle(elCanvas, 22, 24, 20, "magenta")
+                                    break
+                            }
+                            divListe.push(elDiv)
+                            elTd.appendChild(elDiv)
+                            elTr.appendChild(elTd)
+                        }
+                        tBody.appendChild(elTr)
+                        elContainer.appendChild(taCanvas)
+                    }
+
+                    // Eventhandler für alle Divs hinzufügen
+                    divListe.forEach(div => {
+                        div.addEventListener("click", (event) => {
+                        console.log("*** div clicked ***")
+                        div.className = div.className == "canvas highlight" ? "canvas" : "canvas highlight"
+                        })
+                    })
+                })
+            })
+
+       </script>
+    </body>
+</html> 

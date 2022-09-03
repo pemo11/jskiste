@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Finde den Unterschied - V4</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+        <script src="FigureHelpers.js"></script>
+    </head>
+    <body>
+        <h3>Finde den Unterschied - V4</h3>
+        <div class="container">
+        </div>
+        <div class="controller">
+            <button id="btnStart">Start</button>
+            <button id="btnNext">Weiter</button>
+            <button id="btnStop">Stop</button>
+        </div>
+
+       <h6>Remembering an important person</h6>
+       <script>
+            const elController = document.querySelector(".controller")
+            const elContainer = document.querySelector(".container")
+            const elStart = document.querySelector("#btnStart")
+            const elStop = document.querySelector("#btnStop")
+            const elNext = document.querySelector("#btnNext")
+
+            const canvasCount = 16
+            const divListe = []
+            var dicCanvas = null
+            var dicCurrent = null
+
+            window.addEventListener("load", (event) => {
+
+                elStart.addEventListener("click", (event) => {
+                    console.log("*** Start clicked ***")
+
+                    dicCanvas = {}
+                    dicCurrent = {}
+
+                    // Alle Kindelemente löschen
+                    while(elContainer.hasChildNodes()) {
+                        elContainer.removeChild(elContainer.firstChild)
+                    }
+
+                    // Tabelle neu aufbauen
+                    let taCanvas = document.createElement("table")
+                    taCanvas.setAttribute("id", "taCanvas")
+
+                    // Zeilen und Spalten festlegen
+                    let rowCount = colCount = Math.floor(Math.sqrt(canvasCount))
+                    let tHead = document.createElement("thead")
+                    taCanvas.appendChild(tHead)
+                    let tBody = document.createElement("tbody")
+                    taCanvas.appendChild(tBody)
+
+                    // Zeilen und Spalten erzeugen
+                    for (let i = 0; i < rowCount; i++) {
+                        let elTr = document.createElement("tr")
+                        rowCanvas = []
+                        // Zufallszahl für die Hauptfigur erzeugen
+                        let z1 = Math.floor(Math.random() * colCount)
+                        // Zufallszahl für die Fehlfigur erzeugen
+                        let z2 = -1
+                        let abbruch = false
+                        while (!abbruch) {
+                                z2 = Math.floor(Math.random() * colCount)
+                                // z1 und z2 müssen unterschiedlich sei
+                                abbruch = z1 != z2
+                        }
+                        // Die Nummern für colCount - 1 Spalten erzeugen
+                        let colNums = new Array(colCount)
+                        // Mit einem "Spezialwert" füllen
+                        colNums.fill(-1)
+                        let colNr = 0
+                        for (let j = 0; j < colCount - 1; j++) {
+                            abbruch = false
+                            while (!abbruch) {
+                                colNr = Math.floor(Math.random() * colCount)
+                                abbruch = colNums[colNr] === -1
+                            }
+                            colNums[colNr] = z1
+                        }
+                        // Die fehlende Spaltennummer erhalten
+                        let colLeft = colNums.indexOf(-1)
+                        colNums[colLeft] = z2
+                        // Diese Spaltennummeer merken
+                        dicCanvas[i] = colLeft
+                        for (let j = 0; j < colCount; j++) {
+                            let elTd = document.createElement("td")
+                            let elDiv = document.createElement("div")
+                            elDiv.setAttribute("id", "div" + i + j)
+                            elDiv.className = "canvas"
+                            const elCanvas = document.createElement("canvas")
+                            elCanvas.id = `r:${i} c:${j}`
+                            elCanvas.width = 48
+                            elCanvas.height = 48
+                            elDiv.appendChild(elCanvas)
+                            switch(colNums[j]) {
+                                case 0:
+                                    drawCircle(elCanvas, 22, 24, 20,"red")
+                                    break
+                                case 1:
+                                    drawRect(elCanvas, 0, 4, 40, 40, "green")
+                                    break
+                                case 2:
+                                    drawRect(elCanvas, 0, 4, 40, 40, "yellow")
+                                    break
+                                case 3:
+                                    drawCircle(elCanvas, 22, 24, 20, "magenta")
+                                    break
+                            }
+                            divListe.push(elDiv)
+                            elTd.appendChild(elDiv)
+                            elTr.appendChild(elTd)
+                        }
+                        tBody.appendChild(elTr)
+                        elContainer.appendChild(taCanvas)
+                    }
+                    
+                    elNext.addEventListener("click", (event) => {
+                        // Ergebnis vergleichen
+                        for(var i=0; i < Object.keys(dicCanvas).length; i++) {
+                            console.log(`Ergebnis für Zeile ${i}: ${dicCurrent[i]}  - Richtig: ${dicCanvas[i]}`)
+                        }
+                    })
+
+                    elStop.addEventListener("click", (event) => {
+
+                    })
+
+                    // Eventhandler für alle Divs hinzufügen
+                    divListe.forEach(div => {
+                        div.addEventListener("click", (event) => {
+                        console.log(`*** div mit id=${event.target.id} clicked ***`)
+                        let matches = new RegExp(/r:(\d) c:(\d)/).exec(event.target.id)
+                        let r = matches[1]
+                        let c = matches[2]
+                        dicCurrent[r] = c
+                        div.className = div.className == "canvas highlight" ? "canvas" : "canvas highlight"
+                        })
+                    })
+                })
+            })
+
+       </script>
+    </body>
+</html> 
