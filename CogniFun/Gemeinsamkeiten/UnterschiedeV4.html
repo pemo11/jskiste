@@ -16,6 +16,10 @@
             <button id="btnNext">Weiter</button>
             <button id="btnStop">Stop</button>
         </div>
+        <div id="info" class="info></div>"
+        <div>
+            <img id="bewertung" class="bewertung" src=""></img>
+        </div>
 
        <h6>Remembering an important person</h6>
        <script>
@@ -24,123 +28,193 @@
             const elStart = document.querySelector("#btnStart")
             const elStop = document.querySelector("#btnStop")
             const elNext = document.querySelector("#btnNext")
+            const elBewertung = document.querySelector("#bewertung")
+            const elInfo = document.querySelector("#info")
 
             const canvasCount = 16
-            const divListe = []
+            var divListe = []
             var dicCanvas = null
             var dicCurrent = null
+            var roundCount = 0
+            var rightCount = 0
+            var rowCount = 0
+            var colCount = 0
+            const bewertungTimespan = 2500
+
+            // Anzeigen eines Panels mit allen Figuren
+            function displayPanel() {
+
+                // Alle Kindelemente des Containers entfernen
+                while(elContainer.hasChildNodes()) {
+                    elContainer.removeChild(elContainer.firstChild)
+                }
+
+                // Runden zählen
+                roundCount++
+
+                // Tabelle neu aufbauen
+                let taCanvas = document.createElement("table")
+                taCanvas.setAttribute("id", "taCanvas")
+
+                // Zeilen und Spalten festlegen
+                rowCount = colCount = Math.floor(Math.sqrt(canvasCount))
+                let tHead = document.createElement("thead")
+                taCanvas.appendChild(tHead)
+                let tBody = document.createElement("tbody")
+                taCanvas.appendChild(tBody)
+
+                // Liste der div-Elemente leeren
+                divListe = []
+
+                // Zeilen und Spalten erzeugen
+                for (let i = 0; i < rowCount; i++) {
+                    let elTr = document.createElement("tr")
+                    rowCanvas = []
+                    // Zufallszahl für die Hauptfigur erzeugen
+                    let z1 = Math.floor(Math.random() * colCount)
+                    // Zufallszahl für die Fehlfigur erzeugen
+                    let z2 = -1
+                    let abbruch = false
+                    while (!abbruch) {
+                            z2 = Math.floor(Math.random() * colCount)
+                            // z1 und z2 müssen unterschiedlich sei
+                            abbruch = z1 != z2
+                    }
+                    // Die Nummern für colCount - 1 Spalten erzeugen
+                    let colNums = new Array(colCount)
+                    // Mit einem "Spezialwert" füllen
+                    colNums.fill(-1)
+                    let colNr = 0
+                    for (let j = 0; j < colCount - 1; j++) {
+                        abbruch = false
+                        while (!abbruch) {
+                            colNr = Math.floor(Math.random() * colCount)
+                            abbruch = colNums[colNr] === -1
+                        }
+                        colNums[colNr] = z1
+                    }
+                    // Die fehlende Spaltennummer erhalten
+                    let colLeft = colNums.indexOf(-1)
+                    colNums[colLeft] = z2
+                    // Diese Spaltennummer merken
+                    dicCanvas[i] = colLeft
+                    for (let j = 0; j < colCount; j++) {
+                        let elTd = document.createElement("td")
+                        let elDiv = document.createElement("div")
+                        elDiv.setAttribute("id", "div" + i + j)
+                        elDiv.className = "canvas"
+                        const elCanvas = document.createElement("canvas")
+                        elCanvas.id = `r:${i} c:${j}`
+                        elCanvas.width = 48
+                        elCanvas.height = 48
+                        elDiv.appendChild(elCanvas)
+                        switch(colNums[j]) {
+                            case 0:
+                                drawCircle(elCanvas, 22, 24, 20,"red")
+                                break
+                            case 1:
+                                drawRect(elCanvas, 0, 4, 40, 40, "green")
+                                break
+                            case 2:
+                                drawRect(elCanvas, 0, 4, 40, 40, "yellow")
+                                break
+                            case 3:
+                                drawCircle(elCanvas, 22, 24, 20, "magenta")
+                                break
+                        }
+                        divListe.push(elDiv)
+                        elTd.appendChild(elDiv)
+                        elTr.appendChild(elTd)
+                    }
+                    tBody.appendChild(elTr)
+                }
+                elContainer.appendChild(taCanvas)
+
+                 // Eventhandler für alle Divs hinzufügen
+                 divListe.forEach(div => {
+                    div.addEventListener("click", (event) => {
+                    console.log(`*** div mit id=${event.target.id} clicked ***`)
+                    let matches = new RegExp(/r:(\d) c:(\d)/).exec(event.target.id)
+                    let r = matches[1]
+                    let c = matches[2]
+                    dicCurrent[r] = c
+                    div.className = div.className == "canvas highlight" ? "canvas" : "canvas highlight"
+                    })
+                })
+            }
+
+            function bewertung() {
+                // Ergebnis vergleichen
+                let matchCount = 0
+                for(var i=0; i < Object.keys(dicCanvas).length; i++) {
+                    console.log(`Ergebnis für Zeile ${i}: ${dicCurrent[i]}  - Richtig: ${dicCanvas[i]}`)
+                    // Mit === funktioniert es nicht?
+                    if (dicCurrent[i] == dicCanvas[i]) {
+                        matchCount++
+                    }
+                }
+                return matchCount
+            }
 
             window.addEventListener("load", (event) => {
 
                 elStart.addEventListener("click", (event) => {
                     console.log("*** Start clicked ***")
 
+                    elNext.enabled = true
+                    elStop.enabled = true
+
                     dicCanvas = {}
                     dicCurrent = {}
-
-                    // Alle Kindelemente löschen
-                    while(elContainer.hasChildNodes()) {
-                        elContainer.removeChild(elContainer.firstChild)
-                    }
-
-                    // Tabelle neu aufbauen
-                    let taCanvas = document.createElement("table")
-                    taCanvas.setAttribute("id", "taCanvas")
-
-                    // Zeilen und Spalten festlegen
-                    let rowCount = colCount = Math.floor(Math.sqrt(canvasCount))
-                    let tHead = document.createElement("thead")
-                    taCanvas.appendChild(tHead)
-                    let tBody = document.createElement("tbody")
-                    taCanvas.appendChild(tBody)
-
-                    // Zeilen und Spalten erzeugen
-                    for (let i = 0; i < rowCount; i++) {
-                        let elTr = document.createElement("tr")
-                        rowCanvas = []
-                        // Zufallszahl für die Hauptfigur erzeugen
-                        let z1 = Math.floor(Math.random() * colCount)
-                        // Zufallszahl für die Fehlfigur erzeugen
-                        let z2 = -1
-                        let abbruch = false
-                        while (!abbruch) {
-                                z2 = Math.floor(Math.random() * colCount)
-                                // z1 und z2 müssen unterschiedlich sei
-                                abbruch = z1 != z2
-                        }
-                        // Die Nummern für colCount - 1 Spalten erzeugen
-                        let colNums = new Array(colCount)
-                        // Mit einem "Spezialwert" füllen
-                        colNums.fill(-1)
-                        let colNr = 0
-                        for (let j = 0; j < colCount - 1; j++) {
-                            abbruch = false
-                            while (!abbruch) {
-                                colNr = Math.floor(Math.random() * colCount)
-                                abbruch = colNums[colNr] === -1
-                            }
-                            colNums[colNr] = z1
-                        }
-                        // Die fehlende Spaltennummer erhalten
-                        let colLeft = colNums.indexOf(-1)
-                        colNums[colLeft] = z2
-                        // Diese Spaltennummeer merken
-                        dicCanvas[i] = colLeft
-                        for (let j = 0; j < colCount; j++) {
-                            let elTd = document.createElement("td")
-                            let elDiv = document.createElement("div")
-                            elDiv.setAttribute("id", "div" + i + j)
-                            elDiv.className = "canvas"
-                            const elCanvas = document.createElement("canvas")
-                            elCanvas.id = `r:${i} c:${j}`
-                            elCanvas.width = 48
-                            elCanvas.height = 48
-                            elDiv.appendChild(elCanvas)
-                            switch(colNums[j]) {
-                                case 0:
-                                    drawCircle(elCanvas, 22, 24, 20,"red")
-                                    break
-                                case 1:
-                                    drawRect(elCanvas, 0, 4, 40, 40, "green")
-                                    break
-                                case 2:
-                                    drawRect(elCanvas, 0, 4, 40, 40, "yellow")
-                                    break
-                                case 3:
-                                    drawCircle(elCanvas, 22, 24, 20, "magenta")
-                                    break
-                            }
-                            divListe.push(elDiv)
-                            elTd.appendChild(elDiv)
-                            elTr.appendChild(elTd)
-                        }
-                        tBody.appendChild(elTr)
-                        elContainer.appendChild(taCanvas)
-                    }
                     
-                    elNext.addEventListener("click", (event) => {
-                        // Ergebnis vergleichen
-                        for(var i=0; i < Object.keys(dicCanvas).length; i++) {
-                            console.log(`Ergebnis für Zeile ${i}: ${dicCurrent[i]}  - Richtig: ${dicCanvas[i]}`)
-                        }
-                    })
+                    roundCount = 0
+                    rightCount = 0
 
-                    elStop.addEventListener("click", (event) => {
-
-                    })
-
-                    // Eventhandler für alle Divs hinzufügen
-                    divListe.forEach(div => {
-                        div.addEventListener("click", (event) => {
-                        console.log(`*** div mit id=${event.target.id} clicked ***`)
-                        let matches = new RegExp(/r:(\d) c:(\d)/).exec(event.target.id)
-                        let r = matches[1]
-                        let c = matches[2]
-                        dicCurrent[r] = c
-                        div.className = div.className == "canvas highlight" ? "canvas" : "canvas highlight"
-                        })
-                    })
+                    displayPanel()
                 })
+                    
+                elNext.addEventListener("click", (event) => {
+                    matchCount = bewertung()
+
+                    // Alles richtig?
+                    elBewertung.style.display = "block"
+                    elBewertung.src = matchCount == rowCount ? "images/HappyFace256.png" : "images/SadFace256.png"
+                    rightCount += matchCount == rowCount ? 1 : 0
+
+                    // Bewertung nach Ablauf einer Zeitspanne wieder ausblenden
+                    window.setTimeout(() => {
+                        elBewertung.src = ""
+                        elBewertung.style.display = "none"
+                        // Nächstes Panel anzeigen
+                        displayPanel()
+                    }, bewertungTimespan)                       
+                })
+
+                elStop.addEventListener("click", (event) => {
+                    elNext.enabled = false
+                    elStop.enabled = false
+
+                    matchCount = bewertung()
+                    
+                    // Alles richtig?
+                    elBewertung.style.display = "block"
+                    elBewertung.src = matchCount == rowCount ? "images/HappyFace256.png" : "images/SadFace256.png"
+                    rightCount += matchCount == rowCount ? 1 : 0
+
+                    // Bewertung nach Ablauf einer Zeitspanne wieder ausblenden
+                    window.setTimeout(() => {
+                        elBewertung.src = ""
+                        elBewertung.style.display = "none"
+                        elInfo.textContent = `Runden: ${roundCount} Richtig: ${rightCount} Quote: ${Math.round(rightCount / roundCount * 100)}%`
+                    }, bewertungTimespan)                       
+                })
+
+                // Bewertungsgrafik ausblenden
+                elBewertung.style.display = "none"
+
+                elNext.enabled = false
+                elStop.enabled = false
+
             })
 
        </script>
