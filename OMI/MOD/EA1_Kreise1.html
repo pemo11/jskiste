@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <title>EA1 - Kreise in Bewegung</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="circle2.js" ></script>
+        <link rel="stylesheet" href="circle.css">
+    </head>
+    <body>
+        <div id="titleHeader">Title Header</div>
+        <div class="circleContainer">
+            <canvas id="canvas"></canvas>
+        </div>
+        <audio id="audio" src="ScFiCompute_Short.mp3" preload="auto" loop="true" autoplay></audio>
+        
+        <script>
+
+            document.addEventListener("DOMContentLoaded", () => {
+               var elContainer = document.querySelector(".circleContainer")
+               elContainer.style.visibility = "hidden"
+               var elTitleHeader = document.querySelector("#titleHeader")
+               elTitleHeader.textContent = "Bitte klicken..."
+            });
+
+            document.addEventListener("click", () => {
+                var elContainer = document.querySelector(".circleContainer")
+                elContainer.style.visibility = "visible"
+                init()
+            });
+
+        </script>
+    </body>
+</html>

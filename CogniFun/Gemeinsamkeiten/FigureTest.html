@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <title>Figure Tester</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+        <script src="FigureHelpers.js"></script>
+    </head>
+    <body>
+        <h3>Figure Tester</h3>
+
+        <div class="controller">
+            <table>
+                <tr>
+                    <td>Anzahl:</td><input type="number" id="canvasCount" value="16" min="16" max="64">
+                </tr>
+            </table>
+            <button id="btnStart">Start</button>
+        </div>
+        <div id="container"></div>
+
+        <script>
+            const elContainer = document.querySelector("#container")
+            const elStart = document.querySelector("#btnStart")
+            const elCanvasCount = document.querySelector("#canvasCount")
+            const drawAction = []
+            let rowCount, colCount = 0
+            var cavWidth = 72
+            var cavHeight = 72
+
+            window.addEventListener("load", (event) => {
+
+                drawAction.push(drawCircle)
+                drawAction.push(drawRect)
+                drawAction.push(drawRectLeft)
+                drawAction.push(drawRectRight)
+                drawAction.push(drawRectTop)
+                drawAction.push(drawRectBottom)
+
+                // Start-Button
+                elStart.addEventListener("click", (event) => {
+                    console.log("*** Start ***")
+                    // Alle Kindelemente des Containers entfernen
+                    while(elContainer.hasChildNodes()) {
+                        elContainer.removeChild(elContainer.firstChild)
+                    }
+
+                    // Zeilen und Spalten festlegen
+                    let canvasCount = parseInt(elCanvasCount.value)
+                    console.log(`*** Canvas-Count = ${canvasCount} ***`)
+                    rowCount = colCount = Math.floor(Math.sqrt(canvasCount))
+
+                    // Tabelle neu aufbauen
+                    let taCanvas = document.createElement("table")
+                    taCanvas.setAttribute("id", "taCanvas")
+                    let tHead = document.createElement("thead")
+                    taCanvas.appendChild(tHead)
+                    let tBody = document.createElement("tbody")
+                    taCanvas.appendChild(tBody)
+
+                    // Zeilen und Spalten erzeugen
+                    for (let i = 0; i < rowCount; i++) {
+                        let elTr = document.createElement("tr")
+                        for (let j = 0; j < colCount; j++) {
+                            let elTd = document.createElement("td")
+                            let elDiv = document.createElement("div")
+                            elDiv.setAttribute("id", "div" + i + j)
+                            elDiv.style.width = cavWidth + "px"
+                            elDiv.style.height = cavHeight + "px"
+                            const elCanvas = document.createElement("canvas")
+                            elCanvas.id = `r:${i}c:${j}`
+                            elCanvas.width = cavWidth
+                            elCanvas.height = cavHeight
+                            elDiv.appendChild(elCanvas)
+                            elTd.appendChild(elDiv)
+                            elTr.appendChild(elTd)
+                            console.log(`*** Spalte ${i}x${j} erzeugt ***`)
+                        }
+                        tBody.appendChild(elTr)
+                        console.log(`*** Zeile ${i} erzeugt ***`)
+                    }
+
+                    elContainer.appendChild(taCanvas)
+
+                    let canvasList = document.querySelectorAll("canvas")
+                    console.log(`*** Canvas-Liste: ${canvasList.length} ***`)
+                    for (let i = 0; i < canvasList.length; i++) {
+                        let canvas = canvasList[i]
+                        let action = drawAction[Math.floor(Math.random() * drawAction.length)]
+                        let color = getRandomColor()
+                        action(canvas, 0, 0, 64, 64, color)
+                    }
+                })
+
+            })
+
+        </script>
+    </body> 
+</html>

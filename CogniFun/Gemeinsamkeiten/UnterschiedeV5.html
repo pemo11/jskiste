@@ -1,16 +1,33 @@
+<!--
+    Drei Schwierigkeitsgrade:
+    A - 16 Figuren, 3 Typen
+    B - 36 Figuren, 6 Typen
+    C - 64 Figuren, 8 Typen, Zeitlimit
+
+    Wichtig: Es gibt einen neuen Spielmodus: Es wird eine Figur vorgegeben, z.B. Quadrat, und es müssen alle Figuren markiert werden, die mit der vorgegebenen Figur übereinstimmen
+    Die Farbe spielt keine Rolle, kann auch wegen Farbenblindheit ein Thema sein, wird also zunächst nicht verwendet
+    Eventuell ist das auch V6, damit V5 nicht zu kompliziert wird
+-->
+
 <!DOCTYPE html>
 <html lang="de">
     <head>
         <meta charset="utf-8">
-        <title>Finde den Unterschied - V4</title>
+        <title>Finde den Unterschied - V5</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="styles.css" rel="stylesheet" type="text/css">
         <script src="FigureHelpers.js"></script>
     </head>
     <body>
-        <h3>Finde den Unterschied - V4</h3>
+        <h3>Finde den Unterschied - V5</h3>
+        <div class="questSymbol" id="questSymbol"><canvas id="qCanvas"></canvas></div>
         <div class="roundCounter" id="roundCounter"></div>
         <div class="container"></div>
+        <div style="background-color: greenyellow;width:200px;margin:10px">
+            <input type="radio" id="leicht" name="level" value="A" checked>Leicht</input><p>
+            <input type="radio" id="mittel" name="level" value="B">Mittel</input><p>
+            <input type="radio" id="schwer" name="level" value="C">Schwer</input><p>
+        </div>
         <div class="controller">
             <button id="btnStart">Start</button>
             <button id="btnNext">Weiter</button>
@@ -31,21 +48,61 @@
             const elBewertung = document.querySelector("#bewertung")
             const elInfo = document.querySelector("#info")
             const elRoundCounter = document.querySelector("#roundCounter")
+            const elQCanvas = document.querySelector("#qCanvas")
 
-            const canvasCount = 16
+            var canvasCount = 16
             var divListe = []
             var dicCanvas = null
             var dicCurrent = null
-            var canvasColors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF", "#000000"]
+            const drawAction = []
             var roundCount = 0
             var rightCount = 0
             var rowCount = 0
             var colCount = 0
-            const figCount = 3
+            var figCount = 3
             const bewertungTimespan = 2500
+            var level = "A"
+            var questColor = null
+            var questFigure = null
+            var cavWidth = 64
+            var cavHeight = 64
+
+            var elLevels = document.getElementsByName("level")
+                elLevels.forEach(radio => {
+                    radio.addEventListener("click", (event)=> {
+                        level = event.target.value
+                        switch(level) {
+                            case "A":
+                                canvasCount = 16
+                                figCount = 3
+                                break
+                            case "B":
+                                canvasCount = 36
+                                figCount = 5
+                                break
+                            case "C":
+                                canvasCount = 64
+                                figCount = drawAction.length
+                                break
+                        }
+                    })
+            })
+
+            // Anzeige der Suchfigur
+            function displayQuestFigure() {
+                // Farbe und Figur der Suchfigur ermitteln
+                questColor = getRandomColor()
+                questFigure = Math.floor(Math.random() * figCount)
+                // clear canvas (Programmbefehle wurden vom CodePilot vorgeschlagen)
+                let ctx = elQCanvas.getContext("2d")
+                ctx.clearRect(0, 0, elQCanvas.width, elQCanvas.height)
+                action = drawAction[questFigure]
+                action(elQCanvas, 0, 0, cavWidth, cavHeight, questColor)
+            }
 
             // Anzeigen eines Panels mit allen Figuren
             function displayPanel() {
+                let figColor = null
 
                 // Alle Kindelemente des Containers entfernen
                 while(elContainer.hasChildNodes()) {
@@ -61,17 +118,17 @@
                 taCanvas.setAttribute("id", "taCanvas")
 
                 // Die Zufallsfarben für die Figuren ermitteln
-                let rectColor = canvasColors[Math.floor(Math.random() * canvasColors.length)]
+                let rectColor = getRandomColor()
                 let circleColor = null
                 let triColor = null
                 let abbruch = false
                 while (!abbruch) {
-                    circleColor = canvasColors[Math.floor(Math.random() * canvasColors.length)]
+                    circleColor = getRandomColor()
                     abbruch = circleColor != rectColor
                 }
                 abbruch = false
                 while (!abbruch) {
-                    triColor = canvasColors[Math.floor(Math.random() * canvasColors.length)]
+                    triColor = getRandomColor()
                     abbruch = triColor != rectColor && triColor != circleColor
                 }
                 // Zeilen und Spalten festlegen
@@ -88,15 +145,12 @@
                 for (let i = 0; i < rowCount; i++) {
                     let elTr = document.createElement("tr")
                     rowCanvas = []
-                    // Zufallszahl für die Hauptfigur erzeugen
-                    let z1 = Math.floor(Math.random() * figCount)
-                    // Zufallszahl für die Fehlfigur erzeugen
-                    let z2 = -1
+                    // Nebenfigur erzeugen
                     let abbruch = false
                     while (!abbruch) {
-                        z2 = Math.floor(Math.random() * figCount)
-                        // z1 und z2 müssen unterschiedlich sei
-                        abbruch = z1 != z2
+                        figNumber = Math.floor(Math.random() * figCount)
+                        // figColor und questColor müssen unterschiedlich sei
+                        abbruch = figNumber != questFigure
                     }
                     // Die Nummern für colCount - 1 Spalten erzeugen
                     let colNums = new Array(colCount)
@@ -109,11 +163,11 @@
                             colNr = Math.floor(Math.random() * colCount)
                             abbruch = colNums[colNr] === -1
                         }
-                        colNums[colNr] = z1
+                        colNums[colNr] = figNumber
                     }
                     // Die fehlende Spaltennummer erhalten
                     let colLeft = colNums.indexOf(-1)
-                    colNums[colLeft] = z2
+                    colNums[colLeft] = questFigure
                     // Diese Spaltennummer merken
                     dicCanvas[i] = colLeft
                     for (let j = 0; j < colCount; j++) {
@@ -121,23 +175,25 @@
                         let elDiv = document.createElement("div")
                         elDiv.setAttribute("id", "div" + i + j)
                         elDiv.className = "canvas"
+                        elDiv.style.width = cavWidth + "px"
+                        elDiv.style.height = cavHeight + "px"
                         const elCanvas = document.createElement("canvas")
                         elCanvas.id = `r:${i}c:${j}`
-                        elCanvas.width = 48
-                        elCanvas.height = 48
+                        elCanvas.style.width = cavWidth 
+                        elCanvas.style.height = cavHeight
                         elDiv.appendChild(elCanvas)
-                        switch(colNums[j]) {
-                            case 0:
-                                drawCircle(elCanvas, 22, 24, 20, circleColor)
-                                break
-                            case 1:
-                                drawRect(elCanvas, 4, 4, 40, 40, rectColor)
-                                break
-                            case 2:
-                                drawTriangle(elCanvas, -4, 4, 40, 40, triColor)
-                                break
+                        let color = null
+                        if (colNums[j] == questFigure) {
+                            color = questColor
+                        } else {
+                            abbruch = false
+                            while (!abbruch) {
+                                color = getRandomColor()
+                                abbruch = color != figColor
+                            }
                         }
-                        divListe.push(elDiv)
+                        action = drawAction[colNums[j]]
+                        action(elCanvas, 0, 0, cavHeight, cavWidth, color)
                         elTd.appendChild(elDiv)
                         elTr.appendChild(elTd)
                     }
@@ -199,8 +255,8 @@
                     roundCount = 0
                     rightCount = 0
 
-                    elInfo.textContent = "Selektiere in jeder Zeile die Figur, die nicht in die Zeile passt."
-
+                    elInfo.textContent = "Selektiere in jeder Zeile die Figur, die zu der oben angezeigten Figur passt."
+                    displayQuestFigure()
                     displayPanel()
                 })
                 
@@ -241,6 +297,15 @@
                         elInfo.textContent = `Runden: ${roundCount} Richtig: ${rightCount} Quote: ${Math.round(rightCount / roundCount * 100)}%`
                     }, bewertungTimespan)                       
                 })
+                
+                // Zeichenaktionen festlegen
+                drawAction.push(drawCircle)
+                drawAction.push(drawRect)
+                drawAction.push(drawRectLeft)
+                drawAction.push(drawRectRight)
+                drawAction.push(drawRectTop)
+                drawAction.push(drawRectBottom)
+                drawAction.push(drawTriangle)
 
                 // Bewertungsgrafik ausblenden
                 elBewertung.style.display = "none"

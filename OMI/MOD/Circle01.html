@@ -1,0 +1,76 @@
+<!DOCTYPE Html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            body {
+                font-family: "open sans", sans-serif;
+                background: wheat;
+            }
+
+            #content {
+                margin: 40px auto;
+                text-align: center;
+                width: 800px;
+            }
+
+            #content h3 {
+                text-transform: uppercase;
+                font-weight: 700;
+                margin: 0 0 40px 0;
+                font-size: 48px;
+                line-height: 40px;
+            }
+
+            .circle {
+                display: inline-block;
+                width: 200px;
+                height: 200px;
+                line-height: 200px;
+                border-radius: 50%; /* the magic */
+                -moz-border-radius: 50%;
+                -webkit-border-radius: 50%;
+                text-align: center;
+                color: white;
+                font-size: 16px;
+                text-transform: uppercase;
+                font-weight: 700;
+                margin: 0 auto 40px;
+            }
+
+            .red {
+                background-color: red;
+                animation: 4s linear 0s infinite alternate sun-rise;
+            }
+
+            .yellow {
+                background-color: yellow;
+                animation: 2s linear 1s infinite alternate sun-rise;
+            }
+
+            .green {
+                background-color: green;
+                animation: 5s linear 2s infinite alternate sun-rise;
+            }
+
+            @keyframes sun-rise {
+                from {
+                    /* pushes the sun down past the viewport */
+                    transform: translateY(120vh);
+                }
+                to {
+                    /* returns the sun to its default position */
+                    transform: translateY(0);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="content">
+            <h3>CSS-Kreise</h3>
+            <div class="circle red"></div>
+            <div class="circle yellow"></div>
+            <div class="circle green"></div>
+        </div>
+    </body>
+</html>

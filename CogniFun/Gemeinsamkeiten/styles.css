@@ -6,7 +6,8 @@ body {
 
 div.container {
     margin: 20px;
-    height: 600px;
+    height: auto;
+    width: auto;
 }
 
 div.controller {
@@ -14,15 +15,30 @@ div.controller {
 }
 
 div.canvas {
+    width: 50px;
+    margin: 18px;
+}
+
+div.questSymbol {
     width: 60px;
-    margin: 10px;
-    float: left;
+    height: 60px;
+    margin-left: 180px;
+    margin-top: 40px;
 }
 
 div.highlight {
     border-color: blue;
     border-style: solid;
-    border-width: 2px;
+    border-width: 4px;
+    padding: -0.5em;
+}
+
+div.roundCounter {
+    font-family: arial;
+    font-size: 32pt;
+    font-weight: bold;
+    margin-left: 120px;
+    color: blue;
 }
 
 button {

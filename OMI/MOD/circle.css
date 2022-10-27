@@ -1,0 +1,28 @@
+/* a few css rules for the circles */
+
+body {
+    font-family: verdana;
+    font-size: 12px;
+}
+
+.circleContainer {
+    width: 600px;
+    height: 400px;
+    background-color: black;
+}
+
+canvas {
+    border-style: solid;
+    border-width: 4px;
+    border-color: white;
+    margin: 0px;
+    position: absolute;
+    width: 560px;
+    height: 360px;
+    top: 40px;
+    left: 20px;
+}
+
+#titleHeader {
+    font-size: 1.5em;
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <title>Kreise mit Fadeout</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="canvas.css">
+    </head>
+    <body>
+        <h3>Kreise mit Fadeout</h3>
+        <div class="circleContainer">
+            <canvas id="canvas"></canvas>
+        </div>
+
+        <script>
+            const ballRadius = 15
+            var ballList = []
+            var ballCounter = 0
+            var intervalId = 0
+
+            function getColor() {
+                let colorList = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF"]
+                let color = colorList[Math.floor(Math.random() * colorList.length)]
+                return color
+            }
+
+        function newBall(x, y, color) {
+
+                ball = {
+                    bounce: 0.75,
+                    radius: ballRadius,
+                    energy: 255,
+                    floorBounce: 0,
+                    border: "black",
+                    color: color,
+                    aRgbHex: color.substring(1).match(/.{1,2}/g).map((x) => parseInt(x, 16)),
+                    alphaValue: 1,
+                    x: x,
+                    y: y,
+                    velX: (Math.random() * 15 + 5) * (Math.floor(Math.random() * 2) || -1),
+                    velY: (Math.random() * 15 + 5) * (Math.floor(Math.random() * 2) || -1)
+                }
+
+                ballList.push(ball)
+            }
+
+            function drawCanvas () {
+                var canvas = document.getElementById("canvas")
+                var ctx = canvas.getContext("2d");
+                ctx.clearRect(0, 0, canvas.width, canvas.height)
+                ballList.forEach(function (ball) {
+                    ctx.beginPath()
+                    ctx.arc(
+                        ball.x,
+                        ball.y,
+                        ball.radius,
+                        0,
+                        Math.PI * 2,
+                        true
+                    )
+                    ctx.fillStyle = ball.color
+                    ctx.fill()
+                    ctx.strokeStyle = ball.border
+                    ctx.stroke()
+                })
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                intervalId = window.setInterval(() => {
+                    let x = Math.random() * (canvas.width - 2 * ballRadius)
+                    let y = Math.random() * (canvas.height + 1.5 * ballRadius)
+                    let color = getColor()
+                    newBall(x, y, color)
+                    ballCounter++
+                    drawCanvas()
+                    if (ballCounter == 10) {
+                        window.clearInterval(intervalId)
+                        // Fadeout
+                        intervalId = window.setInterval(() => {
+                            ballList.forEach(function (ball) {
+                                ball.alphaValue -= 0.1
+                                ball.color = "rgba(" + ball.aRgbHex[0] + "," + ball.aRgbHex[1] + "," + ball.aRgbHex[2] + "," + ball.alphaValue + ")"
+                                ball.border = "rgba(0, 0, 0, " + ball.alphaValue + ")"
+                            })
+                            drawCanvas()
+                            if (ballList[0].alphaValue <= 0) {
+                                window.clearInterval(intervalId)
+                            }
+                        }, 300)
+                    }
+                }, 1000)
+            });
+
+        </script>
+    </body>
+</html>
